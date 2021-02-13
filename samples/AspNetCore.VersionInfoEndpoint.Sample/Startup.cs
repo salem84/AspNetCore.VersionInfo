@@ -25,7 +25,7 @@ namespace AspNetCore.VersionInfoEndpoint.Sample
         {
             services.AddRazorPages();
 
-            services.Add
+            services.AddVersionInfo();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
