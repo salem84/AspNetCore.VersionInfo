@@ -8,7 +8,8 @@ namespace AspNetCore.VersionInfoEndpoint.Configuration
 {
     public class VersionInfoOptions
     {
-        public string UIPath { get; set; } = "/version";
+        public string UIPath { get; set; } = "/version/{id}";
         public string ApiPath { get; set; } = "/version-api";
+        public string RoutePrefix { get; set; } = "";
     }
 }

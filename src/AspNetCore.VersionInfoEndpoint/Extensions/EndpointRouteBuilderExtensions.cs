@@ -25,7 +25,16 @@ namespace Microsoft.AspNetCore.Builder
             var apiEndpoint = builder.Map(options.ApiPath, apiDelegate)
                 .WithDisplayName("VersionInfo API");
 
-            var endpointConventionBuilders = new List<IEndpointConventionBuilder>(new[] { apiEndpoint });
+            var uiDelegate =
+                builder.CreateApplicationBuilder()
+                    .UseMiddleware<UIMiddleware>()
+                    .Build();
+
+
+            var uiEndpoint = builder.Map(options.UIPath, uiDelegate)
+                .WithDisplayName("VersionInfo UI");
+
+            var endpointConventionBuilders = new List<IEndpointConventionBuilder>(new[] { apiEndpoint, uiEndpoint });
             return new VersionInfoConventionBuilder(endpointConventionBuilders);
         }
     }
