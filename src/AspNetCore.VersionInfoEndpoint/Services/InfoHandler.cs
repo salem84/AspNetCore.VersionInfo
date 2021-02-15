@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +13,9 @@ namespace AspNetCore.VersionInfoEndpoint.Services
         public Dictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();
-            dict.Add("ClrVersion", "1.0");
-            dict.Add("NetVersion", "5.0");
-            dict.Add("AssemblyVersion", "1.0.0");
+            dict.Add("RuntimeVersion", RuntimeInformation.FrameworkDescription);
+            dict.Add("NetVersion", Environment.Version.ToString());
+            dict.Add("AssemblyVersion", Assembly.GetEntryAssembly().GetName().Version.ToString());
 
             return dict;
                
