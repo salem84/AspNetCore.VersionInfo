@@ -16,7 +16,7 @@ env:
   # Project name to pack and publish
   PROJECT_NAME: AspNetCore.VersionInfoEndpoint
   # GitHub Packages Feed settings
-  GITHUB_FEED: https://nuget.pkg.github.com/salem84/
+  GITHUB_FEED: https://nuget.pkg.github.com/salem84//index.json
   GITHUB_USER: salem84
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # Official NuGet Feed settings
@@ -59,11 +59,7 @@ jobs:
         with:
           name: nupkg
       - name: Push to GitHub Feed
-        run: |
-          for f in ./nupkg/*.nupkg
-          do
-            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
-          done
+        run: dotnet nuget push ./nupkg/*.nupkg -k ${GITHUB_TOKEN} -s $GITHUB_FEED --skip-duplicate 
           
   deploy:
     needs: build
