@@ -4,9 +4,9 @@ name: .NET
 on:
   push:
   pull_request:
-  release:
-    types:
-      - published
+  # release:
+  #   types:
+  #     - published
 
 env:
   # Stop wasting time caching packages
@@ -31,6 +31,26 @@ jobs:
       CONFIGURATION: "Release"
 
     steps:
+    - name: Inspect contexts
+      run: |
+        echo "The github context is:"
+        echo "${{ toJson(github) }}"
+        echo ""
+        echo "The job context is:"
+        echo "${{ toJson(job) }}"
+        echo ""
+        echo "The steps context is:"
+        echo "${{ toJson(steps) }}"
+        echo ""
+        echo "The runner context is:"
+        echo "${{ toJson(runner) }}"
+        echo ""
+        echo "The strategy context is:"
+        echo "${{ toJson(strategy) }}"
+        echo ""
+        echo "The matrix context is:"
+        echo "${{ toJson(matrix) }}"
+
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -50,8 +70,8 @@ jobs:
         echo "Build Info"
         echo "-----------------------------------------------------------------------"
         echo "Configuration: $CONFIGURATION"
-        echo "Run ID: ${{ github.run_id }}""
-        echo "Output Run Number: ${{ github.run_number }}"" 
+        echo "Run ID: ${{ github.run_id }}"
+        echo "Output Run Number: ${{ github.run_number }}" 
         echo "Major: ${{ steps.gitversion.outputs.Major }}"
         echo "Minor: ${{ steps.gitversion.outputs.Minor }}"
         echo "Patch: ${{ steps.gitversion.outputs.Patch }}"
@@ -88,17 +108,35 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
+    - name: Update project version (prerelease)
+      uses: roryprimrose/set-vs-sdk-project-version@v1
+      with:
+        version: "${{ steps.gitversion.outputs.NuGetVersionV2 }}-preview.${{github.run_id}}.${{github.run_number}}"
+        assemblyVersion: "${{steps.gitversion.outputs.MajorMinorPatch}}.${{github.run_number}}"
+        fileVersion: "${{steps.gitversion.outputs.MajorMinorPatch}}.${{github.run_number}}"
+        informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
+      if: ${{ github.event_name == 'pull_request' || github.ref == 'refs/heads/master' }}
+
+    - name: Update project version (release)
+      uses: roryprimrose/set-vs-sdk-project-version@v1
+      with:
+        version: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
+        assemblyVersion: ${{ steps.gitversion.outputs.AssemblySemVer }}
+        fileVersion: ${{ steps.gitversion.outputs.MajorMinorPatch }}
+        informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
+      if: startsWith(github.ref, 'refs/tags/')
+
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --no-restore --configuration $CONFIGURATION -p:Version=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+      run: dotnet build --no-restore --configuration $CONFIGURATION
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
     - name: Pack
-      run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} src/$PROJECT_NAME/$PROJECT_NAME.*proj
+      run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source src/$PROJECT_NAME/$PROJECT_NAME.*proj
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
@@ -106,15 +144,15 @@ jobs:
         name: nupkg
         path: ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
         
-  prerelease:
+  publish:
     needs: build
-    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v1
         with:
           name: nupkg
+      
       - name: Push to GitHub Feed
         shell: bash
         run: |
@@ -122,30 +160,7 @@ jobs:
           do
             curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
           done
-          
-  deploy:
-    needs: build
-    if: github.event_name == 'release'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.x
-      - name: Create Release NuGet package
-        run: |
-          arrTag=(${GITHUB_REF//\// })
-          VERSION="${arrTag[2]}"
-          echo Version: $VERSION
-          VERSION="${VERSION//v}"
-          echo Clean Version: $VERSION
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/$PROJECT_NAME/$PROJECT_NAME.*proj
-      - name: Push to GitHub Feed
-        run: |
-          for f in ./nupkg/*.nupkg
-          do
-            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
-          done
+      
       - name: Push to NuGet Feed
         run: dotnet nuget push ./nupkg/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+        if: startsWith(github.ref, 'refs/tags/')
