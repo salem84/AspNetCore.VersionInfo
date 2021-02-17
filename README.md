@@ -1,3 +1,5 @@
+![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg)
+
 # AspNetCore.VersionInfo
 
 AspNetCore.VersionInfo is a library to expose information about assembly versions used in your web application. 
