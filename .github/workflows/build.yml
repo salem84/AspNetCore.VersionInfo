@@ -98,7 +98,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
     - name: Pack
-      run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/$PROJECT_NAME/$PROJECT_NAME.*proj
+      run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }} src/$PROJECT_NAME/$PROJECT_NAME.*proj
     
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
