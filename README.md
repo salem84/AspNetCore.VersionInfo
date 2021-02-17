@@ -1,6 +1,6 @@
-# AspNetCore.VersionInfoEndpoint
+# AspNetCore.VersionInfo
 
-AspNetCore.VersionInfoEndpoint is a library to expose information about assembly versions used in your web application. 
+AspNetCore.VersionInfo is a library to expose information about assembly versions used in your web application. 
 In particular there are two endpoints, which returns:
 * a JSON-formatted data (/version-api)
 * [WIP] an HTML user-friendly page (/version)
@@ -23,7 +23,7 @@ This library currently targets `net5.0`
 
 ## Download
 
-Prerelease are on [GH Packages](https://github.com/salem84?tab=packages&repo_name=AspNetCore.VersionInfoEndpoint)
+Prerelease are on [GH Packages](https://github.com/salem84?tab=packages&repo_name=AspNetCore.VersionInfo)
 Release are on [Nuget]()
 
 ## Getting Started

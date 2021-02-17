@@ -14,7 +14,7 @@ env:
   # Disable sending usage data to Microsoft
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   # Project name to pack and publish
-  PROJECT_NAME: AspNetCore.VersionInfoEndpoint
+  PROJECT_NAME: AspNetCore.VersionInfo
   # GitHub Packages Feed settings
   GITHUB_FEED: https://nuget.pkg.github.com/salem84/
   GITHUB_USER: salem84
