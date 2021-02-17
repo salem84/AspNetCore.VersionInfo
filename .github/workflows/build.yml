@@ -31,7 +31,11 @@ jobs:
       CONFIGURATION: "Release"
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Fetch all history for all tags and branches
+      run: git fetch --prune --unshallow
 
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
@@ -44,8 +48,38 @@ jobs:
 
     - run: |
         echo "Build Info"
-        echo "- Configuration: $CONFIGURATION"
-        echo "- NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        echo "-----------------------------------------------------------------------"
+        echo "Configuration: $CONFIGURATION"
+        echo "::set-env name=GITVERSION_MAJOR::${{ steps.gitversion.outputs.major }}"
+        echo "::set-env name=GITVERSION_MINOR::${{ steps.gitversion.outputs.minor }}"
+        echo "::set-env name=GITVERSION_PATCH::${{ steps.gitversion.outputs.patch }}"
+        echo "::set-env name=GITVERSION_PRERELEASETAG::${{ steps.gitversion.outputs.preReleaseTag }}"
+        echo "::set-env name=GITVERSION_PRERELEASETAGWITHDASH::${{ steps.gitversion.outputs.preReleaseTagWithDash }}"
+        echo "::set-env name=GITVERSION_PRERELEASELABEL::${{ steps.gitversion.outputs.preReleaseLabel }}"
+        echo "::set-env name=GITVERSION_PRERELEASENUMBER::${{ steps.gitversion.outputs.preReleaseNumber }}"
+        echo "::set-env name=GITVERSION_WEIGHTEDPRERELEASENUMBER::${{ steps.gitversion.outputs.weightedPreReleaseNumber }}"
+        echo "::set-env name=GITVERSION_BUILDMETADATA::${{ steps.gitversion.outputs.buildMetaData }}"
+        echo "::set-env name=GITVERSION_BUILDMETADATAPADDED::${{ steps.gitversion.outputs.buildMetaDataPadded }}"
+        echo "::set-env name=GITVERSION_FULLBUILDMETADATA::${{ steps.gitversion.outputs.fullBuildMetaData }}"
+        echo "::set-env name=GITVERSION_MAJORMINORPATCH::${{ steps.gitversion.outputs.majorMinorPatch }}"
+        echo "::set-env name=GITVERSION_SEMVER::${{ steps.gitversion.outputs.semVer }}"
+        echo "::set-env name=GITVERSION_LEGACYSEMVER::${{ steps.gitversion.outputs.legacySemVer }}"
+        echo "::set-env name=GITVERSION_LEGACYSEMVERPADDED::${{ steps.gitversion.outputs.legacySemVerPadded }}"
+        echo "::set-env name=GITVERSION_ASSEMBLYSEMVER::${{ steps.gitversion.outputs.assemblySemVer }}"
+        echo "::set-env name=GITVERSION_ASSEMBLYSEMFILEVER::${{ steps.gitversion.outputs.assemblySemFileVer }}"
+        echo "::set-env name=GITVERSION_FULLSEMVER::${{ steps.gitversion.outputs.fullSemVer }}"
+        echo "::set-env name=GITVERSION_INFORMATIONALVERSION::${{ steps.gitversion.outputs.informationalVersion }}"
+        echo "::set-env name=GITVERSION_BRANCHNAME::${{ steps.gitversion.outputs.branchName }}"
+        echo "::set-env name=GITVERSION_SHA::${{ steps.gitversion.outputs.sha }}"
+        echo "::set-env name=GITVERSION_SHORTSHA::${{ steps.gitversion.outputs.shortSha }}"
+        echo "::set-env name=GITVERSION_NUGETVERSIONV2::${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+        echo "::set-env name=GITVERSION_NUGETVERSION::${{ steps.gitversion.outputs.nuGetVersion }}"
+        echo "::set-env name=GITVERSION_NUGETPRERELEASETAGV2::${{ steps.gitversion.outputs.nuGetPreReleaseTagV2 }}"
+        echo "::set-env name=GITVERSION_NUGETPRERELEASETAG::${{ steps.gitversion.outputs.nuGetPreReleaseTag }}"
+        echo "::set-env name=GITVERSION_VERSIONSOURCESHA::${{ steps.gitversion.outputs.versionSourceSha }}"
+        echo "::set-env name=GITVERSION_COMMITSSINCEVERSIONSOURCE::${{ steps.gitversion.outputs.commitsSinceVersionSource }}"
+        echo "::set-env name=GITVERSION_COMMITSSINCEVERSIONSOURCEPADDED::${{ steps.gitversion.outputs.commitsSinceVersionSourcePadded }}"
+        echo "::set-env name=GITVERSION_COMMITDATE::${{ steps.gitversion.outputs.commitDate }}"
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
