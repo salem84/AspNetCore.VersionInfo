@@ -126,6 +126,42 @@ jobs:
         informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
       if: startsWith(github.ref, 'refs/tags/')
 
+    #### Start SonarCloud steps 
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~\sonar\cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: .\.sonar\scanner
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
+
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      shell: powershell
+      run: |
+        New-Item -Path .\.sonar\scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+
+    - name: Start Sonarcloud 
+      run: |
+        dotnet sonarscanner begin \
+          /k:"salem84_AspNetCore.VersionInfo" \
+          /o:"salem84" \
+          /d:sonar.host.url="https://sonarcloud.io" \
+          /d:sonar.login="$SONAR_TOKEN" \
+
     - name: Restore dependencies
       run: dotnet restore
 
@@ -143,6 +179,9 @@ jobs:
       with:
         name: nupkg
         path: ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
+
+    - name: Stop Sonarcloud
+      run: dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"
         
   publish:
     needs: build

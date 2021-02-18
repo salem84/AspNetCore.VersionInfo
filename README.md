@@ -1,6 +1,4 @@
-[![NuGet version](https://buildstats.info/nuget/AspNetCore.VersionInfo)](http://www.nuget.org/packages/AspNetCore.VersionInfo)
-![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)(https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE)
+[![NuGet version](https://img.shields.io/nuget/v/AspNetCore.VersionInfo?color=yellowgreen)](http://www.nuget.org/packages/AspNetCore.VersionInfo) ![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE)
 
 # AspNetCore.VersionInfo
 
