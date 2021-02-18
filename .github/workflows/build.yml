@@ -135,7 +135,7 @@ jobs:
     - name: Cache SonarCloud packages
       uses: actions/cache@v1
       with:
-        path: ~\sonar\cache
+        path: ~/sonar/cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
 
@@ -143,19 +143,19 @@ jobs:
       id: cache-sonar-scanner
       uses: actions/cache@v1
       with:
-        path: ~\.sonar\scanner
+        path: ~/.sonar/scanner
         key: ${{ runner.os }}-sonar-scanner
         restore-keys: ${{ runner.os }}-sonar-scanner
 
     - name: Install SonarCloud scanner
       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
       run: |
-        mkdir -p ~\.sonar\scanner
-        dotnet tool update dotnet-sonarscanner --tool-path ~\.sonar\scanner
+        mkdir -p ~/.sonar/scanner
+        dotnet tool update dotnet-sonarscanner --tool-path ~/.sonar/scanner
 
     - name: Start Sonarcloud 
       run: |
-        dotnet sonarscanner begin \
+        ~/.sonar/scanner/dotnet-sonarscanner begin \
           /k:"salem84_AspNetCore.VersionInfo" \
           /o:"salem84" \
           /d:sonar.host.url="https://sonarcloud.io" \
@@ -180,7 +180,7 @@ jobs:
         path: ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
 
     - name: Stop Sonarcloud
-      run: dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"
+      run: ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
         
   publish:
     needs: build
