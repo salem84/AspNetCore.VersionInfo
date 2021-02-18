@@ -1,4 +1,6 @@
+[![NuGet version](https://buildstats.info/nuget/AspNetCore.VersionInfo)](http://www.nuget.org/packages/AspNetCore.VersionInfo)
 ![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)(https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE)
 
 # AspNetCore.VersionInfo
 
@@ -26,7 +28,8 @@ This library currently targets `net5.0`
 ## Download
 
 Prerelease are on [GH Packages](https://github.com/salem84?tab=packages&repo_name=AspNetCore.VersionInfo)
-Release are on [Nuget]()
+
+Release are on [Nuget](http://www.nuget.org/packages/AspNetCore.VersionInfo)
 
 ## Getting Started
 
