@@ -161,6 +161,7 @@ jobs:
           /o:"salem84" \
           /d:sonar.host.url="https://sonarcloud.io" \
           /d:sonar.login="$SONAR_TOKEN" \
+          /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
 
     - name: Restore dependencies
       run: dotnet restore
@@ -169,7 +170,7 @@ jobs:
       run: dotnet build --no-restore --configuration $CONFIGURATION
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.opencover.xml
 
     - name: Pack
       run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source src/$PROJECT_NAME/$PROJECT_NAME.*proj
