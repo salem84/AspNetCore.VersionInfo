@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AspNetCore.VersionInfo.Sample.Pages
+namespace AspNetCore.VersionInfo.Samples.Basic.Pages
 {
     public class IndexModel : PageModel
     {

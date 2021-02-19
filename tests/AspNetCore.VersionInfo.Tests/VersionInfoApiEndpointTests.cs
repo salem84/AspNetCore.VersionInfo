@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,6 +32,8 @@ namespace AspNetCore.VersionInfo.Tests
             defaultContext.Response.Body = new MemoryStream();
             defaultContext.Request.Path = "/";
 
+
+            // TODO non utilizzare direttamente InfoHandler
             var serviceProvider = new Mock<IServiceProvider>();
             serviceProvider
                 .Setup(x => x.GetService(typeof(InfoHandler)))
@@ -58,10 +61,13 @@ namespace AspNetCore.VersionInfo.Tests
 
             defaultContext.Response.Body.Seek(0, SeekOrigin.Begin);
             var body = new StreamReader(defaultContext.Response.Body).ReadToEnd();
-            //var objResponse = JsonConvert.DeserializeObject<CustomErrorResponse>(streamText);
+            var jsonData = JsonDocument.Parse(body);
+            var items = jsonData.RootElement.EnumerateObject();
 
             // Assert
-            //Assert.Equal(expectedOutput, body);
+            Assert.True(items.Count() > 0, "No data in JSON response");
         }
+
+        
     }
 }
