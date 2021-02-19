@@ -109,14 +109,14 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
-    - name: Update project version (prerelease)
+    - name: Update project version
       uses: roryprimrose/set-vs-sdk-project-version@v1
       with:
         version: "${{ steps.gitversion.outputs.NuGetVersionV2 }}-preview.${{github.run_id}}.${{github.run_number}}"
         assemblyVersion: "${{steps.gitversion.outputs.MajorMinorPatch}}.${{github.run_number}}"
         fileVersion: "${{steps.gitversion.outputs.MajorMinorPatch}}.${{github.run_number}}"
         informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
-      if: ${{ github.event_name == 'pull_request' || github.ref == 'refs/heads/master' }}
+      #if: ${{ github.event_name == 'pull_request' || github.ref == 'refs/heads/master' }}
 
     - name: Update project version (release)
       uses: roryprimrose/set-vs-sdk-project-version@v1
