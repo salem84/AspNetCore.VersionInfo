@@ -30,9 +30,8 @@ namespace Microsoft.AspNetCore.Builder
                     .UseMiddleware<UIMiddleware>()
                     .Build();
 
-
             var uiEndpoint = builder.Map(options.UIPath, uiDelegate)
-                .WithDisplayName("VersionInfo UI");
+                .WithDisplayName("VersionInfo HTML");
 
             var endpointConventionBuilders = new List<IEndpointConventionBuilder>(new[] { apiEndpoint, uiEndpoint });
             return new VersionInfoConventionBuilder(endpointConventionBuilders);

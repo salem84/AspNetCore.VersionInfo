@@ -16,7 +16,7 @@ namespace AspNetCore.VersionInfo.Tests
         {
             var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
 
-            var indexResponse = await client.GetAsync("/version-api");
+            var indexResponse = await client.GetAsync(Constants.DEFAULT_API_ENDPOINT_URL);
            
             var body = await indexResponse.Content.ReadAsStringAsync();
             var jsonData = JsonDocument.Parse(body);
@@ -32,13 +32,13 @@ namespace AspNetCore.VersionInfo.Tests
         {
             var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
 
-            var indexResponse = await client.GetAsync("/version");
+            var indexResponse = await client.GetAsync(Constants.DEFAULT_HTML_ENDPOINT_URL);
 
             var body = await indexResponse.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Equal(HttpStatusCode.NotFound, indexResponse.StatusCode);
-            //Assert.Contains("<h1>Ciao</h1>", body);
+            Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
+            Assert.Contains("<h1>Versions</h1>", body);
         }
     }
 }

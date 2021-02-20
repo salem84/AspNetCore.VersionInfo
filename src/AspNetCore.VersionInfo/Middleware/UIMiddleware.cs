@@ -19,7 +19,7 @@ namespace AspNetCore.VersionInfo.Middleware
 {
     class UIMiddleware
     {
-        private const string EmbeddedFileNamespace = "Swashbuckle.AspNetCore.SwaggerUI.node_modules.swagger_ui_dist";
+        private const string EmbeddedFileNamespace = "AspNetCore.VersionInfo.assets";
 
         private readonly VersionInfoOptions _options;
         private readonly StaticFileMiddleware _staticFileMiddleware;
@@ -31,30 +31,22 @@ namespace AspNetCore.VersionInfo.Middleware
             VersionInfoOptions options = null)
         {
             _options = options ?? new VersionInfoOptions();
-
             _staticFileMiddleware = CreateStaticFileMiddleware(next, hostingEnv, loggerFactory, _options);
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
             var httpMethod = httpContext.Request.Method;
-            var path = httpContext.Request.Path.Value;
-            var page = httpContext.Request.RouteValues.First().Value as string;
+            var page = httpContext.Request.RouteValues.FirstOrDefault().Value as string;
 
             if (httpMethod == "GET" && (string.IsNullOrEmpty(page) || page == "//"))
             {
-                var indexUrl = httpContext.Request.GetEncodedUrl().TrimEnd('/') + "/index.html";
-
-                RespondWithRedirect(httpContext.Response, indexUrl);
-                return;
-            }
-
-            if (httpMethod == "GET" && string.Compare(page, "index.html", true) == 0)
-            {
                 await RespondWithIndexHtml(httpContext.Response);
+
                 return;
             }
 
+            // Inserted for future use, to include also JS library in assembly
             await _staticFileMiddleware.Invoke(httpContext);
         }
 
@@ -73,12 +65,6 @@ namespace AspNetCore.VersionInfo.Middleware
             return new StaticFileMiddleware(next, hostingEnv, Options.Create(staticFileOptions), loggerFactory);
         }
 
-        private void RespondWithRedirect(HttpResponse response, string location)
-        {
-            response.StatusCode = 301;
-            response.Headers["Location"] = location;
-        }
-
         private async Task RespondWithIndexHtml(HttpResponse response)
         {
             response.StatusCode = 200;
@@ -86,7 +72,6 @@ namespace AspNetCore.VersionInfo.Middleware
 
             using (var stream = GetType().Assembly.GetManifestResourceStream($"{GetType().Assembly.GetName().Name}.assets.index.html")/*_options.IndexStream()*/)
             {
-                // Inject arguments before writing to response
                 var htmlBuilder = new StringBuilder(new StreamReader(stream).ReadToEnd());
                 foreach (var entry in GetIndexArguments())
                 {
@@ -101,11 +86,7 @@ namespace AspNetCore.VersionInfo.Middleware
         {
             return new Dictionary<string, string>()
             {
-                { "%(API_URL)%", _options.ApiPath },
-                //{ "%(HeadContent)", _options.HeadContent },
-                //{ "%(ConfigObject)", JsonSerializer.Serialize(_options.ConfigObject, _jsonSerializerOptions) },
-                //{ "%(OAuthConfigObject)", JsonSerializer.Serialize(_options.OAuthConfigObject, _jsonSerializerOptions) },
-                //{ "%(Interceptors)", JsonSerializer.Serialize(_options.Interceptors) },
+                { "%(API_URL)%", _options.ApiPath }
             };
         }
     }
