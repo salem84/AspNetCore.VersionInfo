@@ -12,12 +12,10 @@ namespace AspNetCore.VersionInfo.Middleware
 {
     internal class VersionInfoApiEndpoint
     {
-        private readonly RequestDelegate _next;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         public VersionInfoApiEndpoint(RequestDelegate next, IServiceScopeFactory serviceScopeFactory)
         {
-            _next = next;
             this._serviceScopeFactory = serviceScopeFactory;
         }
 

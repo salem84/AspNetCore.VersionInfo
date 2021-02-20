@@ -10,7 +10,8 @@ namespace AspNetCore.VersionInfo
     {
         internal const string DEFAULT_API_RESPONSE_CONTENT_TYPE = "application/json";
 
-        public const string DEFAULT_HTML_ENDPOINT_URL = "/version/html";//"/{id?}";
+        //public const string DEFAULT_HTML_ENDPOINT_URL = "/version/html/{id?}";
+        public const string DEFAULT_HTML_ENDPOINT_URL = "/version/html";
         public const string DEFAULT_API_ENDPOINT_URL = "/version/json";
     }
 }
