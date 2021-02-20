@@ -38,7 +38,7 @@ namespace AspNetCore.VersionInfo.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
-            Assert.Contains("<h1>Versions</h1>", body);
+            Assert.Contains("<h1>Version Information</h1>", body);
         }
     }
 }
