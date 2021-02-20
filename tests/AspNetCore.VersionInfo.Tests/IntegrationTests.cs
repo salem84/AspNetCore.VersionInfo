@@ -42,6 +42,19 @@ namespace AspNetCore.VersionInfo.Tests
         }
 
         [Fact]
+        public async Task VersionUrl_WithJsRequest_ReturnsNotFound()
+        {
+            var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
+
+            var indexResponse = await client.GetAsync($"{Constants.DEFAULT_HTML_ENDPOINT_URL}/vue.js");
+
+            var body = await indexResponse.Content.ReadAsStringAsync();
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NotFound, indexResponse.StatusCode);
+        }
+
+        [Fact]
         public async Task VersionApiUrl_WithCustomUrl_ReturnsJson()
         {
             var client = new TestSite(typeof(Samples.CustomOptions.Startup)).BuildClient();
