@@ -40,5 +40,35 @@ namespace AspNetCore.VersionInfo.Tests
             Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
             Assert.Contains("<h1>Version Information</h1>", body);
         }
+
+        [Fact]
+        public async Task VersionApiUrl_WithCustomUrl_ReturnsJson()
+        {
+            var client = new TestSite(typeof(Samples.CustomOptions.Startup)).BuildClient();
+
+            var indexResponse = await client.GetAsync(Samples.CustomOptions.Startup.CUSTOM_JSON_URL);
+
+            var body = await indexResponse.Content.ReadAsStringAsync();
+            var jsonData = JsonDocument.Parse(body);
+            var items = jsonData.RootElement.EnumerateObject();
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
+            Assert.True(items.Count() > 0, "No data in JSON response");
+        }
+
+        [Fact]
+        public async Task VersionUrl_WithCustomUrl_ReturnsHtml()
+        {
+            var client = new TestSite(typeof(Samples.CustomOptions.Startup)).BuildClient();
+
+            var indexResponse = await client.GetAsync(Samples.CustomOptions.Startup.CUSTOM_HTML_URL);
+
+            var body = await indexResponse.Content.ReadAsStringAsync();
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
+            Assert.Contains("<h1>Version Information</h1>", body);
+        }
     }
 }

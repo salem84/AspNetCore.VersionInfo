@@ -17,14 +17,14 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Middleware
 {
-    class UIMiddleware
+    class HtmlEndpoint
     {
         private const string EmbeddedFileNamespace = "AspNetCore.VersionInfo.assets";
 
         private readonly VersionInfoOptions _options;
         private readonly StaticFileMiddleware _staticFileMiddleware;
 
-        public UIMiddleware(
+        public HtmlEndpoint(
             RequestDelegate next,
             IWebHostEnvironment hostingEnv,
             ILoggerFactory loggerFactory,
@@ -59,7 +59,7 @@ namespace AspNetCore.VersionInfo.Middleware
             var staticFileOptions = new StaticFileOptions
             {
                 RequestPath = string.IsNullOrEmpty(options.RoutePrefix) ? string.Empty : $"/{options.RoutePrefix}",
-                FileProvider = new EmbeddedFileProvider(typeof(UIMiddleware).Assembly, EmbeddedFileNamespace),
+                FileProvider = new EmbeddedFileProvider(typeof(HtmlEndpoint).Assembly, EmbeddedFileNamespace),
             };
 
             return new StaticFileMiddleware(next, hostingEnv, Options.Create(staticFileOptions), loggerFactory);

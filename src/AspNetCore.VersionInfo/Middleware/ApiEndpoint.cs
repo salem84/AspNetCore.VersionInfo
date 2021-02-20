@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Middleware
 {
-    internal class VersionInfoApiEndpoint
+    internal class ApiEndpoint
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public VersionInfoApiEndpoint(RequestDelegate next, IServiceScopeFactory serviceScopeFactory)
+        public ApiEndpoint(RequestDelegate next, IServiceScopeFactory serviceScopeFactory)
         {
             this._serviceScopeFactory = serviceScopeFactory;
         }
@@ -24,7 +24,7 @@ namespace AspNetCore.VersionInfo.Middleware
             Dictionary<string, string> versionInfo = null;
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var infoHandler = scope.ServiceProvider.GetService<InfoHandler>();
+                var infoHandler = scope.ServiceProvider.GetService<IInfoHandler>();
                 versionInfo = infoHandler.GetData();
             }
 

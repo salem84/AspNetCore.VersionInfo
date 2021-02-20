@@ -8,7 +8,12 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Services
 {
-    class InfoHandler
+    public interface IInfoHandler
+    {
+        Dictionary<string, string> GetData();
+    }
+
+    class InfoHandler : IInfoHandler
     {
         public Dictionary<string, string> GetData()
         {

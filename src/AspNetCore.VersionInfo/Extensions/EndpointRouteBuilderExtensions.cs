@@ -19,7 +19,7 @@ namespace Microsoft.AspNetCore.Builder
 
             var apiDelegate =
                 builder.CreateApplicationBuilder()
-                    .UseMiddleware<VersionInfoApiEndpoint>()
+                    .UseMiddleware<ApiEndpoint>()
                     .Build();
 
             var apiEndpoint = builder.Map(options.ApiPath, apiDelegate)
@@ -27,10 +27,10 @@ namespace Microsoft.AspNetCore.Builder
 
             var uiDelegate =
                 builder.CreateApplicationBuilder()
-                    .UseMiddleware<UIMiddleware>()
+                    .UseMiddleware<HtmlEndpoint>()
                     .Build();
 
-            var uiEndpoint = builder.Map(options.UIPath, uiDelegate)
+            var uiEndpoint = builder.Map(options.HtmlPath, uiDelegate)
                 .WithDisplayName("VersionInfo HTML");
 
             var endpointConventionBuilders = new List<IEndpointConventionBuilder>(new[] { apiEndpoint, uiEndpoint });

@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\samples\Basic\Basic.csproj" />
+    <ProjectReference Include="..\..\samples\CustomOptions\CustomOptions.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.VersionInfo\AspNetCore.VersionInfo.csproj" />
   </ItemGroup>
 

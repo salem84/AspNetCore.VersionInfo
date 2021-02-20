@@ -8,8 +8,8 @@ namespace AspNetCore.VersionInfo.Configuration
 {
     public class VersionInfoOptions
     {
-        public string UIPath { get; set; } = Constants.DEFAULT_HTML_ENDPOINT_URL;
+        public string HtmlPath { get; set; } = Constants.DEFAULT_HTML_ENDPOINT_URL;
         public string ApiPath { get; set; } = Constants.DEFAULT_API_ENDPOINT_URL;
-        public string RoutePrefix { get; set; } = "";
+        internal string RoutePrefix { get; set; } = "";
     }
 }

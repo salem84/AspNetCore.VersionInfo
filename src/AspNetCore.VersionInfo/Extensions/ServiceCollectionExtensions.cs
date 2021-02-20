@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddVersionInfo(this IServiceCollection services,
             Action<VersionInfoSettings> setupSettings = null)
         {
-            services.AddTransient<InfoHandler>();
+            services.AddTransient<IInfoHandler, InfoHandler>();
         }
     }
 }
