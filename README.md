@@ -33,6 +33,16 @@ Prerelease packages are on [GH Packages](https://github.com/salem84?tab=packages
 
 Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.VersionInfo)
 
+## Demo
+
+**URL:** https://aspnetcoreversioninfo-demo.azurewebsites.net
+
+|   |   |
+| - | - |
+| *HTML*   |   [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html)               |
+| *JSON*  |   [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html)    |
+
+
 ## Getting Started
 
 ### Startup.cs
