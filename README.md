@@ -6,19 +6,21 @@
 
 AspNetCore.VersionInfo is a library to expose information about assembly versions used in your web application. 
 In particular there are two endpoints, which returns:
-* a JSON-formatted data (/version-api)
-* [WIP] an HTML user-friendly page (/version)
+* a JSON-formatted data (_/version/json_)
+* an HTML user-friendly page (_/version/html_)
 
-Currently library supports following data versions:
+For example, library supports following data versions:
 * The name of .NET installation on which the app is running
 * The version of the common language runtime
 * The version of entry assembly
 
 ```js
 {
-    "RuntimeVersion":".NET 5.0.3",
-    "NetVersion":"5.0.3",
-    "AssemblyVersion":"1.0.0.0"
+    "RuntimeInformation.FrameworkDescription":".NET 5.0.3",
+    "DotNetVersion":"5.0.3",
+    "EntryAssemblyVersion":"1.0.0.0",
+
+    ...
 }
 ```
 
