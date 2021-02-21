@@ -8,6 +8,7 @@ branches:
   tags:
     regex: ^tags
     mode: ContinuousDelivery
+    source-branches: ['master']
 ignore:
   sha: []
 merge-message-formats: {}
