@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspNetCore.VersionInfo.Tests
+namespace AspNetCore.VersionInfo.Services
 {
-    class InfoHandlerTests
+    public interface IInfoHandler
     {
+        Dictionary<string, string> GetData();
     }
 }

@@ -24,8 +24,8 @@ namespace AspNetCore.VersionInfo.Middleware
             Dictionary<string, string> versionInfo = null;
             using (var scope = _serviceScopeFactory.CreateScope())
             {
-                var infoHandler = scope.ServiceProvider.GetService<IInfoHandler>();
-                versionInfo = infoHandler.GetData();
+                var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
+                versionInfo = infoHandler.AggregateData();
             }
 
             var responseContent = JsonSerializer.Serialize(versionInfo ?? new Dictionary<string, string>());

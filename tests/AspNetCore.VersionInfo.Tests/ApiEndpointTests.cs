@@ -31,8 +31,8 @@ namespace AspNetCore.VersionInfo.Tests
             defaultContext.Response.Body = new MemoryStream();
             defaultContext.Request.Path = "/";
 
-            var infoHandler = new Mock<IInfoHandler>();
-            RegisterService<IInfoHandler>(infoHandler.Object);
+            var infoHandler = new Mock<IInfoCollector>();
+            RegisterServiceWithInstance<IInfoCollector>(infoHandler.Object);
 
             // Act
             var middlewareInstance = new ApiEndpoint(
@@ -41,7 +41,7 @@ namespace AspNetCore.VersionInfo.Tests
 
             await middlewareInstance.InvokeAsync(defaultContext);
 
-            infoHandler.Verify(x => x.GetData());
+            infoHandler.Verify(x => x.AggregateData());
 
             //defaultContext.Response.Body.Seek(0, SeekOrigin.Begin);
             //var body = new StreamReader(defaultContext.Response.Body).ReadToEnd();
