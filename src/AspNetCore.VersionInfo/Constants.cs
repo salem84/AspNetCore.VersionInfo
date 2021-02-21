@@ -19,4 +19,9 @@ namespace AspNetCore.VersionInfo
         public const string KEY_DOTNET_VERSION = "DotNetVersion";
 
     }
+
+    public static class Messages
+    {
+        public const string DUPLICATED_KEY = "Duplicated key: {0}";
+    }
 }
