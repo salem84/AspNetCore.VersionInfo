@@ -29,9 +29,9 @@ This library currently targets `net5.0`
 
 ## Download
 
-Prerelease are on [GH Packages](https://github.com/salem84?tab=packages&repo_name=AspNetCore.VersionInfo)
+Prerelease packages are on [GH Packages](https://github.com/salem84?tab=packages&repo_name=AspNetCore.VersionInfo)
 
-Release are on [Nuget](http://www.nuget.org/packages/AspNetCore.VersionInfo)
+Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.VersionInfo)
 
 ## Getting Started
 
