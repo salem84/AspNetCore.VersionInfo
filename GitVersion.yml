@@ -1,5 +1,12 @@
 mode: Mainline
-branches: {}
+branches:
+  master:
+    regex: ^master$|^main$
+    mode: ContinuousDeployment
+    tag: ci
+    is-mainline: true
+  tags:
+    mode: ContinuousDelivery
 ignore:
   sha: []
 merge-message-formats: {}
