@@ -9,7 +9,7 @@ namespace AspNetCore.VersionInfo.Services
 {
     class AssemblyVersionHandler : IInfoHandler
     {
-        public Dictionary<string, string> GetData()
+        public IDictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();
 

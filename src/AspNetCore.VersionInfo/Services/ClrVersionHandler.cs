@@ -9,10 +9,15 @@ namespace AspNetCore.VersionInfo.Services
 {
     class ClrVersionHandler : IInfoHandler
     {
-        public Dictionary<string, string> GetData()
+        public IDictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();
-            dict.Add(Constants.KEY_RUNTIME_VERSION, RuntimeInformation.FrameworkDescription);
+            dict.Add(Constants.KEY_RUNTIMEINFORMATION_FRAMEWORKDESCRIPTION, RuntimeInformation.FrameworkDescription);
+            dict.Add(Constants.KEY_RUNTIMEINFORMATION_OSDESCRIPTION, RuntimeInformation.OSDescription);
+            dict.Add(Constants.KEY_RUNTIMEINFORMATION_OSARCHITECTURE, RuntimeInformation.OSArchitecture.ToString());
+            dict.Add(Constants.KEY_RUNTIMEINFORMATION_PROCESSARCHITECTURE, RuntimeInformation.ProcessArchitecture.ToString());
+            dict.Add(Constants.KEY_RUNTIMEINFORMATION_RUNTIMEIDENTIFIER, RuntimeInformation.RuntimeIdentifier);
+
             dict.Add(Constants.KEY_DOTNET_VERSION, Environment.Version.ToString());
 
             return dict;

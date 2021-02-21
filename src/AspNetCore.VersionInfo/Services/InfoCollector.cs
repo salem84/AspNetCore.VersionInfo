@@ -26,6 +26,7 @@ namespace AspNetCore.VersionInfo.Services
         }
         public Dictionary<string, string> AggregateData()
         {
+            // It's maybe better pass this dictionary as argument for all handlers
             var data = new Dictionary<string, string>();
             foreach(var handler in _infoHandlers)
             {
