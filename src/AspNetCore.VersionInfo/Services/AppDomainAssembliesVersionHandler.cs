@@ -15,7 +15,10 @@ namespace AspNetCore.VersionInfo.Services
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
             {
-                dict.Add(assembly.GetName().Name, assembly.GetName().Version.ToString());
+                if (!dict.ContainsKey(assembly.GetName().Name))
+                {
+                    dict.Add(assembly.GetName().Name, assembly.GetName().Version.ToString());
+                }
             }
 
             return dict.OrderBy(x => x.Key).ToDictionary(x=> x.Key, x=> x.Value);
