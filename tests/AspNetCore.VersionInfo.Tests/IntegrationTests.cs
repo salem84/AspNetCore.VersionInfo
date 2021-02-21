@@ -25,6 +25,8 @@ namespace AspNetCore.VersionInfo.Tests
             // Assert
             Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
             Assert.True(items.Count() > 0, "No data in JSON response");
+
+            // TODO check type returned?
         }
 
         [Fact]
@@ -47,8 +49,6 @@ namespace AspNetCore.VersionInfo.Tests
             var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
 
             var indexResponse = await client.GetAsync($"{Constants.DEFAULT_HTML_ENDPOINT_URL}/vue.js");
-
-            var body = await indexResponse.Content.ReadAsStringAsync();
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, indexResponse.StatusCode);

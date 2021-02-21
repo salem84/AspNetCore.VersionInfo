@@ -32,7 +32,7 @@ namespace AspNetCore.VersionInfo.Tests
                 .Returns(_serviceScopeFactory.Object);
         }
 
-        protected void RegisterService<T>(T obj)
+        protected void RegisterServiceWithInstance<T>(T obj)
         {
             _serviceProvider
                 .Setup(x => x.GetService(typeof(T)))
