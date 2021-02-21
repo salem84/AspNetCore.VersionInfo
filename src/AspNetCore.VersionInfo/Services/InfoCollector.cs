@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,21 +16,29 @@ namespace AspNetCore.VersionInfo.Services
 
     class InfoCollector : IInfoCollector
     {
-        private readonly IEnumerable<IInfoHandler> infoHandlers;
+        private readonly IEnumerable<IInfoHandler> _infoHandlers;
+        private readonly ILogger<InfoCollector> _logger;
 
-        public InfoCollector(IEnumerable<IInfoHandler> infoHandlers)
+        public InfoCollector(IEnumerable<IInfoHandler> infoHandlers, ILogger<InfoCollector> logger)
         {
-            this.infoHandlers = infoHandlers;
+            _infoHandlers = infoHandlers;
+            _logger = logger;
         }
         public Dictionary<string, string> AggregateData()
         {
             var data = new Dictionary<string, string>();
-            foreach(var handler in infoHandlers)
+            foreach(var handler in _infoHandlers)
             {
                 foreach(var d in handler.GetData())
                 {
-                    // TODO check duplicates
-                    data.Add(d.Key, d.Value);
+                    if (data.ContainsKey(d.Key))
+                    {
+                        _logger.LogWarning(Messages.DUPLICATED_KEY, d.Key);
+                    }
+                    else
+                    {
+                        data.Add(d.Key, d.Value);
+                    }
                 }
             }
 
