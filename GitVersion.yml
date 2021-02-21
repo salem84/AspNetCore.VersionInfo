@@ -6,6 +6,7 @@ branches:
     tag: ci
     is-mainline: true
   tags:
+    regex: ^tags
     mode: ContinuousDelivery
 ignore:
   sha: []
