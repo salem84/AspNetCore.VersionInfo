@@ -18,6 +18,11 @@ namespace AspNetCore.VersionInfo
         public const string KEY_RUNTIME_VERSION = "RuntimeVersion";
         public const string KEY_DOTNET_VERSION = "DotNetVersion";
 
+        public const string KEY_RUNTIMEINFORMATION_FRAMEWORKDESCRIPTION = "RuntimeInformation.FrameworkDescription";
+        public const string KEY_RUNTIMEINFORMATION_OSDESCRIPTION = "RuntimeInformation.OsDescription";
+        public const string KEY_RUNTIMEINFORMATION_OSARCHITECTURE = "RuntimeInformation.OsArchitecture";
+        public const string KEY_RUNTIMEINFORMATION_PROCESSARCHITECTURE = "RuntimeInformation.ProcessArchitecture";
+        public const string KEY_RUNTIMEINFORMATION_RUNTIMEIDENTIFIER = "RuntimeInformation.RuntimeIdentifier";
     }
 
     public static class Messages

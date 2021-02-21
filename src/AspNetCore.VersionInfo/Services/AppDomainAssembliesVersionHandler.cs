@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AspNetCore.VersionInfo.Services
+{
+    class AppDomainAssembliesVersionHandler : IInfoHandler
+    {
+        public IDictionary<string, string> GetData()
+        {
+            var dict = new SortedDictionary<string, string>();
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                dict.Add(assembly.GetName().Name, assembly.GetName().Version.ToString());
+            }
+
+            return dict.OrderBy(x => x.Key).ToDictionary(x=> x.Key, x=> x.Value);
+        }
+    }
+}

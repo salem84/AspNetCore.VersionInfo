@@ -8,6 +8,6 @@ namespace AspNetCore.VersionInfo.Services
 {
     public interface IInfoHandler
     {
-        Dictionary<string, string> GetData();
+        IDictionary<string, string> GetData();
     }
 }

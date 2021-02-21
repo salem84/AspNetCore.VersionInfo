@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IInfoCollector, InfoCollector>();
             services.AddTransient<IInfoHandler, ClrVersionHandler>();
             services.AddTransient<IInfoHandler, AssemblyVersionHandler>();
+            services.AddTransient<IInfoHandler, AppDomainAssembliesVersionHandler>();
         }
     }
 }
