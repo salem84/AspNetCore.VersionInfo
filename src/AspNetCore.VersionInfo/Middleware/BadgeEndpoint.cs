@@ -23,10 +23,10 @@ namespace AspNetCore.VersionInfo.Middleware
             Dictionary<string, string> versionInfo;
             string responseContent;
 
-            var id = context.Request.RouteValues["versionInfoId"] as string;
+            var id = context.Request.RouteValues[Constants.BADGE_PARAM_VERSIONINFOID] as string;
             if(string.IsNullOrEmpty(id))
             {
-                throw new ArgumentNullException("versionInfoId", Messages.BADGE_VERSIONINFOID_EMPTY);
+                throw new ArgumentNullException(Constants.BADGE_PARAM_VERSIONINFOID, Messages.BADGE_VERSIONINFOID_EMPTY);
             }
 
             using (var scope = _serviceScopeFactory.CreateScope())
@@ -39,16 +39,16 @@ namespace AspNetCore.VersionInfo.Middleware
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);
                 if (!found)
                 {
-                    throw new ArgumentOutOfRangeException("versionInfoId", Messages.BADGE_KEY_NOT_FOUND);
+                    throw new ArgumentOutOfRangeException(Constants.BADGE_PARAM_VERSIONINFOID, Messages.BADGE_KEY_NOT_FOUND);
                 }
 
-                var color = context.Request.Query["color"];
+                var color = context.Request.Query[Constants.BADGE_PARAM_COLOR];
                 if (string.IsNullOrEmpty(color))
                 {
-                    color = "Red";
+                    color = Constants.BADGE_DEFAULT_COLOR;
                 }
 
-                var displayName = context.Request.Query["displayName"];
+                var displayName = context.Request.Query[Constants.BADGE_PARAM_DISPLAYNAME];
                 if(string.IsNullOrEmpty(displayName))
                 {
                     displayName = id;

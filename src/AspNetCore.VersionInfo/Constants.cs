@@ -25,6 +25,13 @@ namespace AspNetCore.VersionInfo
         public const string KEY_RUNTIMEINFORMATION_OSARCHITECTURE = "RuntimeInformation.OsArchitecture";
         public const string KEY_RUNTIMEINFORMATION_PROCESSARCHITECTURE = "RuntimeInformation.ProcessArchitecture";
         public const string KEY_RUNTIMEINFORMATION_RUNTIMEIDENTIFIER = "RuntimeInformation.RuntimeIdentifier";
+
+        public const string BADGE_PARAM_VERSIONINFOID = "versionInfoId";
+        public const string BADGE_PARAM_DISPLAYNAME = "displayName";
+        public const string BADGE_PARAM_COLOR = "color";
+
+        public const string BADGE_DEFAULT_COLOR = "Green";
+
     }
 
     public static class Messages
