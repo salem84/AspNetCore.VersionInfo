@@ -33,7 +33,15 @@ namespace Microsoft.AspNetCore.Builder
             var uiEndpoint = builder.Map(options.HtmlPath, uiDelegate)
                 .WithDisplayName("VersionInfo HTML");
 
-            var endpointConventionBuilders = new List<IEndpointConventionBuilder>(new[] { apiEndpoint, uiEndpoint });
+            var badgeDelegate =
+                builder.CreateApplicationBuilder()
+                    .UseMiddleware<BadgeEndpoint>()
+                    .Build();
+
+            var badgeEndpoint = builder.Map(options.BadgePath, badgeDelegate)
+                .WithDisplayName("VersionInfo Badge");
+
+            var endpointConventionBuilders = new List<IEndpointConventionBuilder>(new[] { apiEndpoint, uiEndpoint, badgeEndpoint });
             return new VersionInfoConventionBuilder(endpointConventionBuilders);
         }
     }
