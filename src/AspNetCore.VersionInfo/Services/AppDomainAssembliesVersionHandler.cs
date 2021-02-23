@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Services
 {
-    class AppDomainAssembliesVersionHandler : IInfoHandler
+    public class AppDomainAssembliesVersionHandler : IInfoHandler
     {
         public IDictionary<string, string> GetData()
         {

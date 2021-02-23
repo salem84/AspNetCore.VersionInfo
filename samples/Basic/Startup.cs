@@ -1,3 +1,4 @@
+using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,10 @@ namespace AspNetCore.VersionInfo.Samples.Basic
         {
             services.AddRazorPages();
 
-            services.AddVersionInfo();
+            services.AddVersionInfo()
+                .With<ClrVersionHandler>()
+                .With<AssemblyVersionHandler>()
+                .With<AppDomainAssembliesVersionHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
