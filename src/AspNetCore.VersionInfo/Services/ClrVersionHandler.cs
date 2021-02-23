@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Services
 {
-    class ClrVersionHandler : IInfoHandler
+    public class ClrVersionHandler : IInfoHandler
     {
         public IDictionary<string, string> GetData()
         {
