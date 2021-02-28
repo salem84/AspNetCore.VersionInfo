@@ -14,9 +14,11 @@ namespace Microsoft.Extensions.DependencyInjection
         public static VersionInfoBuilder AddVersionInfo(this IServiceCollection services,
             Action<VersionInfoSettings> setupSettings = null)
         {
+            var builder = new VersionInfoBuilder(services);
+
             services.AddTransient<IInfoCollector, InfoCollector>();
 
-            return new VersionInfoBuilder(services);
+            return builder;
         }
     }
 }
