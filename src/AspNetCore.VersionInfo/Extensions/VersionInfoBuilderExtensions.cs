@@ -1,4 +1,5 @@
-﻿using AspNetCore.VersionInfo.Services;
+﻿using AspNetCore.VersionInfo.Providers;
+using AspNetCore.VersionInfo.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace AspNetCore.VersionInfo
 {
     public static class VersionInfoBuilderExtensions
     {
-        public static VersionInfoBuilder With<T>(this VersionInfoBuilder builder) where T : class, IInfoHandler
+        public static VersionInfoBuilder With<T>(this VersionInfoBuilder builder) where T : class, IInfoProvider
         {
-            builder.Services.AddTransient<IInfoHandler, T>();
+            builder.Services.AddTransient<IInfoProvider, T>();
             return builder;
         }
     }

@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspNetCore.VersionInfo.Services
+namespace AspNetCore.VersionInfo.Providers
 {
-    public class ClrVersionHandler : IInfoHandler
+    public class ClrVersionProvider : IInfoProvider
     {
         public IDictionary<string, string> GetData()
         {
