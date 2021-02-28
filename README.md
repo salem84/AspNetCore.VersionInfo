@@ -39,7 +39,7 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 | - | - |
 | *HTML*   |   [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html)               |
 | *JSON*  |   [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json)    |
-
+| *Badge* |   [/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=Blue&displayName=Version)
 
 ## Getting Started
 
@@ -87,3 +87,11 @@ _AspNetCore.VersionInfo_ package includes following providers:
 | AppDomainAssembliesVersionProvider  | `<AssemblyName>` | version of assemblies loaded in App Domain |
 
 
+### Options
+
+WIP - Configure Endpoint
+
+
+### Badge
+
+Using badge endpoint, 
