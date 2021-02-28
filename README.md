@@ -9,20 +9,18 @@ In particular there are two endpoints, which returns:
 * a JSON-formatted data (_/version/json_)
 * an HTML user-friendly page (_/version/html_)
 
-For example, library supports following data versions:
-* The name of .NET installation on which the app is running
-* The version of the common language runtime
-* The version of entry assembly
+Library offers some in-bundle providers to capture versions information, such as the version of entry assembly or the version of the common language runtime. A typical JSON output is: 
 
 ```js
 {
     "RuntimeInformation.FrameworkDescription":".NET 5.0.3",
-    "DotNetVersion":"5.0.3",
     "EntryAssemblyVersion":"1.0.0.0",
 
     ...
 }
 ```
+
+Moreover it is possible create a specific class to collect additional data as described in [Providers](#providers) section.
 
 ## Prerequisites
 This library currently targets `net5.0`
@@ -51,7 +49,9 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddVersionInfo();
+        services.AddVersionInfo()
+            .With<ClrVersionProvider>()
+            .With<AssemblyVersionProvider>();
     }
 
     public void Configure(IApplicationBuilder app)
@@ -65,4 +65,25 @@ public class Startup
     }
 }
 ```
+
+## Providers
+Library is based on following types:
+* Providers, that read information and return data in a dictionary
+* Collector, that aggregates all data from providers and exposes to endpoints.
+
+A Collector implementation is already included in _AspNetCore.VersionInfo_ package, and usually its default implementation is valid for all scenarios. 
+
+Instead, in order to enrich data gathered from library, multiple custom providers could be developed, implementing custom classes inherited from `IInfoProvider` interface.
+
+To show providers' information, they have to be configured in `ConfigureServices` declaration, using `.With<IInfoProvider>` extension method.
+
+### In-bundle providers
+_AspNetCore.VersionInfo_ package includes following providers:
+
+| Provider | Keys | Description |
+| - | - | - |
+| AssemblyVersionProvider  | `EntryAssembly` | Version of entry assembly |
+| ClrVersionProvider  | `RuntimeInformation.FrameworkDescription` <br/> `RuntimeInformation.OsDescription` <br/> `RuntimeInformation.OsArchitecture` <br/> `RuntimeInformation.ProcessArchitecture` <br/> `RuntimeInformation.RuntimeIdentifier` | Version of the common language runtime and .NET installation on which the app is running |
+| AppDomainAssembliesVersionProvider  | `<AssemblyName>` | version of assemblies loaded in App Domain |
+
 
