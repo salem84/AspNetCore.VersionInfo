@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AspNetCore.VersionInfo.Providers;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,10 @@ namespace AspNetCore.VersionInfo.Services
 
     class InfoCollector : IInfoCollector
     {
-        private readonly IEnumerable<IInfoHandler> _infoHandlers;
+        private readonly IEnumerable<IInfoProvider> _infoHandlers;
         private readonly ILogger<InfoCollector> _logger;
 
-        public InfoCollector(IEnumerable<IInfoHandler> infoHandlers, ILogger<InfoCollector> logger)
+        public InfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<InfoCollector> logger)
         {
             _infoHandlers = infoHandlers;
             _logger = logger;

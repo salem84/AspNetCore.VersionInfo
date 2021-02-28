@@ -1,4 +1,5 @@
-﻿using AspNetCore.VersionInfo.Services;
+﻿using AspNetCore.VersionInfo.Providers;
+using AspNetCore.VersionInfo.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -27,11 +28,11 @@ namespace AspNetCore.VersionInfo.Tests
                     { "Key1", "Value1" }
                 };
 
-            var infoHandlerSimple = new Mock<IInfoHandler>();
+            var infoHandlerSimple = new Mock<IInfoProvider>();
             infoHandlerSimple.Setup(x => x.GetData())
                 .Returns(simpleData);
 
-            var collector = new InfoCollector(new List<IInfoHandler>() { infoHandlerSimple.Object }, _mockLogger.Object);
+            var collector = new InfoCollector(new List<IInfoProvider>() { infoHandlerSimple.Object }, _mockLogger.Object);
 
             // Act
             var result = collector.AggregateData();
@@ -44,7 +45,7 @@ namespace AspNetCore.VersionInfo.Tests
         public void ReturnEmptyData_WhenNoHandler()
         {
             // Arrange
-            var collector = new InfoCollector(new List<IInfoHandler>(), _mockLogger.Object);
+            var collector = new InfoCollector(new List<IInfoProvider>(), _mockLogger.Object);
             
             // Act
             var result = collector.AggregateData();
@@ -62,7 +63,7 @@ namespace AspNetCore.VersionInfo.Tests
                     { "Key1", "Value1" }
                 };
 
-            var infoHandler1 = new Mock<IInfoHandler>();
+            var infoHandler1 = new Mock<IInfoProvider>();
             infoHandler1.Setup(x => x.GetData())
                 .Returns(simpleData1);
 
@@ -71,11 +72,11 @@ namespace AspNetCore.VersionInfo.Tests
                     { "Key2", "Value2" }
                 };
 
-            var infoHandler2 = new Mock<IInfoHandler>();
+            var infoHandler2 = new Mock<IInfoProvider>();
             infoHandler2.Setup(x => x.GetData())
                 .Returns(simpleData2);
 
-            var collector = new InfoCollector(new List<IInfoHandler>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);
+            var collector = new InfoCollector(new List<IInfoProvider>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);
             
             // Act
             var result = collector.AggregateData();
@@ -94,15 +95,15 @@ namespace AspNetCore.VersionInfo.Tests
                     { "Key1", "Value1" }
                 };
 
-            var infoHandler1 = new Mock<IInfoHandler>();
+            var infoHandler1 = new Mock<IInfoProvider>();
             infoHandler1.Setup(x => x.GetData())
                 .Returns(simpleData1);
 
-            var infoHandler2 = new Mock<IInfoHandler>();
+            var infoHandler2 = new Mock<IInfoProvider>();
             infoHandler2.Setup(x => x.GetData())
                 .Returns(simpleData1);
 
-            var collector = new InfoCollector(new List<IInfoHandler>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);
+            var collector = new InfoCollector(new List<IInfoProvider>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);
             
             // Act
             var result = collector.AggregateData();

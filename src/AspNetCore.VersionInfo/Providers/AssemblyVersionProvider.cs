@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspNetCore.VersionInfo.Services
+namespace AspNetCore.VersionInfo.Providers
 {
-    public class AssemblyVersionHandler : IInfoHandler
+    public class AssemblyVersionProvider : IInfoProvider
     {
         public IDictionary<string, string> GetData()
         {
