@@ -53,14 +53,14 @@ namespace AspNetCore.VersionInfo.Middleware
                 }
 
                 // Set label found in QueryString, otherwise set as Key
-                var displayName = context.Request.Query[Constants.BADGE_PARAM_DISPLAYNAME];
-                if(string.IsNullOrEmpty(displayName))
+                var label = context.Request.Query[Constants.BADGE_PARAM_LABEL];
+                if(string.IsNullOrEmpty(label))
                 {
-                    displayName = id;
+                    label = id;
                 }
 
                 // Draw badge
-                responseContent = badgePainter.DrawSVG(displayName, versionInfoValue, color);
+                responseContent = badgePainter.DrawSVG(label, versionInfoValue, color);
             }
 
             // Set ContentType as image/svg+xml
