@@ -23,6 +23,7 @@ namespace AspNetCore.VersionInfo.Middleware
             Dictionary<string, string> versionInfo;
             string responseContent;
 
+            // Read VersionInfoId to use as key in providers dictionary
             var id = context.Request.RouteValues[Constants.BADGE_PARAM_VERSIONINFOID] as string;
             if(string.IsNullOrEmpty(id))
             {
@@ -34,28 +35,35 @@ namespace AspNetCore.VersionInfo.Middleware
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
                 var badgePainter = scope.ServiceProvider.GetService<BadgePainter>();
 
+                // Collect all data
                 versionInfo = infoHandler.AggregateData();
 
+                // Retrieve versionInfo data by QueryString key
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);
                 if (!found)
                 {
                     throw new ArgumentOutOfRangeException(Constants.BADGE_PARAM_VERSIONINFOID, Messages.BADGE_KEY_NOT_FOUND);
                 }
 
+                // Set color found in QueryString, otherwise set BADGE_DEFAULT_COLOR
                 var color = context.Request.Query[Constants.BADGE_PARAM_COLOR];
                 if (string.IsNullOrEmpty(color))
                 {
                     color = Constants.BADGE_DEFAULT_COLOR;
                 }
 
+                // Set label found in QueryString, otherwise set as Key
                 var displayName = context.Request.Query[Constants.BADGE_PARAM_DISPLAYNAME];
                 if(string.IsNullOrEmpty(displayName))
                 {
                     displayName = id;
                 }
+
+                // Draw badge
                 responseContent = badgePainter.DrawSVG(displayName, versionInfoValue, color);
             }
 
+            // Set ContentType as image/svg+xml
             context.Response.ContentType = Constants.DEFAULT_BADGE_RESPONSE_CONTENT_TYPE;
 
             await context.Response.WriteAsync(responseContent);
