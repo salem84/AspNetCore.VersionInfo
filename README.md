@@ -40,7 +40,7 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 | - | - |
 | *HTML*   |   [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html)               |
 | *JSON*  |   [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json)    |
-| *Badge* |   [/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=Blue&label=version)
+| *Badge* |   [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=Blue&label=version)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=Blue&label=version) |
 
 ## Getting Started
 
