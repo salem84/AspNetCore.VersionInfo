@@ -1,5 +1,6 @@
 ﻿using AspNetCore.VersionInfo;
 using AspNetCore.VersionInfo.Configuration;
+using AspNetCore.VersionInfo.Providers;
 using AspNetCore.VersionInfo.Services;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddTransient<IInfoCollector, InfoCollector>();
 
             services.AddTransient<BadgePainter>();
-            services.AddTransient<IInfoHandler, ClrVersionHandler>();
-            services.AddTransient<IInfoHandler, AssemblyVersionHandler>();
-            services.AddTransient<IInfoHandler, AppDomainAssembliesVersionHandler>();
+            services.AddTransient<IInfoProvider, ClrVersionProvider>();
+            services.AddTransient<IInfoProvider, AssemblyVersionProvider>();
+            services.AddTransient<IInfoProvider, AppDomainAssembliesVersionProvider>();
             return builder;
         }
     }
