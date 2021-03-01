@@ -90,10 +90,10 @@ _AspNetCore.VersionInfo_ package includes following providers:
 
 ### Options
 
-`MapVersionInfo` extension method accepts an optional `VersionInfoOptions` argument to change default URLs.
+`MapVersionInfo` extension method accepts an optional `VersionInfoOptions` argument to change default URLs:
 
 ```csharp
-    
+
 public void Configure(IApplicationBuilder app)
 {
     app.UseRouting();
@@ -121,7 +121,7 @@ where `{versionInfoId}` is a key returned by providers.
 
 Moreover endpoint accepts following parameters in querystring:
 * `label`: it's the name to show in the image
-* `color`: a string as defined in the colors table
+* `color`: a string as defined in the colors table, custom colors are not (yet) supported
 
 | Color | String | 
 | -     | -      |
@@ -134,3 +134,4 @@ Moreover endpoint accepts following parameters in querystring:
 | ![#007ec6](https://via.placeholder.com/15/007ec6/000000?text=+) | Blue |
 | ![#555](https://via.placeholder.com/15/555/000000?text=+) | Gray |
 | ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000?text=+) | LightGray |
+
