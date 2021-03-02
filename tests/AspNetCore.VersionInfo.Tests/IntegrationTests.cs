@@ -83,5 +83,21 @@ namespace AspNetCore.VersionInfo.Tests
             Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
             Assert.Contains("<h1>Version Information</h1>", body);
         }
+
+        [Fact]
+        public async Task BadgeUrl_ReturnsSvg()
+        {
+            // Arrange
+            var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
+
+            // Act
+            var versionInfoId = Constants.KEY_ENTRY_ASSEMBLY_VERSION;
+            var url = Constants.DEFAULT_BADGE_ENDPOINT_URL.Replace("{versionInfoId}", versionInfoId);
+            var indexResponse = await client.GetAsync(url);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
+            Assert.Equal(Constants.DEFAULT_BADGE_RESPONSE_CONTENT_TYPE, indexResponse.Content.Headers.ContentType.MediaType);
+        }
     }
 }
