@@ -26,14 +26,9 @@ namespace AspNetCore.VersionInfo.Middleware
             Dictionary<string, string> versionInfo;
             string responseContent;
 
-            // Read VersionInfoId to use as key in providers dictionary
+            // Read VersionInfoId to use as key in providers dictionary 
+            // (it's never empty because of route configuration)
             var id = context.Request.RouteValues[Constants.BADGE_PARAM_VERSIONINFOID] as string;
-            if(string.IsNullOrEmpty(id))
-            {
-                Logger.LogWarning($"Badge Endpoint Error: {Messages.BADGE_VERSIONINFOID_EMPTY}");
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                return;
-            }
 
             using (var scope = _serviceScopeFactory.CreateScope())
             {

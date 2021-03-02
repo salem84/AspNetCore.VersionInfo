@@ -99,5 +99,35 @@ namespace AspNetCore.VersionInfo.Tests
             Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
             Assert.Equal(Constants.DEFAULT_BADGE_RESPONSE_CONTENT_TYPE, indexResponse.Content.Headers.ContentType.MediaType);
         }
+
+        [Fact]
+        public async Task BadgeUrl_WithKeyNotValid_ReturnsNotFound()
+        {
+            // Arrange
+            var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
+
+            // Act
+            var versionInfoId = "KEY_NOT_VALID";
+            var url = Constants.DEFAULT_BADGE_ENDPOINT_URL.Replace("{versionInfoId}", versionInfoId);
+            var indexResponse = await client.GetAsync(url);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NotFound, indexResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task BadgeUrl_WithKeyEmpty_ReturnsNotFound()
+        {
+            // Arrange
+            var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
+
+            // Act
+            var versionInfoId = "";
+            var url = Constants.DEFAULT_BADGE_ENDPOINT_URL.Replace("{versionInfoId}", versionInfoId);
+            var indexResponse = await client.GetAsync(url);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NotFound, indexResponse.StatusCode);
+        }
     }
 }
