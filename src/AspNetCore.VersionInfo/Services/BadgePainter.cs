@@ -45,7 +45,7 @@ namespace AspNetCore.VersionInfo.Services
 
     public class BadgePainter
     {
-        public static string DrawSVG(string subject, string status, string statusColor, Style style = Style.Flat)
+        public string DrawSVG(string subject, string status, string statusColor, Style style = Style.Flat)
         {
             string template;
             string color;
@@ -85,7 +85,7 @@ namespace AspNetCore.VersionInfo.Services
             return result;
         }
 
-        public static string ParseColor(string input)
+        private string ParseColor(string input)
         {
             var cs = new ColorScheme();
 
