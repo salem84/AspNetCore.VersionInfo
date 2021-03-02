@@ -91,7 +91,7 @@ namespace AspNetCore.VersionInfo.Services
             return result;
         }
 
-        private string ParseColor(string input)
+        private static string ParseColor(string input)
         {
             var type = typeof(ColorScheme);
             var fieldInfo = type.GetField(input);
