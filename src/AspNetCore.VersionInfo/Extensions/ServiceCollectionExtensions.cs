@@ -19,7 +19,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddTransient<IInfoCollector, InfoCollector>();
 
-            services.AddTransient<BadgePainter>();
             services.AddTransient<IInfoProvider, ClrVersionProvider>();
             services.AddTransient<IInfoProvider, AssemblyVersionProvider>();
             services.AddTransient<IInfoProvider, AppDomainAssembliesVersionProvider>();
