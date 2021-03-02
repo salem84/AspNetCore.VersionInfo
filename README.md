@@ -8,6 +8,7 @@ AspNetCore.VersionInfo is a library to expose information about assembly version
 In particular there are two endpoints, which returns:
 * a JSON-formatted data (_/version/json_)
 * an HTML user-friendly page (_/version/html_)
+* a nice badge image (_/version/badge_)
 
 Library offers some in-bundle providers to capture versions information, such as the version of entry assembly or the version of the common language runtime. A typical JSON output is: 
 
@@ -39,7 +40,7 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 | - | - |
 | *HTML*   |   [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html)               |
 | *JSON*  |   [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json)    |
-
+| *Badge* |   [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=Blue&label=version)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=Blue&label=version) |
 
 ## Getting Started
 
@@ -86,4 +87,53 @@ _AspNetCore.VersionInfo_ package includes following providers:
 | ClrVersionProvider  | `RuntimeInformation.FrameworkDescription` <br/> `RuntimeInformation.OsDescription` <br/> `RuntimeInformation.OsArchitecture` <br/> `RuntimeInformation.ProcessArchitecture` <br/> `RuntimeInformation.RuntimeIdentifier` | Version of the common language runtime and .NET installation on which the app is running |
 | AppDomainAssembliesVersionProvider  | `<AssemblyName>` | version of assemblies loaded in App Domain |
 
+
+### Options
+
+`MapVersionInfo` extension method accepts an optional `VersionInfoOptions` argument to change default URLs:
+
+```csharp
+
+public void Configure(IApplicationBuilder app)
+{
+    app.UseRouting();
+
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapVersionInfo(o =>
+        {
+            o.HtmlPath = CUSTOM_HTML_URL;
+            o.ApiPath = CUSTOM_JSON_URL;
+        });
+    });
+}
+
+```
+
+
+### Badge
+
+Badge image can be obtained with url
+
+`/version/badge/{versionInfoId}`
+
+where `{versionInfoId}` is a key returned by providers.
+
+Moreover endpoint accepts following parameters in querystring:
+* `label`: it's the name to show in the image
+* `color`: a string as defined in the colors table, custom colors are not (yet) supported
+
+| Color | String | 
+| -     | -      |
+| ![#4c1](https://via.placeholder.com/15/4c1/000000?text=+)| BrightGreen |
+| ![#97CA00](https://via.placeholder.com/15/97CA00/000000?text=+) | Green |
+| ![#dfb317](https://via.placeholder.com/15/dfb317/000000?text=+) | Yellow |
+| ![#a4a61d](https://via.placeholder.com/15/a4a61d/000000?text=+) | YellowGreen |
+| ![#fe7d37](https://via.placeholder.com/15/fe7d37/000000?text=+) | Orange |
+| ![#e05d44](https://via.placeholder.com/15/e05d44/000000?text=+) | Red |
+| ![#007ec6](https://via.placeholder.com/15/007ec6/000000?text=+) | Blue |
+| ![#555](https://via.placeholder.com/15/555/000000?text=+) | Gray |
+| ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000?text=+) | LightGray |
+
+Thanks to [Rebornix](https://github.com/rebornix) and [DotBadge library](https://github.com/rebornix/DotBadge)
 
