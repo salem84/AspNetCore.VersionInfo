@@ -33,6 +33,7 @@ namespace AspNetCore.VersionInfo.Middleware
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
+                var badgePainter = scope.ServiceProvider.GetService<IBadgePainter>();
 
                 // Collect all data
                 versionInfo = infoHandler.AggregateData();
@@ -61,7 +62,7 @@ namespace AspNetCore.VersionInfo.Middleware
                 }
 
                 // Draw badge
-                responseContent = BadgePainter.DrawSVG(label, versionInfoValue, color);
+                responseContent = badgePainter.Draw(label, versionInfoValue, color, Style.Flat);
             }
 
             // Set ContentType as image/svg+xml
