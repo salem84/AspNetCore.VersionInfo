@@ -18,7 +18,7 @@ namespace AspNetCore.VersionInfo.Services
         Plastic
     }
 
-    public class ColorScheme
+    public static class ColorScheme
     {
         public const string BrightGreen = "#4c1";
         public const string Green = "#97CA00";
@@ -61,7 +61,7 @@ namespace AspNetCore.VersionInfo.Services
                     template = Resources.Plastic;
                     break;
                 default:
-                    throw new ArgumentException(nameof(style));
+                    throw new ArgumentException("Style not supported", nameof(style));
             }
 
             Font font = new Font("DejaVu Sans,Verdana,Geneva,sans-serif", 11, FontStyle.Regular);
@@ -85,16 +85,15 @@ namespace AspNetCore.VersionInfo.Services
             return result;
         }
 
-        private string ParseColor(string input)
+        private static string ParseColor(string input)
         {
-            var cs = new ColorScheme();
-
-            var fieldInfo = cs.GetType().GetField(input);
+            var type = typeof(ColorScheme);
+            var fieldInfo = type.GetField(input);
             if (fieldInfo == null)
             {
                 return String.Empty;
             }
-            return (string)fieldInfo.GetValue(cs.GetType());
+            return (string)fieldInfo.GetValue(type);
         }
     }
 }
