@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+// Based on https://github.com/rebornix/DotBadge
+
 namespace AspNetCore.VersionInfo.Services
 {
     public enum Style
@@ -45,6 +48,7 @@ namespace AspNetCore.VersionInfo.Services
         public string DrawSVG(string subject, string status, string statusColor, Style style = Style.Flat)
         {
             string template;
+            string color;
             switch (style)
             {
                 case Style.Flat:
@@ -65,7 +69,9 @@ namespace AspNetCore.VersionInfo.Services
             var subjectWidth = g.MeasureString(subject, font).Width;
             var statusWidth = g.MeasureString(status, font).Width;
 
-            var result = String.Format(
+            color = ParseColor(statusColor);
+
+            var result = string.Format(
                 CultureInfo.InvariantCulture,
                 template,
                 subjectWidth + statusWidth,
@@ -75,7 +81,7 @@ namespace AspNetCore.VersionInfo.Services
                 subjectWidth + statusWidth / 2 - 1,
                 subject,
                 status,
-                statusColor);
+                color);
             return result;
         }
 
