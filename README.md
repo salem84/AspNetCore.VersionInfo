@@ -135,3 +135,5 @@ Moreover endpoint accepts following parameters in querystring:
 | ![#555](https://via.placeholder.com/15/555/000000?text=+) | Gray |
 | ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000?text=+) | LightGray |
 
+Thanks to [Rebornix](https://github.com/rebornix) and [DotBadge library](https://github.com/rebornix/DotBadge)
+
