@@ -1,6 +1,7 @@
 ﻿using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace AspNetCore.VersionInfo.Middleware
     class BadgeEndpoint
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly ILogger<BadgeEndpoint> Logger;
 
-        public BadgeEndpoint(RequestDelegate next, IServiceScopeFactory serviceScopeFactory)
+        public BadgeEndpoint(RequestDelegate next, IServiceScopeFactory serviceScopeFactory, ILogger<BadgeEndpoint> logger)
         {
             this._serviceScopeFactory = serviceScopeFactory;
+            this.Logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -27,7 +30,9 @@ namespace AspNetCore.VersionInfo.Middleware
             var id = context.Request.RouteValues[Constants.BADGE_PARAM_VERSIONINFOID] as string;
             if(string.IsNullOrEmpty(id))
             {
-                throw new ArgumentNullException(Constants.BADGE_PARAM_VERSIONINFOID, Messages.BADGE_VERSIONINFOID_EMPTY);
+                Logger.LogWarning($"Badge Endpoint Error: {Messages.BADGE_VERSIONINFOID_EMPTY}");
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                return;
             }
 
             using (var scope = _serviceScopeFactory.CreateScope())
@@ -42,7 +47,9 @@ namespace AspNetCore.VersionInfo.Middleware
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);
                 if (!found)
                 {
-                    throw new ArgumentOutOfRangeException(Constants.BADGE_PARAM_VERSIONINFOID, Messages.BADGE_KEY_NOT_FOUND);
+                    Logger.LogWarning($"Badge Endpoint Error: {Messages.BADGE_KEY_NOT_FOUND} - {id}");
+                    context.Response.StatusCode = StatusCodes.Status404NotFound;
+                    return;
                 }
 
                 // Set color found in QueryString, otherwise set BADGE_DEFAULT_COLOR
