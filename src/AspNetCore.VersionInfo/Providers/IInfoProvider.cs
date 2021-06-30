@@ -8,6 +8,7 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public interface IInfoProvider
     {
+        string ProviderName { get; }
         IDictionary<string, string> GetData();
     }
 }

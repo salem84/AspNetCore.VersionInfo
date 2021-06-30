@@ -1,5 +1,6 @@
 ﻿using AspNetCore.VersionInfo.Middleware;
 using AspNetCore.VersionInfo.Services;
+using AspNetCore.VersionInfo.Tests.Mock;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -32,10 +33,12 @@ namespace AspNetCore.VersionInfo.Tests
             defaultContext.Request.RouteValues.Add("versionInfoId", "Key1");
 
             var infoHandler = new Mock<IInfoCollector>();
-            var simpleData = new Dictionary<string, string>()
+            
+            // Create mock versionInfo
+            var simpleData = new MockDictionaryCollectorResult(new Dictionary<string, string>
                 {
                     { "Key1", "Value1" }
-                };
+                });
             infoHandler.Setup(x => x.AggregateData()).Returns(simpleData);
             RegisterServiceWithInstance<IInfoCollector>(infoHandler.Object);
             

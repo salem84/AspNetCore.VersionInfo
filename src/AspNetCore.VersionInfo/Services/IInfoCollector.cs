@@ -1,4 +1,5 @@
-﻿using AspNetCore.VersionInfo.Providers;
+﻿using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Providers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,6 @@ namespace AspNetCore.VersionInfo.Services
 {
     public interface IInfoCollector
     {
-        dynamic AggregateData();
+        ICollectorResult AggregateData();
     }
 }

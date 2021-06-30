@@ -1,4 +1,5 @@
-﻿using AspNetCore.VersionInfo.Providers;
+﻿using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Providers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,26 +21,35 @@ namespace AspNetCore.VersionInfo.Services
             _infoHandlers = infoHandlers;
             _logger = logger;
         }
-        public dynamic AggregateData()
+        public ICollectorResult AggregateData()
         {
-            // It's maybe better pass this dictionary as argument for all handlers
-            var data = new Dictionary<string, string>();
+            // It's maybe better pass this dictionary as argument for all handlers?
+            var result = new FlatCollectorResult();
             foreach(var handler in _infoHandlers)
             {
-                foreach(var d in handler.GetData())
+                //result.Add(new VersionDataProviderResult()
+                //{
+                //    ProviderName = handler.ProviderName,
+                //    Data = handler.GetData()
+                //});
+                foreach (var d in handler.GetData())
                 {
-                    if (data.ContainsKey(d.Key))
-                    {
-                        _logger.LogWarning(Messages.DUPLICATED_KEY, d.Key);
-                    }
-                    else
-                    {
-                        data.Add(d.Key, d.Value);
-                    }
+                    //if (data.ContainsKey(d.Key))
+                    //{
+                    //    _logger.LogWarning(Messages.DUPLICATED_KEY, d.Key);
+                    //}
+                    //else
+                    //{
+                        result.Add(new VersionDataProviderKeyValueResult() {
+                            Key = d.Key, 
+                            Value = d.Value,
+                            ProviderName = handler.ProviderName
+                            });
+                    //}
                 }
             }
 
-            return data;
+            return result;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class ClrVersionProvider : IInfoProvider
     {
+        public string ProviderName => nameof(ClrVersionProvider);
+
         public IDictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();

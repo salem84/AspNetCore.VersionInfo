@@ -9,6 +9,8 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class AssemblyVersionProvider : IInfoProvider
     {
+        public string ProviderName => nameof(AssemblyVersionProvider);
+
         public IDictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();

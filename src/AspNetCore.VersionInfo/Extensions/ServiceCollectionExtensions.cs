@@ -1,5 +1,6 @@
 ﻿using AspNetCore.VersionInfo;
 using AspNetCore.VersionInfo.Configuration;
+using AspNetCore.VersionInfo.Models;
 using AspNetCore.VersionInfo.Providers;
 using AspNetCore.VersionInfo.Services;
 using System;
