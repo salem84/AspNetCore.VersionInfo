@@ -13,6 +13,7 @@
             font-size: 0.9em;
             font-family: sans-serif;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            /*width: 600px;*/
         }
 
             .styled-table .tabulator-header {
@@ -21,9 +22,13 @@
                 padding-bottom: 10px;
             }
 
-                .styled-table .tabulator-header .tabulator-col.tabulator-sortable:hover {
-                    background-color: transparent;
-                }
+            .styled-table .tabulator .tabulator-header .tabulator-col .tabulator-col-content {
+                padding-left:10px;
+            }
+
+        .styled-table .tabulator-header .tabulator-col.tabulator-sortable:hover {
+            background-color: transparent;
+        }
 
                 .styled-table .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
                     border-bottom-color: #fff;
@@ -39,17 +44,26 @@
                         border-right: none;
                     }
 
-            .styled-table .tabulator-row.tabulator-row-even {
+                    .styled-table .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title,
+                    .tabulator-row .tabulator-cell {
+                        padding-left: 10px;
+                    }
+
+            .styled-table .tabulator-row {
                 background-color: transparent;
             }
 
-            .styled-table .tabulator-row.tabulator-group, .styled-table .tabulator-row.tabulator-group .tabulator-row-even {
-                background-color: #77d4ad;
-            }
-
-                .styled-table .tabulator-row.tabulator-group:hover, .styled-table .tabulator-row.tabulator-group:hover .tabulator-row-even {
-                    background-color: #00cfa6;
+                .styled-table .tabulator-row.tabulator-selectable:hover {
+                    background-color: #eee;
                 }
+
+                .styled-table .tabulator-row.tabulator-group {
+                    background-color: #77d4ad;
+                }
+
+                    .styled-table .tabulator-row.tabulator-group:hover {
+                        background-color: #00cfa6;
+                    }
     </style>
 </head>
 <body>
@@ -68,10 +82,10 @@
                 return response.Results;
             },
             groupBy: "ProviderName",
-            layout: "fitColumns",
+            layout: "fitDataTable",
             columns: [
-                { title: "Provider", field: "ProviderName" },
-                { title: "Property", field: "Key" },
+                //{ title: "Provider", field: "ProviderName" },
+                { title: "Property", field: "Key", width: 500},
                 { title: "Value", field: "Value" }
             ]
         });
