@@ -1,4 +1,5 @@
 ﻿using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

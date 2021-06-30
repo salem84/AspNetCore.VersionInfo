@@ -1,4 +1,5 @@
-﻿using AspNetCore.VersionInfo.Services;
+﻿using AspNetCore.VersionInfo.Models.Collectors;
+using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -26,7 +27,7 @@ namespace AspNetCore.VersionInfo.Middleware
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
-                var versionInfo = infoHandler.AggregateData();
+                var versionInfo = infoHandler.AggregateData() as FlatCollectorResult;
                 responseContent = JsonSerializer.Serialize(versionInfo);
             }
 

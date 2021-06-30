@@ -17,10 +17,14 @@
 
   <ItemGroup>
     <None Remove="assets\index.html" />
+    <None Remove="assets\indexGrouped.html" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="assets\index.html">
+      <CustomToolNamespace></CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="assets\indexGrouped.html">
       <CustomToolNamespace></CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>

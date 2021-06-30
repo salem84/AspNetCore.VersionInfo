@@ -1,4 +1,5 @@
 ﻿using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Models.Collectors;
 using System;
 using System.Collections;
 using System.Collections.Generic;

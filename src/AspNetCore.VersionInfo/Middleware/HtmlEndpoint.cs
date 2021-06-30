@@ -70,7 +70,8 @@ namespace AspNetCore.VersionInfo.Middleware
             response.StatusCode = 200;
             response.ContentType = "text/html;charset=utf-8";
 
-            using (var stream = GetType().Assembly.GetManifestResourceStream($"{GetType().Assembly.GetName().Name}.assets.index.html")/*_options.IndexStream()*/)
+            string page = "indexGrouped";//"index";
+            using (var stream = GetType().Assembly.GetManifestResourceStream($"{GetType().Assembly.GetName().Name}.assets.{page}.html")/*_options.IndexStream()*/)
             {
                 var htmlBuilder = new StringBuilder(new StreamReader(stream).ReadToEnd());
                 foreach (var entry in GetIndexArguments())

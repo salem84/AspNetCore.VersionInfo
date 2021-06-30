@@ -1,4 +1,5 @@
 ﻿using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Providers;
 using Microsoft.Extensions.Logging;
 using System;

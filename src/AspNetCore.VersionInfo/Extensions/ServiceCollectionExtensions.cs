@@ -18,7 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var builder = new VersionInfoBuilder(services);
 
-            services.AddTransient<IInfoCollector, InfoCollector>();
+            services.AddTransient<IInfoCollector, FlatInfoCollector>();
             services.AddTransient<IBadgePainter, BadgePainter>();
 
             return builder;

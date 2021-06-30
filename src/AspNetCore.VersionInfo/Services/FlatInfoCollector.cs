@@ -1,4 +1,5 @@
 ﻿using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Providers;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Services
 {
-    class InfoCollector : IInfoCollector
+    class FlatInfoCollector : IInfoCollector
     {
         private readonly IEnumerable<IInfoProvider> _infoHandlers;
-        private readonly ILogger<InfoCollector> _logger;
+        private readonly ILogger<FlatInfoCollector> _logger;
 
-        public InfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<InfoCollector> logger)
+        public FlatInfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<FlatInfoCollector> logger)
         {
             _infoHandlers = infoHandlers;
             _logger = logger;

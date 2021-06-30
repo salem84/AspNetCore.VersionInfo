@@ -62,9 +62,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(value, prop) in versionInfo" :key="prop">
-                    <td>{{prop}}</td>
-                    <td>{{value}}</td>
+                <tr v-for="item in versionInfo" :key="item.Key">
+                    <td>{{item.Key}}</td>
+                    <td>{{item.Value}}</td>
                 </tr>
             </tbody>
         </table>
@@ -81,7 +81,7 @@
             mounted() {
                 axios
                     .get('%(API_URL)%')
-                    .then(response => (this.versionInfo = response.data))
+                    .then(response => (this.versionInfo = response.data.Results))
             }
         }
         Vue.createApp(VersionApp).mount('#app');

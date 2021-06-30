@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+
+    <title>AspNetCore.VersionInfo</title>
+    <style>
+        .styled-table {
+            border: 1px solid #333;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+            .styled-table .tabulator-header {
+                background-color: #009879;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+                .styled-table .tabulator-header .tabulator-col.tabulator-sortable:hover {
+                    background-color: transparent;
+                }
+
+                .styled-table .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+                    border-bottom-color: #fff;
+                }
+
+                .styled-table .tabulator-header .tabulator-col {
+                    background-color: transparent;
+                    color: #fff;
+                    white-space: normal;
+                }
+
+                    .styled-table .tabulator-header .tabulator-col:last-child {
+                        border-right: none;
+                    }
+
+            .styled-table .tabulator-row.tabulator-row-even {
+                background-color: transparent;
+            }
+
+            .styled-table .tabulator-row.tabulator-group, .styled-table .tabulator-row.tabulator-group .tabulator-row-even {
+                background-color: #77d4ad;
+            }
+
+                .styled-table .tabulator-row.tabulator-group:hover, .styled-table .tabulator-row.tabulator-group:hover .tabulator-row-even {
+                    background-color: #00cfa6;
+                }
+    </style>
+</head>
+<body>
+    <h1>Version Information</h1>
+    <p></p>
+    <div id="info-table" class="styled-table"></div>
+
+    <script>
+        //var tabledata = [
+        //];
+
+        var table = new Tabulator("#info-table", {
+            //data: tabledata,
+            ajaxURL: '%(API_URL)%',
+            ajaxResponse: function (url, params, response) {
+                return response.Results;
+            },
+            groupBy: "ProviderName",
+            layout: "fitColumns",
+            columns: [
+                { title: "Provider", field: "ProviderName" },
+                { title: "Property", field: "Key" },
+                { title: "Value", field: "Value" }
+            ]
+        });
+    </script>
+</body>
+</html>
