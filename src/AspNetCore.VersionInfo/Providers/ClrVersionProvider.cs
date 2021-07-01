@@ -20,7 +20,7 @@ namespace AspNetCore.VersionInfo.Providers
             dict.Add(Constants.KEY_RUNTIMEINFORMATION_PROCESSARCHITECTURE, RuntimeInformation.ProcessArchitecture.ToString());
             dict.Add(Constants.KEY_RUNTIMEINFORMATION_RUNTIMEIDENTIFIER, RuntimeInformation.RuntimeIdentifier);
 
-            dict.Add(Constants.KEY_DOTNET_VERSION, Environment.Version.ToString());
+            dict.Add(Constants.KEY_ENVIRONMENT_VERSION, Environment.Version.ToString());
 
             return dict;
         }
