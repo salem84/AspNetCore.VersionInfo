@@ -8,6 +8,7 @@ namespace AspNetCore.VersionInfo.Models.Collectors
 {
     public class FlatCollectorResult : ICollectorResult
     {
+        // TODO make it private?
         public IList<VersionDataProviderKeyValueResult> Results { get; set; }
         public int Count => Results.Count;
 
