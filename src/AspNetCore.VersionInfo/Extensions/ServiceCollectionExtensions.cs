@@ -1,5 +1,6 @@
 ﻿using AspNetCore.VersionInfo;
 using AspNetCore.VersionInfo.Configuration;
+using AspNetCore.VersionInfo.Models;
 using AspNetCore.VersionInfo.Providers;
 using AspNetCore.VersionInfo.Services;
 using System;
@@ -17,12 +18,9 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var builder = new VersionInfoBuilder(services);
 
-            services.AddTransient<IInfoCollector, InfoCollector>();
-
+            services.AddTransient<IInfoCollector, FlatInfoCollector>();
             services.AddTransient<IBadgePainter, BadgePainter>();
-            services.AddTransient<IInfoProvider, ClrVersionProvider>();
-            services.AddTransient<IInfoProvider, AssemblyVersionProvider>();
-            services.AddTransient<IInfoProvider, AppDomainAssembliesVersionProvider>();
+
             return builder;
         }
     }

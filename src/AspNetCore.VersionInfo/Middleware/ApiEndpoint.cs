@@ -1,4 +1,5 @@
-﻿using AspNetCore.VersionInfo.Services;
+﻿using AspNetCore.VersionInfo.Models.Collectors;
+using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,14 +22,15 @@ namespace AspNetCore.VersionInfo.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            Dictionary<string, string> versionInfo = null;
+            string responseContent = string.Empty;
+
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
-                versionInfo = infoHandler.AggregateData();
+                var versionInfo = infoHandler.AggregateData() as FlatCollectorResult;
+                responseContent = JsonSerializer.Serialize(versionInfo);
             }
 
-            var responseContent = JsonSerializer.Serialize(versionInfo ?? new Dictionary<string, string>());
             context.Response.ContentType = Constants.DEFAULT_API_RESPONSE_CONTENT_TYPE;
 
             await context.Response.WriteAsync(responseContent);

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.9.3/css/tabulator.min.css" integrity="sha512-qXb7/N44R94029hvbV06tyEl1P3TCwCbyPsIUl61D6W8mRCFbCPsRYOVJbCUaEzlwUvg7JJSLsglThYs7zNoZw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.9.3/js/tabulator.min.js" integrity="sha512-N/WbW5rCM/O+/QpzuqYXkInRdSfFu6txbJcbQioBywGXDiF1XCJY2LXVKIGjNFUMS4P79mtf9pDu5ViXaa+BnA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <title>AspNetCore.VersionInfo</title>
+    <style>
+        .styled-table {
+            border: 1px solid #333;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+            .styled-table .tabulator-header {
+                background-color: #009879;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .styled-table .tabulator .tabulator-header .tabulator-col .tabulator-col-content {
+                padding-left:10px;
+            }
+
+        .styled-table .tabulator-header .tabulator-col.tabulator-sortable:hover {
+            background-color: transparent;
+        }
+
+                .styled-table .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+                    border-bottom-color: #fff;
+                }
+
+                .styled-table .tabulator-header .tabulator-col {
+                    background-color: transparent;
+                    color: #fff;
+                    white-space: normal;
+                }
+
+                    .styled-table .tabulator-header .tabulator-col:last-child {
+                        border-right: none;
+                    }
+
+                    .styled-table .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title,
+                    .tabulator-row .tabulator-cell {
+                        padding-left: 10px;
+                    }
+
+            .styled-table .tabulator-row {
+                background-color: transparent;
+            }
+
+                .styled-table .tabulator-row.tabulator-selectable:hover {
+                    background-color: #eee;
+                }
+
+                .styled-table .tabulator-row.tabulator-group {
+                    background-color: #77d4ad;
+                }
+
+                    .styled-table .tabulator-row.tabulator-group:hover {
+                        background-color: #00cfa6;
+                    }
+
+            .styled-table .tabulator-cell[tabulator-field="Value"] {
+                font-style: italic;
+            }
+    </style>
+</head>
+<body>
+    <h1>Version Information</h1>
+    <p></p>
+    <div id="info-table" class="styled-table"></div>
+
+    <script>
+        //var tabledata = [
+        //];
+
+        var table = new Tabulator("#info-table", {
+            //data: tabledata,
+            ajaxURL: '%(API_URL)%',
+            ajaxResponse: function (url, params, response) {
+                return response.Results;
+            },
+            groupBy: "ProviderName",
+            layout: "fitDataTable",
+            columns: [
+                //{ title: "Provider", field: "ProviderName" },
+                { title: "Property", field: "Key", width: 500},
+                { title: "Value", field: "Value" }
+            ]
+        });
+    </script>
+</body>
+</html>
