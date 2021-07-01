@@ -8,7 +8,7 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class EnvironmentProvider : IInfoProvider
     {
-        public string ProviderName => nameof(EnvironmentProvider);
+        public string Name => nameof(EnvironmentProvider);
 
         public IDictionary<string, string> GetData()
         {

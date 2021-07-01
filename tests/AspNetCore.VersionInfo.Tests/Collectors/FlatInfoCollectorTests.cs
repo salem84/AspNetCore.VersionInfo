@@ -33,7 +33,7 @@ namespace AspNetCore.VersionInfo.Tests.Collectors
             infoHandlerSimple.Setup(x => x.GetData())
                 .Returns(simpleData);
 
-            infoHandlerSimple.Setup(x => x.ProviderName)
+            infoHandlerSimple.Setup(x => x.Name)
                 .Returns(nameof(infoHandlerSimple));
 
             var collector = new FlatInfoCollector(new List<IInfoProvider>() { infoHandlerSimple.Object }, _mockLogger.Object);
@@ -107,13 +107,13 @@ namespace AspNetCore.VersionInfo.Tests.Collectors
             var infoHandler1 = new Mock<IInfoProvider>();
             infoHandler1.Setup(x => x.GetData())
                 .Returns(simpleData1);
-            infoHandler1.Setup(x => x.ProviderName)
+            infoHandler1.Setup(x => x.Name)
                 .Returns(nameof(infoHandler1));
 
             var infoHandler2 = new Mock<IInfoProvider>();
             infoHandler2.Setup(x => x.GetData())
                 .Returns(simpleData1);
-            infoHandler2.Setup(x => x.ProviderName)
+            infoHandler2.Setup(x => x.Name)
                 .Returns(nameof(infoHandler2));
 
             var collector = new FlatInfoCollector(new List<IInfoProvider>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);

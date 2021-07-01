@@ -8,7 +8,7 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class AppDomainAssembliesVersionProvider : IInfoProvider
     {
-        public string ProviderName => nameof(AppDomainAssembliesVersionProvider);
+        public string Name => nameof(AppDomainAssembliesVersionProvider);
 
         public IDictionary<string, string> GetData()
         {

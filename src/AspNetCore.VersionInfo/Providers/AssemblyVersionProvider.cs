@@ -11,7 +11,7 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class AssemblyVersionProvider : IInfoProvider
     {
-        public string ProviderName => nameof(AssemblyVersionProvider);
+        public string Name => nameof(AssemblyVersionProvider);
 
         public IDictionary<string, string> GetData()
         {

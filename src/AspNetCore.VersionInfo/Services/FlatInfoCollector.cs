@@ -44,7 +44,7 @@ namespace AspNetCore.VersionInfo.Services
                         result.Add(new VersionDataProviderKeyValueResult() {
                             Key = d.Key, 
                             Value = d.Value,
-                            ProviderName = handler.ProviderName
+                            ProviderName = handler.Name
                             });
                     //}
                 }
