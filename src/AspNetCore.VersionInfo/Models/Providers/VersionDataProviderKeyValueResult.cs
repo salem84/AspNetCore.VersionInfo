@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Models
 {
-
-  
     public class VersionDataProviderKeyValueResult
     {
         public string ProviderName { get; set; }

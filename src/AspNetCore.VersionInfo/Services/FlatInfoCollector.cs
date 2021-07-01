@@ -28,11 +28,7 @@ namespace AspNetCore.VersionInfo.Services
             var result = new FlatCollectorResult();
             foreach(var handler in _infoHandlers)
             {
-                //result.Add(new VersionDataProviderResult()
-                //{
-                //    ProviderName = handler.ProviderName,
-                //    Data = handler.GetData()
-                //});
+                _logger.LogDebug($"Elaborating {handler.Name} provider");
                 foreach (var d in handler.GetData())
                 {
                     //if (data.ContainsKey(d.Key))
