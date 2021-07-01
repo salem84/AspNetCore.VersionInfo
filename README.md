@@ -14,8 +14,8 @@ Library offers some in-bundle providers to capture versions information, such as
 
 ```js
 {
-    "RuntimeInformation.FrameworkDescription":".NET 5.0.3",
-    "EntryAssemblyVersion":"1.0.0.0",
+    "RuntimeInformation.FrameworkDescription":".NET 5.0.7",
+    "EntryAssemblyVersion":"2.5.0.0",
 
     ...
 }
@@ -83,9 +83,10 @@ _AspNetCore.VersionInfo_ package includes following providers:
 
 | Provider | Keys | Description |
 | - | - | - |
-| AssemblyVersionProvider  | `EntryAssembly` | Version of entry assembly |
+| AssemblyVersionProvider  | `EntryAssembly` <br/> `EntryAssemblyFullName` <br/> `EntryAssemblyLocation` <br/> `EntryAssemblyDirectoryPath` <br/> `EntryAssemblyFileVersion` <br/> `EntryAssemblyClrVersion` <br/> `EntryAssemblyCreationDate` <br/> `EntryAssemblyLastModifiedDate` | Version and main properties of entry assembly |
 | ClrVersionProvider  | `RuntimeInformation.FrameworkDescription` <br/> `RuntimeInformation.OsDescription` <br/> `RuntimeInformation.OsArchitecture` <br/> `RuntimeInformation.ProcessArchitecture` <br/> `RuntimeInformation.RuntimeIdentifier` | Version of the common language runtime and .NET installation on which the app is running |
-| AppDomainAssembliesVersionProvider  | `<AssemblyName>` | version of assemblies loaded in App Domain |
+| AppDomainAssembliesVersionProvider  | `<AssemblyName>` | Version of assemblies loaded in App Domain |
+| EnvironmentProvider  | `Environment.Uptime` <br/> `Environment.OSVersion` <br/> `Environment.IsOsWindows` <br/> `Environment.Is64BitOperatingSystem` <br/> `Environment.Is64BitProcess` <br/> `Environment.ProcessorCount` <br/> `Environment.MachineName` <br/> `Environment.SystemDirectory` <br/> `Environment.WorkingDirectory` <br/> `Environment.CommandLine` <br/> `Environment.DotNetVersion` | Environment properties |
 
 
 ### Options
