@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <SonarQubeExclude>true</SonarQubeExclude>
+    <Version>2.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -23,13 +23,33 @@ namespace AspNetCore.VersionInfo.Models.Collectors
 
         public bool TryGetValue(string id, out string versionInfoValue)
         {
-            var res = Results.SingleOrDefault(x => x.Key == id);
-            if(res == null)
+            // Check id is valid
+            if(string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            VersionDataProviderKeyValueResult res = null;
+
+            // Check if id is composed as ProviderName:Key
+            var splitted = id.Split(Constants.PROVIDERNAME_SEPARATOR);
+            if(splitted.Length > 1)
+            {
+                res = Results.SingleOrDefault(x => x.ProviderName == splitted[0] && x.Key == splitted[1]);
+            }
+            else
+            {
+                res = Results.SingleOrDefault(x => x.Key == splitted[0]);
+            }
+
+            // Value not found
+            if (res == null)
             {
                 versionInfoValue = null;
                 return false;
             }
 
+            // Return value
             versionInfoValue = res.Value;
             return true;
         }
@@ -38,7 +58,7 @@ namespace AspNetCore.VersionInfo.Models.Collectors
         {
             if(includeProviderName)
             {
-                return Results.ToDictionary(x => $"{x.ProviderName}:{x.Key}", x => x.Value);
+                return Results.ToDictionary(x => x.ProviderName + Constants.PROVIDERNAME_SEPARATOR + x.Key, x => x.Value);
             }
             else
             {

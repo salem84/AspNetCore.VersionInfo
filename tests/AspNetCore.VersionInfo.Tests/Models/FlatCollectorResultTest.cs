@@ -12,6 +12,109 @@ namespace AspNetCore.VersionInfo.Tests.Models
     public class FlatCollectorResultTest
     {
         [Fact]
+        public void TryGetValue_Id_Null()
+        {
+            // Arrange
+            var model = new FlatCollectorResult();
+            model.Add(new VersionDataProviderKeyValueResult()
+            {
+                ProviderName = "Provider1",
+                Key = "Key1",
+                Value = "Value1"
+            });
+
+            // Act
+            string id = null;
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => model.TryGetValue(id, out string value));
+        }
+
+        [Fact]
+        public void TryGetValue_Id_NotExists()
+        {
+            // Arrange
+            var model = new FlatCollectorResult();
+            model.Add(new VersionDataProviderKeyValueResult()
+            {
+                ProviderName = "Provider1",
+                Key = "Key1",
+                Value = "Value1"
+            });
+
+            // Act
+            string id = "Provider1:KeyB";
+            var success = model.TryGetValue(id, out string value);
+
+            // Assert
+            Assert.False(success);
+            Assert.Null(value);
+        }
+
+        [Fact]
+        public void TryGetValue_Id_WithProviderEmpty()
+        {
+            // Arrange
+            var model = new FlatCollectorResult();
+            model.Add(new VersionDataProviderKeyValueResult()
+            {
+                ProviderName = "Provider1",
+                Key = "Key1",
+                Value = "Value1"
+            });
+
+            // Act
+            string id = ":Key1";
+            var success = model.TryGetValue(id, out string value);
+
+            // Assert
+            Assert.False(success);
+            Assert.Null(value);
+        }
+
+        [Fact]
+        public void TryGetValue_Id_WithProvider()
+        {
+            // Arrange
+            var model = new FlatCollectorResult();
+            model.Add(new VersionDataProviderKeyValueResult()
+            {
+                ProviderName = "Provider1",
+                Key = "Key1",
+                Value = "Value1"
+            });
+
+            // Act
+            string id = "Provider1:Key1";
+            var success = model.TryGetValue(id, out string value);
+
+            // Assert
+            Assert.True(success);
+            Assert.Equal("Value1", value);
+        }
+
+        [Fact]
+        public void TryGetValue_Id_WithoutProvider()
+        {
+            // Arrange
+            var model = new FlatCollectorResult();
+            model.Add(new VersionDataProviderKeyValueResult()
+            {
+                ProviderName = "Provider1",
+                Key = "Key1",
+                Value = "Value1"
+            });
+
+            // Act
+            string id = "Key1";
+            var success = model.TryGetValue(id, out string value);
+
+            // Assert
+            Assert.True(success);
+            Assert.Equal("Value1", value);
+        }
+
+        [Fact]
         public void ConvertToDictionaryTest_WithProviderName()
         {
             // Arrange

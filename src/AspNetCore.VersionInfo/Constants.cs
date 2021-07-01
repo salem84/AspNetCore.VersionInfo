@@ -16,6 +16,8 @@ namespace AspNetCore.VersionInfo
         public const string DEFAULT_API_ENDPOINT_URL = "/version/json";
         public const string DEFAULT_BADGE_ENDPOINT_URL = "/version/badge/{versionInfoId}";
 
+        public const string PROVIDERNAME_SEPARATOR = ":";
+
         public const string KEY_ENTRY_ASSEMBLY_VERSION = "EntryAssemblyVersion";
         public const string KEY_ENTRY_ASSEMBLY_FULLNAME = "EntryAssemblyFullName";
         public const string KEY_ENTRY_ASSEMBLY_LOCATION = "EntryAssemblyLocation";
