@@ -20,7 +20,6 @@ namespace AspNetCore.VersionInfo.Providers
                 dict.Add(envVar.Key.ToString(), envVar.Value.ToString());
             }
 
-
             return dict;
         }
     }
