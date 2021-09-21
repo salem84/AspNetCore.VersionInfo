@@ -31,7 +31,8 @@ namespace AspNetCore.VersionInfo.Samples.Basic
                 .With<ClrVersionProvider>()
                 .With<AssemblyVersionProvider>()
                 .With<AppDomainAssembliesVersionProvider>()
-                .With<EnvironmentProvider>();
+                .With<EnvironmentProvider>()
+                .With<EnvironmentVariablesProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
