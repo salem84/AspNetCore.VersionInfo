@@ -87,7 +87,7 @@ _AspNetCore.VersionInfo_ package includes following providers:
 | ClrVersionProvider  | `RuntimeInformation.FrameworkDescription` <br/> `RuntimeInformation.OsDescription` <br/> `RuntimeInformation.OsArchitecture` <br/> `RuntimeInformation.ProcessArchitecture` <br/> `RuntimeInformation.RuntimeIdentifier` | Version of the common language runtime and .NET installation on which the app is running |
 | AppDomainAssembliesVersionProvider  | `<AssemblyName>` | Version of assemblies loaded in App Domain |
 | EnvironmentProvider  | `Environment.Uptime` <br/> `Environment.OSVersion` <br/> `Environment.IsOsWindows` <br/> `Environment.Is64BitOperatingSystem` <br/> `Environment.Is64BitProcess` <br/> `Environment.ProcessorCount` <br/> `Environment.MachineName` <br/> `Environment.SystemDirectory` <br/> `Environment.WorkingDirectory` <br/> `Environment.CommandLine` <br/> `Environment.DotNetVersion` | Environment properties |
-
+| EnvironmentVariablesProvider | `<EnvironmentVariableName>`-`<EnvironmentVariableValue>` | Environment variables |
 
 ### Options
 
