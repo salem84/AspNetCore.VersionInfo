@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <PackageProjectUrl>https://github.com/salem84/AspNetCore.VersionInfo</PackageProjectUrl>
     <RepositoryUrl>https://github.com/salem84/AspNetCore.VersionInfo</RepositoryUrl>
@@ -9,7 +9,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <Authors>Giorgio Lasala</Authors>
     <PackageDescription>A library to expose version information in JSON, HTML or Shields-style badge format</PackageDescription>
-    <Copyright>Copyright 2021</Copyright>
+    <Copyright>Copyright 2022</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>dotnet-core csharp middleware versioning</PackageTags>
@@ -31,9 +31,9 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
