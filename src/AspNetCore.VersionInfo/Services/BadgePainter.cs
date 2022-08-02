@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 // Based on https://github.com/rebornix/DotBadge
@@ -70,10 +65,11 @@ namespace AspNetCore.VersionInfo.Services
                     throw new ArgumentException("Style not supported", nameof(style));
             }
 
-            Font font = new Font("DejaVu Sans,Verdana,Geneva,sans-serif", 11, FontStyle.Regular);
-            Graphics g = Graphics.FromImage(new Bitmap(1, 1));
-            var subjectWidth = g.MeasureString(subject, font).Width;
-            var statusWidth = g.MeasureString(status, font).Width;
+            // Font SVG - "DejaVu Sans,Verdana,Geneva,sans-serif" Size=11 FontStyle.Regular;
+            string fontName = "Verdana";
+            float fontSize = 11;
+            var subjectWidth = MeasureString(subject, fontName, fontSize).Width + 10;
+            var statusWidth = MeasureString(status, fontName, fontSize).Width + 10;
 
             color = ParseColor(statusColor);
 
@@ -100,6 +96,15 @@ namespace AspNetCore.VersionInfo.Services
                 return String.Empty;
             }
             return (string)fieldInfo.GetValue(type);
+        }
+
+        private (float Width, float Height) MeasureString(string text, string fontName, float fontSize)
+        {
+            using SkiaSharp.SKTypeface typeFace = SkiaSharp.SKTypeface.FromFamilyName(fontName);
+            using SkiaSharp.SKPaint paint = new() { Typeface = typeFace, TextSize = fontSize };
+            float width = paint.MeasureText(text);
+            float height = fontSize;
+            return new (width, height);
         }
     }
 }
