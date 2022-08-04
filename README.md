@@ -126,15 +126,15 @@ Moreover endpoint accepts following parameters in querystring:
 
 | Color | String | 
 | -     | -      |
-| ![#4c1](https://via.placeholder.com/15/4c1/000000?text=+)| BrightGreen |
-| ![#97CA00](https://via.placeholder.com/15/97CA00/000000?text=+) | Green |
-| ![#dfb317](https://via.placeholder.com/15/dfb317/000000?text=+) | Yellow |
-| ![#a4a61d](https://via.placeholder.com/15/a4a61d/000000?text=+) | YellowGreen |
-| ![#fe7d37](https://via.placeholder.com/15/fe7d37/000000?text=+) | Orange |
-| ![#e05d44](https://via.placeholder.com/15/e05d44/000000?text=+) | Red |
-| ![#007ec6](https://via.placeholder.com/15/007ec6/000000?text=+) | Blue |
-| ![#555](https://via.placeholder.com/15/555/000000?text=+) | Gray |
-| ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000?text=+) | LightGray |
+| ![#4c1](https://via.placeholder.com/15/4c1/000000.png?text=+)| BrightGreen |
+| ![#97CA00](https://via.placeholder.com/15/97CA00/000000.png?text=+) | Green |
+| ![#dfb317](https://via.placeholder.com/15/dfb317/000000.png?text=+) | Yellow |
+| ![#a4a61d](https://via.placeholder.com/15/a4a61d/000000.png?text=+) | YellowGreen |
+| ![#fe7d37](https://via.placeholder.com/15/fe7d37/000000.png?text=+) | Orange |
+| ![#e05d44](https://via.placeholder.com/15/e05d44/000000.png?text=+) | Red |
+| ![#007ec6](https://via.placeholder.com/15/007ec6/000000.png?text=+) | Blue |
+| ![#555](https://via.placeholder.com/15/555/000000.png?text=+) | Gray |
+| ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000.png?text=+) | LightGray |
 
 Thanks to [Rebornix](https://github.com/rebornix) and [DotBadge library](https://github.com/rebornix/DotBadge)
 
