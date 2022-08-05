@@ -5,7 +5,6 @@
         string Draw(string subject, string status, string statusColor, Style style);
     }
 
-
     public enum Style
     {
         Flat,
@@ -35,21 +34,22 @@
     {
         private readonly double[] _charWidthTable = FontsWidth.Verdana110;
 
+        public bool ShowIcon { get; set; } = false;
+        public bool ShowSubject { get; set; } = true;
+
         public string Draw(string subject, string status, string statusColor, Style style)
         {
             string fontFamily = "Verdana,DejaVu Sans,sans-serif";
             int fontSize = 110;
             int scale = 1;
             string accessibleText = $"{subject}_{status}";
-            bool showIcon = false;
-            bool showSubject = true;
             string subjectColor = "#555";
             statusColor = ParseColor(statusColor);
 
             double iconWidth = 0;
-            double iconSpanWidth = showIcon ? (subject.Length > 0 ? iconWidth + 30 : iconWidth - 18) : 0;
-            double sbTextStart = showIcon ? (iconSpanWidth + 50) : 50;
-            double sbTextWidth = showSubject ? CalcWidth(subject) : 0;
+            double iconSpanWidth = ShowIcon ? (subject.Length > 0 ? iconWidth + 30 : iconWidth - 18) : 0;
+            double sbTextStart = ShowIcon ? (iconSpanWidth + 50) : 50;
+            double sbTextWidth = ShowSubject ? CalcWidth(subject) : 0;
             double stTextWidth = CalcWidth(status);
             double sbRectWidth = sbTextWidth + 100 + iconSpanWidth;
             double stRectWidth = stTextWidth + 100;
@@ -99,6 +99,7 @@
             {
                 return input;
             }
+
             return (string)fieldInfo.GetValue(type);
         }
     }
