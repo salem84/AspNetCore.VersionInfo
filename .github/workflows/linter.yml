@@ -17,8 +17,10 @@ on:
   push:
     branches-ignore: [master]
     # Remove the line above to run when pushing to master
+    paths: [ 'src/**' ]
   pull_request:
     branches: [master]
+    paths: [ 'src/**' ]
   workflow_dispatch:
 
 ###############
