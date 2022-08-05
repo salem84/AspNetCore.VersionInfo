@@ -47,7 +47,11 @@
             statusColor = ParseColor(statusColor);
 
             double iconWidth = 0;
-            double iconSpanWidth = ShowIcon ? (subject.Length > 0 ? iconWidth + 30 : iconWidth - 18) : 0;
+            double iconSpanWidth = 0;
+            if(ShowIcon)
+            {
+                iconSpanWidth = subject.Length > 0 ? iconWidth + 30 : iconWidth - 18;
+            }
             double sbTextStart = ShowIcon ? (iconSpanWidth + 50) : 50;
             double sbTextWidth = ShowSubject ? CalcWidth(subject) : 0;
             double stTextWidth = CalcWidth(status);
