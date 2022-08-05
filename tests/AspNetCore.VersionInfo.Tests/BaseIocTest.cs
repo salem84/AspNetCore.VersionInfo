@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using System;
 
 namespace AspNetCore.VersionInfo.Tests
 {

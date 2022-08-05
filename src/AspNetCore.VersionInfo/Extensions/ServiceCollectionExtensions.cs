@@ -1,7 +1,7 @@
-﻿using AspNetCore.VersionInfo;
+﻿using System;
+using AspNetCore.VersionInfo;
 using AspNetCore.VersionInfo.Configuration;
 using AspNetCore.VersionInfo.Services;
-using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

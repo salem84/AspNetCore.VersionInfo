@@ -44,5 +44,4 @@ namespace AspNetCore.VersionInfo.Tests
             return Path.GetFullPath(Path.Combine(applicationBasePath, relativePath, applicationName));
         }
     }
-
 }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Builder;
 
 namespace AspNetCore.VersionInfo.Endpoint
 {

@@ -12,7 +12,6 @@ namespace AspNetCore.VersionInfo.Samples.CustomOptions
         public const string CUSTOM_HTML_URL = "custom-version-html";
         public const string CUSTOM_JSON_URL = "custom-version-json";
 
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;

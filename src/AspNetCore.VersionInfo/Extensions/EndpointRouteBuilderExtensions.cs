@@ -1,9 +1,9 @@
-﻿using AspNetCore.VersionInfo.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using AspNetCore.VersionInfo.Configuration;
 using AspNetCore.VersionInfo.Endpoint;
 using AspNetCore.VersionInfo.Middleware;
 using Microsoft.AspNetCore.Routing;
-using System;
-using System.Collections.Generic;
 
 namespace Microsoft.AspNetCore.Builder
 {
