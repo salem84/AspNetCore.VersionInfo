@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.VersionInfo.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomOptions", "samples\CustomOptions\CustomOptions.csproj", "{FCE98365-2348-42DD-8444-023B25AF2AEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimal", "samples\Minimal\Minimal.csproj", "{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minimal", "samples\Minimal\Minimal.csproj", "{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7597E6E0-69AA-4A41-99A4-18E85B0AD0D0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
