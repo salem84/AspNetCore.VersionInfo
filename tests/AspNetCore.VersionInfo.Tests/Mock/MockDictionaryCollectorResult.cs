@@ -1,17 +1,11 @@
-﻿using AspNetCore.VersionInfo.Models;
+﻿using System.Collections.Generic;
 using AspNetCore.VersionInfo.Models.Collectors;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Tests.Mock
 {
     class MockDictionaryCollectorResult : ICollectorResult/*, IEnumerable<KeyValuePair<string, string>>*/
     {
-        private Dictionary<string,string> Results { get; set; }
+        private Dictionary<string, string> Results { get; set; }
 
         public int Count => Results.Count;
 

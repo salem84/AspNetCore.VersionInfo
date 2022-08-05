@@ -1,13 +1,8 @@
-﻿using AspNetCore.VersionInfo.Models;
-using AspNetCore.VersionInfo.Models.Collectors;
+﻿using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Middleware
@@ -58,7 +53,7 @@ namespace AspNetCore.VersionInfo.Middleware
 
                 // Set label found in QueryString, otherwise set as Key
                 var label = context.Request.Query[Constants.BADGE_PARAM_LABEL];
-                if(string.IsNullOrEmpty(label))
+                if (string.IsNullOrEmpty(label))
                 {
                     label = id;
                 }

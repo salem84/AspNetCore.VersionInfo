@@ -1,13 +1,10 @@
-﻿using AspNetCore.VersionInfo.Models.Collectors;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Providers;
 using AspNetCore.VersionInfo.Services;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests.Collectors
@@ -41,7 +38,7 @@ namespace AspNetCore.VersionInfo.Tests.Collectors
             // Act
             var result = collector.AggregateData() as FlatCollectorResult;
             var resultDict = result.ToDictionary(includeProviderName: false);
-            
+
             // Assert
             Assert.Equal(resultDict, simpleData);
         }
@@ -51,10 +48,10 @@ namespace AspNetCore.VersionInfo.Tests.Collectors
         {
             // Arrange
             var collector = new FlatInfoCollector(new List<IInfoProvider>(), _mockLogger.Object);
-            
+
             // Act
             var result = collector.AggregateData();
-            
+
             // Assert
             Assert.True(result.Count == 0);
         }
@@ -82,7 +79,7 @@ namespace AspNetCore.VersionInfo.Tests.Collectors
                 .Returns(simpleData2);
 
             var collector = new FlatInfoCollector(new List<IInfoProvider>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);
-            
+
             // Act
             var result = collector.AggregateData() as FlatCollectorResult;
             var resultDict = result.ToDictionary(includeProviderName: false);
@@ -117,7 +114,7 @@ namespace AspNetCore.VersionInfo.Tests.Collectors
                 .Returns(nameof(infoHandler2));
 
             var collector = new FlatInfoCollector(new List<IInfoProvider>() { infoHandler1.Object, infoHandler2.Object }, _mockLogger.Object);
-            
+
             // Act
             var result = collector.AggregateData() as FlatCollectorResult;
             var resultDict = result.ToDictionary(includeProviderName: false);

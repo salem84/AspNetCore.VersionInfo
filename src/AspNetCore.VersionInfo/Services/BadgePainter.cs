@@ -1,8 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-
-namespace AspNetCore.VersionInfo.Services
+﻿namespace AspNetCore.VersionInfo.Services
 {
     public interface IBadgePainter
     {
@@ -38,7 +34,7 @@ namespace AspNetCore.VersionInfo.Services
     public class BadgePainter : IBadgePainter
     {
         private double[] _charWidthTable = FontsWidth.Verdana110;
-        
+
         public string Draw(string subject, string status, string statusColor, Style style)
         {
             string fontFamily = "Verdana,DejaVu Sans,sans-serif";

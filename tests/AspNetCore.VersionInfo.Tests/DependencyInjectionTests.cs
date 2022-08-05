@@ -1,9 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests
@@ -18,7 +14,7 @@ namespace AspNetCore.VersionInfo.Tests
 
             // Act
             Action action = () => serviceCollection.AddVersionInfo();
-            
+
             // Assert
             Assert.Throws<ArgumentNullException>(action);
         }
