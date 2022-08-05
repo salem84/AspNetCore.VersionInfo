@@ -39,7 +39,7 @@ namespace AspNetCore.VersionInfo.Middleware
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);
                 if (!found)
                 {
-                    Logger.LogWarning($"Badge Endpoint Error: {Messages.BADGE_KEY_NOT_FOUND} - {id}");
+                    Logger.LogWarning($"Badge Endpoint Error: {Messages.BADGE_KEY_NOT_FOUND} - {@id}", id);
                     context.Response.StatusCode = StatusCodes.Status404NotFound;
                     return;
                 }

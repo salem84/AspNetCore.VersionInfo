@@ -22,7 +22,7 @@ namespace AspNetCore.VersionInfo.Services
             var result = new FlatCollectorResult();
             foreach (var handler in _infoHandlers)
             {
-                _logger.LogDebug($"Elaborating {handler.Name} provider");
+                _logger.LogDebug("Elaborating {handlerName} provider", handler.Name);
                 foreach (var d in handler.GetData())
                 {
 

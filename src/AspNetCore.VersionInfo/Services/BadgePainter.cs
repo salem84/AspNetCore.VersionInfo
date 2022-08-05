@@ -33,7 +33,7 @@
 
     public class BadgePainter : IBadgePainter
     {
-        private double[] _charWidthTable = FontsWidth.Verdana110;
+        private readonly double[] _charWidthTable = FontsWidth.Verdana110;
 
         public string Draw(string subject, string status, string statusColor, Style style)
         {
