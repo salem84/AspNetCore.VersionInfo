@@ -6,10 +6,15 @@ using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.VersionInfo.Services
 {
-    class FlatInfoCollector : IInfoCollector
+    internal partial class FlatInfoCollector : IInfoCollector
     {
         private readonly IEnumerable<IInfoProvider> _infoHandlers;
         private readonly ILogger<FlatInfoCollector> _logger;
+
+        #region LoggerMessage
+        [LoggerMessage(Level = LogLevel.Debug, Message = "Elaborating {handlerName} provider")]
+        private partial void LogElaboratingHandler(string handlerName);
+        #endregion
 
         public FlatInfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<FlatInfoCollector> logger)
         {
@@ -22,7 +27,7 @@ namespace AspNetCore.VersionInfo.Services
             var result = new FlatCollectorResult();
             foreach (var handler in _infoHandlers)
             {
-                _logger.LogDebug("Elaborating {handlerName} provider", handler.Name);
+                LogElaboratingHandler(handler.Name);
                 foreach (var d in handler.GetData())
                 {
                     result.Add(new VersionDataProviderKeyValueResult()

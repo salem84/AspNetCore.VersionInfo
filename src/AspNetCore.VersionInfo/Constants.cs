@@ -45,11 +45,4 @@
 
         public const string BADGE_DEFAULT_COLOR = "Green";
     }
-
-    public static class Messages
-    {
-        public const string DUPLICATED_KEY = "Duplicated key: {0}";
-        public const string BADGE_KEY_NOT_FOUND = "Key not found";
-        public const string BADGE_VERSIONINFOID_EMPTY = "VersionInfoId not valid in url";
-    }
 }

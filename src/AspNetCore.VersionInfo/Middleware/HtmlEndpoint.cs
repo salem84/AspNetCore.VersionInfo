@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 
 namespace AspNetCore.VersionInfo.Middleware
 {
-    class HtmlEndpoint
+    internal class HtmlEndpoint
     {
         private const string EmbeddedFileNamespace = "AspNetCore.VersionInfo.assets";
 
