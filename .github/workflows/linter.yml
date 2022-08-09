@@ -53,7 +53,7 @@ jobs:
         uses: github/super-linter@v4
         env:
           LINTER_RULES_PATH: '.'
-          EDITORCONFIG_FILE_NAME: '.editorconfig'
+          EDITORCONFIG_FILE_NAME: '.editorconfig2'
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CSHARP: true
           DEFAULT_BRANCH: master
