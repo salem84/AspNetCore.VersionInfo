@@ -1,4 +1,6 @@
-﻿namespace AspNetCore.VersionInfo.Services
+﻿using System;
+
+namespace AspNetCore.VersionInfo.Services
 {
     public interface IBadgePainter
     {
@@ -48,10 +50,12 @@
 
             double iconWidth = 0;
             double iconSpanWidth = 0;
-            if(ShowIcon)
+            if (ShowIcon)
             {
                 iconSpanWidth = subject.Length > 0 ? iconWidth + 30 : iconWidth - 18;
+                throw new NotImplementedException("ShowIcon Flag not implemented");
             }
+
             double sbTextStart = ShowIcon ? (iconSpanWidth + 50) : 50;
             double sbTextWidth = ShowSubject ? CalcWidth(subject) : 0;
             double stTextWidth = CalcWidth(status);
