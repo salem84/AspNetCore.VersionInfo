@@ -32,10 +32,18 @@ jobs:
     - name: dotnet publish
       run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-    - name: Deploy to Azure Web App
+    - name: Deploy to Azure Web App (Windows)
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'aspnetcoreversioninfo-demo'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_0819e02428474e0e9a2ecf8fe5c64165 }}
+        package: ${{env.DOTNET_ROOT}}/myapp
+        
+    - name: Deploy to Azure Web App (Linux)
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'aspnetcoreversioninfo-linux-demo'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_Linux_Demosite }}
         package: ${{env.DOTNET_ROOT}}/myapp 
