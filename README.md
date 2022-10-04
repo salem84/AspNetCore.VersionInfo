@@ -34,14 +34,17 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 
 ## Demo
 
-**Windows Azure AppService URL:** https://aspnetcoreversioninfo-demo.azurewebsites.net
-**Linux Azure AppService URL:** https://aspnetcoreversioninfo-linux-demo.azurewebsites.net
-
-|   |  Endpoint |
-| - | - |
-| *HTML*   |   [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html)               |
-| *JSON*  |   [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json)    |
-| *Badge* |   [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=BrightGreen&label=version)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=BrightGreen&label=version) |
+|   | URL |
+|---|:-----:|
+|![Win](docs/images/win_med.png) **Windows Web App**| https://aspnetcoreversioninfo-demo.azurewebsites.net | 
+|![Win](docs/images/win_med.png) **Windows HTML Endpoint** | [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html) | 
+|![Win](docs/images/win_med.png) **Windows JSON Endpoint** | [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json) |
+|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=BrightGreen&label=version)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/EntryAssemblyVersion?color=BrightGreen&label=version) | 
+| | |
+|![Linux](docs/images/linux_med.png) **Linux Web App**| https://aspnetcoreversioninfo-linux-demo.azurewebsites.net | 
+|![Linux](docs/images/linux_med.png) **Linux HTML Endpoint**| [/version/html](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/html) | 
+|![Linux](docs/images/linux_med.png) **Linux JSON Endpoint**| [/version/json](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/json) | 
+|![Linux](docs/images/linux_med.png) **Linux Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.FrameworkDescription?color=Red&label=framework)](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.FrameworkDescription?color=Red&label=framework) | 
 
 ## Getting Started
 
