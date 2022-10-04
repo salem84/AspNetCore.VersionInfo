@@ -34,7 +34,8 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 
 ## Demo
 
-**URL:** https://aspnetcoreversioninfo-demo.azurewebsites.net
+**Windows Azure AppService URL:** https://aspnetcoreversioninfo-demo.azurewebsites.net
+**Linux Azure AppService URL:** https://aspnetcoreversioninfo-linux-demo.azurewebsites.net
 
 |   |  Endpoint |
 | - | - |
