@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AspNetCore.VersionInfo
+﻿namespace AspNetCore.VersionInfo
 {
     public static class Constants
     {
@@ -49,13 +43,6 @@ namespace AspNetCore.VersionInfo
         public const string BADGE_PARAM_LABEL = "label";
         public const string BADGE_PARAM_COLOR = "color";
 
-        public const string BADGE_DEFAULT_COLOR = "Green";
-    }
-
-    public static class Messages
-    {
-        public const string DUPLICATED_KEY = "Duplicated key: {0}";
-        public const string BADGE_KEY_NOT_FOUND = "Key not found";
-        public const string BADGE_VERSIONINFOID_EMPTY = "VersionInfoId not valid in url";
+        public const string BADGE_DEFAULT_COLOR = "Green"; 
     }
 }

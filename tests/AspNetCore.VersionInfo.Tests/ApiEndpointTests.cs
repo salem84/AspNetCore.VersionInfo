@@ -1,15 +1,9 @@
-﻿using AspNetCore.VersionInfo.Middleware;
+﻿using System.IO;
+using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Middleware;
 using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests
@@ -51,7 +45,5 @@ namespace AspNetCore.VersionInfo.Tests
             // Assert
             //Assert.True(items.Count() > 0, "No data in JSON response");
         }
-
-
     }
 }

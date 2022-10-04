@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,7 +14,7 @@ namespace AspNetCore.VersionInfo.Tests
             var client = new TestSite(typeof(Samples.Basic.Startup)).BuildClient();
 
             var indexResponse = await client.GetAsync(Constants.DEFAULT_API_ENDPOINT_URL);
-           
+
             var body = await indexResponse.Content.ReadAsStringAsync();
             var jsonData = JsonDocument.Parse(body);
             var items = jsonData.RootElement.EnumerateObject();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32519.111
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{A861D26B-FE01-4F21-8406-491A3AA51EDC}"
 EndProject
@@ -16,6 +16,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.VersionInfo.Tests", "tests\AspNetCore.VersionInfo.Tests\AspNetCore.VersionInfo.Tests.csproj", "{39D0FF95-8133-4361-8890-9CC5B5BEE8EF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomOptions", "samples\CustomOptions\CustomOptions.csproj", "{FCE98365-2348-42DD-8444-023B25AF2AEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minimal", "samples\Minimal\Minimal.csproj", "{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7597E6E0-69AA-4A41-99A4-18E85B0AD0D0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,10 @@ Global
 		{FCE98365-2348-42DD-8444-023B25AF2AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE98365-2348-42DD-8444-023B25AF2AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE98365-2348-42DD-8444-023B25AF2AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +59,7 @@ Global
 		{9F800954-126A-4AB2-AB62-D5DF5938B135} = {A861D26B-FE01-4F21-8406-491A3AA51EDC}
 		{39D0FF95-8133-4361-8890-9CC5B5BEE8EF} = {CF15560A-CAC6-428D-99B3-E751DB2852A4}
 		{FCE98365-2348-42DD-8444-023B25AF2AEF} = {A861D26B-FE01-4F21-8406-491A3AA51EDC}
+		{F1E4ACE6-7B65-46D4-A404-CCEC1E55485D} = {A861D26B-FE01-4F21-8406-491A3AA51EDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63AF568A-066B-46E8-AB2B-E367DFD9C84D}

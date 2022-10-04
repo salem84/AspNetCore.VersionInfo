@@ -1,15 +1,9 @@
 using AspNetCore.VersionInfo.Providers;
-using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Samples.CustomOptions
 {
@@ -17,7 +11,6 @@ namespace AspNetCore.VersionInfo.Samples.CustomOptions
     {
         public const string CUSTOM_HTML_URL = "custom-version-html";
         public const string CUSTOM_JSON_URL = "custom-version-json";
-
 
         public Startup(IConfiguration configuration)
         {

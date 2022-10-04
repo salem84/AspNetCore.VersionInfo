@@ -26,7 +26,7 @@ env:
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
-  build:  
+  build:
     runs-on: ubuntu-latest
     env:
       CONFIGURATION: "Release"
@@ -65,7 +65,7 @@ jobs:
 
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.9.7
+      uses: gittools/actions/gitversion/execute@v0.9.13
 
     - name: Build info
       run: |
@@ -73,7 +73,7 @@ jobs:
         echo "-----------------------------------------------------------------------"
         echo "Configuration: $CONFIGURATION"
         echo "Run ID: ${{ github.run_id }}"
-        echo "Output Run Number: ${{ github.run_number }}" 
+        echo "Output Run Number: ${{ github.run_number }}"
         echo "Major: ${{ steps.gitversion.outputs.Major }}"
         echo "Minor: ${{ steps.gitversion.outputs.Minor }}"
         echo "Patch: ${{ steps.gitversion.outputs.Patch }}"
@@ -108,7 +108,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
 
     - name: Update project version
       uses: roryprimrose/set-vs-sdk-project-version@v1
@@ -128,7 +128,7 @@ jobs:
         informationalVersion: ${{ steps.gitversion.outputs.InformationalVersion }}
       if: startsWith(github.ref, 'refs/tags/')
 
-    #### Start SonarCloud steps 
+    #### Start SonarCloud steps
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
@@ -155,7 +155,7 @@ jobs:
         mkdir -p ~/.sonar/scanner
         dotnet tool update dotnet-sonarscanner --tool-path ~/.sonar/scanner
 
-    - name: Start Sonarcloud 
+    - name: Start Sonarcloud
       run: |
         ~/.sonar/scanner/dotnet-sonarscanner begin \
           /k:"salem84_AspNetCore.VersionInfo" \
@@ -175,7 +175,7 @@ jobs:
 
     - name: Pack
       run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source src/$PROJECT_NAME/$PROJECT_NAME.*proj
-    
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -184,7 +184,7 @@ jobs:
 
     - name: Stop Sonarcloud
       run: ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
-        
+
   publish:
     needs: build
     if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') }}
@@ -194,7 +194,7 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: nupkg
-      
+
       - name: Push to GitHub Feed
         shell: bash
         run: |
@@ -202,7 +202,7 @@ jobs:
           do
             curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
           done
-      
+
       - name: Push to NuGet Feed
         run: dotnet nuget push ./nupkg/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
         if: startsWith(github.ref, 'refs/tags/')

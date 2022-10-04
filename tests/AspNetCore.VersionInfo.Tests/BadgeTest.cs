@@ -1,15 +1,12 @@
-﻿using AspNetCore.VersionInfo.Middleware;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Middleware;
 using AspNetCore.VersionInfo.Services;
 using AspNetCore.VersionInfo.Tests.Mock;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests
@@ -33,7 +30,7 @@ namespace AspNetCore.VersionInfo.Tests
             defaultContext.Request.RouteValues.Add("versionInfoId", "Key1");
 
             var infoHandler = new Mock<IInfoCollector>();
-            
+
             // Create mock versionInfo
             var simpleData = new MockDictionaryCollectorResult(new Dictionary<string, string>
                 {
@@ -41,7 +38,7 @@ namespace AspNetCore.VersionInfo.Tests
                 });
             infoHandler.Setup(x => x.AggregateData()).Returns(simpleData);
             RegisterServiceWithInstance<IInfoCollector>(infoHandler.Object);
-            
+
             var mockLogger = new Mock<ILogger<BadgeEndpoint>>();
             var mockBadgePainter = new Mock<IBadgePainter>();
             var svgReturnForKey1 = "<svg>Value1</svg>";
@@ -61,6 +58,5 @@ namespace AspNetCore.VersionInfo.Tests
             var body = new StreamReader(defaultContext.Response.Body).ReadToEnd();
             Assert.Equal(svgReturnForKey1, body);
         }
-
     }
 }

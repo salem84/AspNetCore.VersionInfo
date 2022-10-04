@@ -1,14 +1,4 @@
-﻿using AspNetCore.VersionInfo.Models;
-using AspNetCore.VersionInfo.Models.Collectors;
-using AspNetCore.VersionInfo.Providers;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AspNetCore.VersionInfo.Models.Collectors;
 
 namespace AspNetCore.VersionInfo.Services
 {

@@ -14,7 +14,7 @@ Library offers some in-bundle providers to capture versions information, such as
 
 ```js
 {
-    "RuntimeInformation.FrameworkDescription":".NET 5.0.7",
+    "RuntimeInformation.FrameworkDescription":".NET 6.0.5",
     "EntryAssemblyVersion":"2.5.0.0",
 
     ...
@@ -24,7 +24,7 @@ Library offers some in-bundle providers to capture versions information, such as
 Moreover it is possible create a specific class to collect additional data as described in [Providers](#providers) section.
 
 ## Prerequisites
-This library currently targets `net5.0`
+This library currently targets `net6.0`
 
 ## Download
 

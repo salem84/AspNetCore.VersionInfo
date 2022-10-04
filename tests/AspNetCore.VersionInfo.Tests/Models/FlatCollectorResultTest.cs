@@ -1,10 +1,7 @@
-﻿using AspNetCore.VersionInfo.Models;
-using AspNetCore.VersionInfo.Models.Collectors;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models;
+using AspNetCore.VersionInfo.Models.Collectors;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests.Models
@@ -132,7 +129,7 @@ namespace AspNetCore.VersionInfo.Tests.Models
             // Assert
             var expectedResult = new Dictionary<string, string>()
             {
-                {"Provider1:Key1", "Value1" } 
+                {"Provider1:Key1", "Value1" }
             };
 
             Assert.Equal(expectedResult, dictResult);

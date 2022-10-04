@@ -1,13 +1,7 @@
-﻿using AspNetCore.VersionInfo;
+﻿using System;
+using AspNetCore.VersionInfo;
 using AspNetCore.VersionInfo.Configuration;
-using AspNetCore.VersionInfo.Models;
-using AspNetCore.VersionInfo.Providers;
 using AspNetCore.VersionInfo.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

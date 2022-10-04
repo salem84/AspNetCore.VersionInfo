@@ -1,21 +1,21 @@
-﻿using AspNetCore.VersionInfo.Models;
-using AspNetCore.VersionInfo.Models.Collectors;
+﻿using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Middleware
 {
-    class BadgeEndpoint
+    internal partial class BadgeEndpoint
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly ILogger<BadgeEndpoint> Logger;
+
+        #region LoggerMessage
+        [LoggerMessage(Level = LogLevel.Warning, Message = "Key not found: {versionInfoId}")]
+        private partial void LogBadgeKeyNotFound(string versionInfoId);
+        #endregion
 
         public BadgeEndpoint(RequestDelegate next, IServiceScopeFactory serviceScopeFactory, ILogger<BadgeEndpoint> logger)
         {
@@ -44,7 +44,7 @@ namespace AspNetCore.VersionInfo.Middleware
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);
                 if (!found)
                 {
-                    Logger.LogWarning($"Badge Endpoint Error: {Messages.BADGE_KEY_NOT_FOUND} - {id}");
+                    LogBadgeKeyNotFound(id);
                     context.Response.StatusCode = StatusCodes.Status404NotFound;
                     return;
                 }
@@ -58,7 +58,7 @@ namespace AspNetCore.VersionInfo.Middleware
 
                 // Set label found in QueryString, otherwise set as Key
                 var label = context.Request.Query[Constants.BADGE_PARAM_LABEL];
-                if(string.IsNullOrEmpty(label))
+                if (string.IsNullOrEmpty(label))
                 {
                     label = id;
                 }
