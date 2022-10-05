@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Demo site
+name: Build and deploy Demo sites
 
 on:
   workflow_dispatch:
@@ -32,10 +32,18 @@ jobs:
     - name: dotnet publish
       run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-    - name: Deploy to Azure Web App
+    - name: Deploy to Azure Web App (Windows)
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'aspnetcoreversioninfo-demo'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_0819e02428474e0e9a2ecf8fe5c64165 }}
+        package: ${{env.DOTNET_ROOT}}/myapp
+        
+    - name: Deploy to Azure Web App (Linux)
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'aspnetcoreversioninfo-linux-demo'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_Linux_Demosite }}
         package: ${{env.DOTNET_ROOT}}/myapp 
