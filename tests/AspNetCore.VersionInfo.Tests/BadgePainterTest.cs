@@ -1,5 +1,4 @@
-﻿using System;
-using AspNetCore.VersionInfo.Services;
+﻿using AspNetCore.VersionInfo.Services;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests
@@ -13,7 +12,7 @@ namespace AspNetCore.VersionInfo.Tests
             var painter = new BadgePainter();
 
             // Act
-            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR);
 
             // Assert
             Assert.StartsWith("<svg", badge);
@@ -24,10 +23,9 @@ namespace AspNetCore.VersionInfo.Tests
         {
             // Arrange
             var painter = new BadgePainter();
-            painter.ShowIcon = false;
 
             // Act
-            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR);
 
             // Assert
             Assert.DoesNotContain("<icon", badge);
@@ -38,13 +36,14 @@ namespace AspNetCore.VersionInfo.Tests
         {
             // Arrange
             var painter = new BadgePainter();
-            painter.ShowIcon = true;
 
             // Act
-            Action action = () => painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat, "github");
 
             // Assert
-            Assert.Throws<NotImplementedException>(action);
+            Assert.Contains("<image", badge);
+            Assert.Contains("https://cdn.simpleicons.org/github/white", badge);
+
         }
 
         [Fact]
@@ -54,7 +53,7 @@ namespace AspNetCore.VersionInfo.Tests
             var painter = new BadgePainter();
 
             // Act
-            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR);
 
             // Assert
             Assert.StartsWith("<svg", badge);

@@ -1,9 +1,9 @@
-﻿using AspNetCore.VersionInfo.Models.Collectors;
+﻿using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Middleware
 {
@@ -63,8 +63,11 @@ namespace AspNetCore.VersionInfo.Middleware
                     label = id;
                 }
 
+                // Set icon found in QueryString
+                var iconName = context.Request.Query[Constants.BADGE_PARAM_ICON];
+
                 // Draw badge
-                responseContent = badgePainter.Draw(label, versionInfoValue, color, Style.Flat);
+                responseContent = badgePainter.Draw(label, versionInfoValue, color, Style.Flat, iconName);
             }
 
             // Set ContentType as image/svg+xml

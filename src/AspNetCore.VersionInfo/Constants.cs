@@ -42,6 +42,7 @@
         public const string BADGE_PARAM_VERSIONINFOID = "versionInfoId";
         public const string BADGE_PARAM_LABEL = "label";
         public const string BADGE_PARAM_COLOR = "color";
+        public const string BADGE_PARAM_ICON = "icon";
 
         public const string BADGE_DEFAULT_COLOR = "Green";
     }

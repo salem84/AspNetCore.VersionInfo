@@ -42,7 +42,7 @@ namespace AspNetCore.VersionInfo.Tests
             var mockLogger = new Mock<ILogger<BadgeEndpoint>>();
             var mockBadgePainter = new Mock<IBadgePainter>();
             var svgReturnForKey1 = "<svg>Value1</svg>";
-            mockBadgePainter.Setup(x => x.Draw("Key1", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Style>())).Returns(svgReturnForKey1);
+            mockBadgePainter.Setup(x => x.Draw("Key1", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Style>(), It.IsAny<string>())).Returns(svgReturnForKey1);
             RegisterServiceWithInstance<IBadgePainter>(mockBadgePainter.Object);
 
             // Act

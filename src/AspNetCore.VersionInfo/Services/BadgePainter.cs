@@ -1,10 +1,10 @@
-﻿using System;
-
-namespace AspNetCore.VersionInfo.Services
+﻿namespace AspNetCore.VersionInfo.Services
 {
     public interface IBadgePainter
     {
+        string Draw(string subject, string status, string statusColor);
         string Draw(string subject, string status, string statusColor, Style style);
+        string Draw(string subject, string status, string statusColor, Style style, string iconName);
     }
 
     public enum Style
@@ -36,11 +36,21 @@ namespace AspNetCore.VersionInfo.Services
     {
         private readonly double[] _charWidthTable = FontsWidth.Verdana110;
 
-        public bool ShowIcon { get; set; } = false;
-        public bool ShowSubject { get; set; } = true;
+        public string Draw(string subject, string status, string statusColor)
+        {
+            return Draw(subject, status, statusColor, Style.Flat, null);
+        }
 
         public string Draw(string subject, string status, string statusColor, Style style)
         {
+            return Draw(subject, status, statusColor, style, null);
+        }
+
+        public string Draw(string subject, string status, string statusColor, Style style, string iconName)
+        {
+            bool showIcon = !string.IsNullOrEmpty(iconName);
+            bool showSubject = true;
+
             string fontFamily = "Verdana,DejaVu Sans,sans-serif";
             int fontSize = 110;
             int scale = 1;
@@ -48,16 +58,19 @@ namespace AspNetCore.VersionInfo.Services
             string subjectColor = "#555";
             statusColor = ParseColor(statusColor);
 
-            double iconWidth = 0;
+            double iconWidth = 15 * 10;
             double iconSpanWidth = 0;
-            if (ShowIcon)
+            string iconSvgPart = string.Empty;
+            if (showIcon)
             {
+                string iconUrl = $"https://cdn.simpleicons.org/{iconName}/white";
+
                 iconSpanWidth = subject.Length > 0 ? iconWidth + 30 : iconWidth - 18;
-                throw new NotImplementedException("ShowIcon Flag not implemented");
+                iconSvgPart = $$"""<image x="40" y="25" width="{{iconWidth}}" height="132" xlink:href="{{iconUrl}}"/>""";
             }
 
-            double sbTextStart = ShowIcon ? (iconSpanWidth + 50) : 50;
-            double sbTextWidth = ShowSubject ? CalcWidth(subject) : 0;
+            double sbTextStart = showIcon ? (iconSpanWidth + 50) : 50;
+            double sbTextWidth = showSubject ? CalcWidth(subject) : 0;
             double stTextWidth = CalcWidth(status);
             double sbRectWidth = sbTextWidth + 100 + iconSpanWidth;
             double stRectWidth = stTextWidth + 100;
@@ -82,6 +95,7 @@ namespace AspNetCore.VersionInfo.Services
                     <text x="{{sbRectWidth + 55}}" y="148" textLength="{{stTextWidth}}" fill="#000" opacity="0.25">{{status}}</text>
                     <text x="{{sbRectWidth + 45}}" y="138" textLength="{{stTextWidth}}">{{status}}</text>
                   </g>
+                  {{iconSvgPart}}
                 </svg>
                 """;
 
