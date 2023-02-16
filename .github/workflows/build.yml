@@ -1,12 +1,10 @@
 # based on https://dusted.codes/github-actions-for-dotnet-core-nuget-packages
-name: .NET
+name: CI .NET
 
 on:
   push:
   pull_request:
-  # release:
-  #   types:
-  #     - published
+  workflow_dispatch:
 
 env:
   # Stop wasting time caching packages
@@ -17,13 +15,9 @@ env:
   PROJECT_NAME: AspNetCore.VersionInfo
   # GitHub Packages Feed settings
   GITHUB_FEED: https://nuget.pkg.github.com/salem84/
-  GITHUB_USER: salem84
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # Official NuGet Feed settings
   NUGET_FEED: https://api.nuget.org/v3/index.json
   NUGET_KEY: ${{ secrets.NUGET_KEY }}
-
-  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
   build:
@@ -32,40 +26,21 @@ jobs:
       CONFIGURATION: "Release"
 
     steps:
-    # - name: Inspect contexts
-    #   run: |
-    #     echo "The github context is:"
-    #     echo "${{ toJson(github) }}"
-    #     echo ""
-    #     echo "The job context is:"
-    #     echo "${{ toJson(job) }}"
-    #     echo ""
-    #     echo "The steps context is:"
-    #     echo "${{ toJson(steps) }}"
-    #     echo ""
-    #     echo "The runner context is:"
-    #     echo "${{ toJson(runner) }}"
-    #     echo ""
-    #     echo "The strategy context is:"
-    #     echo "${{ toJson(strategy) }}"
-    #     echo ""
-    #     echo "The matrix context is:"
-    #     echo "${{ toJson(matrix) }}"
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Fetch all history for all tags and branches
       run: git fetch --prune --unshallow
 
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.7
+      uses: gittools/actions/gitversion/setup@v0.9.15
       with:
         versionSpec: '5.x'
 
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.9.13
+      uses: gittools/actions/gitversion/execute@v0.9.15
 
     - name: Build info
       run: |
@@ -106,7 +81,7 @@ jobs:
         echo "CommitDate: ${{ steps.gitversion.outputs.CommitDate }}"
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
 
@@ -130,12 +105,13 @@ jobs:
 
     #### Start SonarCloud steps
     - name: Set up JDK 11
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v3
       with:
-        java-version: 1.11
+        distribution: 'temurin'
+        java-version: '11'
 
     - name: Cache SonarCloud packages
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/sonar/cache
         key: ${{ runner.os }}-sonar
@@ -143,7 +119,7 @@ jobs:
 
     - name: Cache SonarCloud scanner
       id: cache-sonar-scanner
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.sonar/scanner
         key: ${{ runner.os }}-sonar-scanner
@@ -156,12 +132,15 @@ jobs:
         dotnet tool update dotnet-sonarscanner --tool-path ~/.sonar/scanner
 
     - name: Start Sonarcloud
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         ~/.sonar/scanner/dotnet-sonarscanner begin \
           /k:"salem84_AspNetCore.VersionInfo" \
           /o:"salem84" \
           /d:sonar.host.url="https://sonarcloud.io" \
-          /d:sonar.login="$SONAR_TOKEN" \
+          /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
           /d:sonar.cs.opencover.reportsPaths="**\coverage.opencover.xml"
 
     - name: Restore dependencies
@@ -177,13 +156,16 @@ jobs:
       run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source src/$PROJECT_NAME/$PROJECT_NAME.*proj
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: nupkg
         path: ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
 
     - name: Stop Sonarcloud
-      run: ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="$SONAR_TOKEN"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   publish:
     needs: build
@@ -191,18 +173,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: nupkg
 
       - name: Push to GitHub Feed
         shell: bash
-        run: |
-          for f in ./nupkg/*.nupkg
-          do
-            curl -vX PUT -u "$GITHUB_USER:$GITHUB_TOKEN" -F package=@$f $GITHUB_FEED
-          done
+        run: dotnet nuget push *.nupkg --source $GITHUB_FEED --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to NuGet Feed
-        run: dotnet nuget push ./nupkg/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
         if: startsWith(github.ref, 'refs/tags/')
+        run: dotnet nuget push *.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+        

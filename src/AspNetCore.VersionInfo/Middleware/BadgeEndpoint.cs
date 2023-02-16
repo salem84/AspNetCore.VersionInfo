@@ -1,11 +1,4 @@
-﻿using System.Threading.Tasks;
-using AspNetCore.VersionInfo.Models.Collectors;
-using AspNetCore.VersionInfo.Services;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-namespace AspNetCore.VersionInfo.Middleware
+﻿namespace AspNetCore.VersionInfo.Middleware
 {
     internal partial class BadgeEndpoint
     {
