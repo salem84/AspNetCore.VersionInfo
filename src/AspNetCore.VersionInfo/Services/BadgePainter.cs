@@ -70,7 +70,7 @@
             }
 
             double sbTextStart = showIcon ? (iconSpanWidth + 50) : 50;
-            double sbTextWidth = showSubject ? CalcWidth(subject) : 0;
+            double sbTextWidth = CalcWidth(subject);
             double stTextWidth = CalcWidth(status);
             double sbRectWidth = sbTextWidth + 100 + iconSpanWidth;
             double stRectWidth = stTextWidth + 100;

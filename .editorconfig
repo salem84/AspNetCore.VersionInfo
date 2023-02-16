@@ -278,3 +278,4 @@ dotnet_diagnostic.IDE0010.severity = none
 
 # IDE0072: Add missing cases
 dotnet_diagnostic.IDE0072.severity = none
+csharp_style_prefer_top_level_statements = true:silent
