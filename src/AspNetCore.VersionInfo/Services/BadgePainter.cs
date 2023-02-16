@@ -2,8 +2,6 @@
 {
     public interface IBadgePainter
     {
-        string Draw(string subject, string status, string statusColor);
-        string Draw(string subject, string status, string statusColor, Style style);
         string Draw(string subject, string status, string statusColor, Style style, string iconName);
     }
 
@@ -35,16 +33,6 @@
     public class BadgePainter : IBadgePainter
     {
         private readonly double[] _charWidthTable = FontsWidth.Verdana110;
-
-        public string Draw(string subject, string status, string statusColor)
-        {
-            return Draw(subject, status, statusColor, Style.Flat, null);
-        }
-
-        public string Draw(string subject, string status, string statusColor, Style style)
-        {
-            return Draw(subject, status, statusColor, style, null);
-        }
 
         public string Draw(string subject, string status, string statusColor, Style style, string iconName)
         {

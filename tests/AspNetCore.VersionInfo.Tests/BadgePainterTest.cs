@@ -12,7 +12,7 @@ namespace AspNetCore.VersionInfo.Tests
             var painter = new BadgePainter();
 
             // Act
-            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat, null);
 
             // Assert
             Assert.StartsWith("<svg", badge);
@@ -25,7 +25,7 @@ namespace AspNetCore.VersionInfo.Tests
             var painter = new BadgePainter();
 
             // Act
-            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat, null);
 
             // Assert
             Assert.DoesNotContain("<icon", badge);
@@ -53,7 +53,7 @@ namespace AspNetCore.VersionInfo.Tests
             var painter = new BadgePainter();
 
             // Act
-            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR);
+            var badge = painter.Draw("Framework", ".NET 6.0.0", Constants.BADGE_DEFAULT_COLOR, Style.Flat, null);
 
             // Assert
             Assert.StartsWith("<svg", badge);
