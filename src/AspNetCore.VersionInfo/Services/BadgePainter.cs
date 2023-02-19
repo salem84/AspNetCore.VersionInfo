@@ -53,7 +53,7 @@
                 string iconUrl = $"https://cdn.simpleicons.org/{iconName}/white";
 
                 iconSpanWidth = subject.Length > 0 ? iconWidth + 30 : iconWidth - 18;
-                iconSvgPart = $$"""<image x="40" y="25" width="{{iconWidth}}" height="132" xlink:href="{{iconUrl}}"/>""";
+                iconSvgPart = $$"""<image x="40" y="25" width="{{iconWidth}}" height="132" href="{{iconUrl}}"/>""";
             }
 
             double sbTextStart = showIcon ? (iconSpanWidth + 50) : 50;
@@ -64,7 +64,7 @@
             double width = sbRectWidth + stRectWidth;
 
             var template = $$"""
-                <svg width="{{scale * width / 10}}" height="{{scale * 20}}" viewBox="0 0 {{width}} 200" xmlns="http://www.w3.org/2000/svg" xmlns:xlink='http://www.w3.org/1999/xlink' role="img" aria-label="{{accessibleText}}">
+                <svg width="{{scale * width / 10}}" height="{{scale * 20}}" viewBox="0 0 {{width}} 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{accessibleText}}">
                   <title>{{accessibleText}}</title>
                   <linearGradient id="a" x2="0" y2="100%">
                     <stop offset="0" stop-opacity=".1" stop-color="#EEE"/>
