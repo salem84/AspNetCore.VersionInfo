@@ -37,7 +37,6 @@
         public string Draw(string subject, string status, string statusColor, Style style, string iconName)
         {
             bool showIcon = !string.IsNullOrEmpty(iconName);
-            bool showSubject = true;
 
             string fontFamily = "Verdana,DejaVu Sans,sans-serif";
             int fontSize = 110;
