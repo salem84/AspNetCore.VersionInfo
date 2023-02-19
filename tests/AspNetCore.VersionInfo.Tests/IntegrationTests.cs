@@ -21,7 +21,7 @@ namespace AspNetCore.VersionInfo.Tests
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, indexResponse.StatusCode);
-            Assert.True(items.Count() > 0, "No data in JSON response");
+            Assert.True(items.Any(), "No data in JSON response");
 
             // TODO check type returned?
         }
