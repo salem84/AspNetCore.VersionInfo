@@ -52,9 +52,4 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
-          LINTER_RULES_PATH: '.'
-          EDITORCONFIG_FILE_NAME: '.editorconfig'
-          VALIDATE_ALL_CODEBASE: false
-          VALIDATE_CSHARP: true
-          DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
