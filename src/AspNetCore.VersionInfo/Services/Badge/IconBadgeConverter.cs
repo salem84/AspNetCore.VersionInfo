@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Services.Badge
 {
-    public interface IIconBadgeConverter
+    internal interface IIconBadgeConverter
     {
         string ConvertToSvgBase64(byte[] svgBytes);
     }
@@ -15,7 +15,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
     /// <summary>
     /// Convert SVG to Base64 image
     /// </summary>
-    public class IconBadgeConverter : IIconBadgeConverter
+    internal class IconBadgeConverter : IIconBadgeConverter
     {
         public string ConvertToSvgBase64(byte[] svgBytes)
         {

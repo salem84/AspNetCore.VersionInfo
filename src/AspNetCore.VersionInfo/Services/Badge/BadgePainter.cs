@@ -2,7 +2,7 @@
 
 namespace AspNetCore.VersionInfo.Services.Badge
 {
-    public interface IBadgePainter
+    internal interface IBadgePainter
     {
         Task<string> Draw(BadgeInfo badgeInfo);
     }

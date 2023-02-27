@@ -9,12 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.VersionInfo.Services.Badge
 {
-    public interface IIconBadgeGenerator
+    internal interface IIconBadgeGenerator
     {
         Task<string> Generate(string iconSlug);
     }
 
-    public class IconBadgeGenerator : IIconBadgeGenerator
+    internal class IconBadgeGenerator : IIconBadgeGenerator
     {
         private const string TYPE_SIMPLEICONS = "simpleicons";
         private const char TYPE_SEPARATOR = '|';
