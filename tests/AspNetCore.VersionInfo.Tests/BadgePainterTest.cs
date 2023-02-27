@@ -11,7 +11,7 @@ namespace AspNetCore.VersionInfo.Tests
         public async Task DrawBadge()
         {
             // Arrange
-            var iconBadgeGenerator = new Mock<IconBadgeGenerator>();
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
             var painter = new BadgePainter(iconBadgeGenerator.Object);
             var badgeInfo = new BadgeInfo()
             {
