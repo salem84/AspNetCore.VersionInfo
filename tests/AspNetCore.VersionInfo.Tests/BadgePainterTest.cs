@@ -32,7 +32,7 @@ namespace AspNetCore.VersionInfo.Tests
         public async Task DrawBadge_WithoutIcon()
         {
             // Arrange
-            var iconBadgeGenerator = new Mock<IconBadgeGenerator>();
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
             var painter = new BadgePainter(iconBadgeGenerator.Object);
             var badgeInfo = new BadgeInfo()
             {
@@ -53,7 +53,7 @@ namespace AspNetCore.VersionInfo.Tests
         public async Task DrawBadge_WithIcon()
         {
             // Arrange
-            var iconBadgeGenerator = new Mock<IconBadgeGenerator>();
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
             var painter = new BadgePainter(iconBadgeGenerator.Object);
             var badgeInfo = new BadgeInfo()
             {
@@ -75,7 +75,7 @@ namespace AspNetCore.VersionInfo.Tests
         public async Task DrawBadge_WithCustomColor()
         {
             // Arrange
-            var iconBadgeGenerator = new Mock<IconBadgeGenerator>();
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
             var painter = new BadgePainter(iconBadgeGenerator.Object);
             var badgeInfo = new BadgeInfo()
             {
