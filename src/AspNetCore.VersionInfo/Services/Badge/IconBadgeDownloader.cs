@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -19,7 +20,8 @@ namespace AspNetCore.VersionInfo.Services.Badge
 
         private static Regex ValidSlugRegex = new (
             pattern: "^[a-zA-Z0-9]*$",
-            options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            options: RegexOptions.Compiled | RegexOptions.IgnoreCase,
+            matchTimeout: TimeSpan.FromMilliseconds(200));
 
         private readonly IHttpClientFactory _httpClientFactory;
 
