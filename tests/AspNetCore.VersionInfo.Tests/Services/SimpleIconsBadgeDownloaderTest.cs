@@ -14,7 +14,7 @@ namespace AspNetCore.VersionInfo.Tests
     public class SimpleIconsBadgeDownloaderTest : BaseIocTest
     {
         private readonly Mock<IHttpClientFactory> _httpClientFactoryMock;
-        private static readonly string _validIconSlug = "valid-icon-slug";
+        private static readonly string _validIconSlug = "githubiconslug";
         private static readonly byte[] _validIconData = Encoding.UTF8.GetBytes(_validIconSlug);
 
         public SimpleIconsBadgeDownloaderTest()
@@ -59,16 +59,29 @@ namespace AspNetCore.VersionInfo.Tests
         }
 
         [Fact]
-        public async Task GenerateFromSimpleIcons_WithNotValidIcon()
+        public async Task GenerateFromSimpleIcons_WithFakeIcon()
         {
             // Arrange
             var downloader = new SimpleIconsDownloader(_httpClientFactoryMock.Object);
 
             // Act
-            await Assert.ThrowsAnyAsync<Exception>(() => downloader.DownloadAsBytes("not-valid-icon-slug"));
+            await Assert.ThrowsAsync<HttpRequestException>(() => downloader.DownloadAsBytes("fakeicon"));
 
             // Assert
             _httpClientFactoryMock.Verify(x => x.CreateClient(It.IsAny<string>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task GenerateFromSimpleIcons_WithNotValidSlug()
+        {
+            // Arrange
+            var downloader = new SimpleIconsDownloader(_httpClientFactoryMock.Object);
+
+            // Act
+            await Assert.ThrowsAsync<ArgumentException>(() => downloader.DownloadAsBytes("http://fakeurl/icon"));
+
+            // Assert
+            _httpClientFactoryMock.Verify(x => x.CreateClient(It.IsAny<string>()), Times.Never);
         }
     }
 }
