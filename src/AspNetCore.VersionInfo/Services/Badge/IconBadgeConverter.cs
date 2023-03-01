@@ -26,7 +26,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
 
         public string ConvertToSvgBase64(string svgContent)
         {
-            byte[] svgBytes = System.Text.Encoding.UTF8.GetBytes(svgContent);
+            byte[] svgBytes = Encoding.UTF8.GetBytes(svgContent);
             return ConvertToSvgBase64(svgBytes);
         }
     }

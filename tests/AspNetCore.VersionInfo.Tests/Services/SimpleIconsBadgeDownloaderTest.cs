@@ -11,7 +11,7 @@ using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests
 {
-    public class SimpleIconsBadgeDownloaderTest : BaseIocTest
+    public class SimpleIconsBadgeDownloaderTest
     {
         private readonly Mock<IHttpClientFactory> _httpClientFactoryMock;
         private static readonly string _validIconSlug = "githubiconslug";
