@@ -8,7 +8,7 @@ using Moq;
 using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests.Services;
-public class IconBadgeConverterTest
+public class IconBadgeConverterTests
 {
     [Fact]
     public void FromStringToSvgBase64_Test()

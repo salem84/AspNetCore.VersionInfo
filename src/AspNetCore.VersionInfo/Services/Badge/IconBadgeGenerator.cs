@@ -19,12 +19,12 @@ namespace AspNetCore.VersionInfo.Services.Badge
         private const string TYPE_SIMPLEICONS = "simpleicons";
         private const char TYPE_SEPARATOR = '|';
         private readonly IServiceProvider _serviceProvider;
-        private readonly ILogger<IconBadgeGenerator> logger;
+        private readonly ILogger<IIconBadgeGenerator> logger;
         private readonly IIconBadgeConverter iconBadgeConverter;
         private readonly IMemoryCache memoryCache;
 
         public IconBadgeGenerator(IServiceProvider serviceProvider,
-            ILogger<IconBadgeGenerator> logger,
+            ILogger<IIconBadgeGenerator> logger,
             IIconBadgeConverter iconBadgeConverter,
             IMemoryCache memoryCache
             )

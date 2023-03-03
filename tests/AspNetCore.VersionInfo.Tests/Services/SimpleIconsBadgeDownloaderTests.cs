@@ -11,13 +11,13 @@ using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests
 {
-    public class SimpleIconsBadgeDownloaderTest
+    public class SimpleIconsBadgeDownloaderTests
     {
         private readonly Mock<IHttpClientFactory> _httpClientFactoryMock;
         private static readonly string _validIconSlug = "githubiconslug";
         private static readonly byte[] _validIconData = Encoding.UTF8.GetBytes(_validIconSlug);
 
-        public SimpleIconsBadgeDownloaderTest()
+        public SimpleIconsBadgeDownloaderTests()
         {
             var expectedUrl = $"https://cdn.simpleicons.org/{_validIconSlug}/white";
 
