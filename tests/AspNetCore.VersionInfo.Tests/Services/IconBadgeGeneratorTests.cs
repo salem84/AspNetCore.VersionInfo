@@ -16,6 +16,8 @@ public class IconBadgeGeneratorTests
     private readonly Mock<IServiceProvider> _serviceProviderMock;
     private readonly Mock<SimpleIconsDownloader> _downloaderMock;
 
+    private const string TYPE_SEPARATOR = "__";
+
     public IconBadgeGeneratorTests()
     {
         _loggerMock = new Mock<ILogger<IconBadgeGenerator>>();
@@ -38,7 +40,7 @@ public class IconBadgeGeneratorTests
     public async Task Generate_ValidSlug_ReturnsSvgBase64()
     {
         // Arrange
-        var slug = "simpleicons|github";
+        var slug = $"simpleicons{TYPE_SEPARATOR}github";
         var svgDataBytes = new byte[] { 0x1, 0x2, 0x3 };
         var expectedSvgBase64 = "c3Zn";
 
@@ -75,7 +77,7 @@ public class IconBadgeGeneratorTests
     public async Task Generate_DownloaderThrowsException_LogsErrorAndReturnsEmptyString()
     {
         // Arrange
-        var slug = "simpleicons|github";
+        var slug = $"simpleicons{TYPE_SEPARATOR}github";
         var expectedLoggedErrorMessage = "Badge generation error";
         var expectedException = new Exception("Download failed");
 
@@ -94,7 +96,7 @@ public class IconBadgeGeneratorTests
     public async Task Generate_UnsupportedIconBadgeDownloader()
     {
         // Arrange
-        var slug = "unsupported|github";
+        var slug = $"unsupported{TYPE_SEPARATOR}github";
         var expectedLoggedErrorMessage = "Badge generation error";
         var expectedLoggedException = new NotSupportedException("Icon type not supported");
 
