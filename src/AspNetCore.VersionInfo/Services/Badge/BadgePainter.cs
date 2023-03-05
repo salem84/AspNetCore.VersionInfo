@@ -76,7 +76,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
             {
                 var iconData = await iconBadgeGenerator.Generate(badgeInfo.IconSlug);
 
-                iconSpanWidth = badgeInfo.Subject.Length > 0 ? iconWidth + 30 : iconWidth - 18;
+                iconSpanWidth = iconWidth + 30;
                 iconSvgPart = $$"""<image x="40" y="25" width="{{iconWidth}}" height="132" href="{{iconData}}"/>""";
             }
 
