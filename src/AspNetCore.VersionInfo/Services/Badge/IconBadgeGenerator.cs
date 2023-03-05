@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,12 +31,21 @@ namespace AspNetCore.VersionInfo.Services.Badge
             this.iconBadgeConverter = iconBadgeConverter;
             this.memoryCache = memoryCache;
         }
+
         public async Task<string> Generate(string iconSlug)
+        {
+            return await memoryCache.GetOrCreateAsync<string>(iconSlug, async cacheEntry =>
+            {
+                return await DownloadAndGenerate(iconSlug);
+            });
+        }
+
+        private async Task<string> DownloadAndGenerate(string iconSlug)
         {
             try
             {
                 var iconInfoArray = iconSlug.Split(TYPE_SEPARATOR);
-                if(iconInfoArray.Length != 2)
+                if (iconInfoArray.Length != 2)
                 {
                     logger.LogError($"Icon slug {iconSlug} is not valid");
                     return string.Empty;
@@ -53,7 +59,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
 
                 return svgBase64;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogError(ex, "Badge generation error");
                 return string.Empty;
@@ -62,7 +68,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
 
         private IIconBadgeDownloader GetDownloader(string iconType)
         {
-            switch(iconType)
+            switch (iconType)
             {
                 case TYPE_SIMPLEICONS:
                     return _serviceProvider.GetService<SimpleIconsDownloader>();
