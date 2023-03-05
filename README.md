@@ -39,12 +39,12 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 |![Win](docs/images/win_med.png) **Windows Web App**| https://aspnetcoreversioninfo-demo.azurewebsites.net | 
 |![Win](docs/images/win_med.png) **Windows HTML Endpoint** | [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html) | 
 |![Win](docs/images/win_med.png) **Windows JSON Endpoint** | [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json) |
-|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons|windows)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons|windows) | 
+|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons__windows)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons__windows) | 
 | | |
 |![Linux](docs/images/linux_med.png) **Linux Web App**| https://aspnetcoreversioninfo-linux-demo.azurewebsites.net | 
 |![Linux](docs/images/linux_med.png) **Linux HTML Endpoint**| [/version/html](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/html) | 
 |![Linux](docs/images/linux_med.png) **Linux JSON Endpoint**| [/version/json](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/json) | 
-|![Linux](docs/images/linux_med.png) **Linux Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons|debian)](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons|debian) | 
+|![Linux](docs/images/linux_med.png) **Linux Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons__debian)](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons__debian) | 
 
 ## Getting Started
 
