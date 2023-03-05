@@ -19,6 +19,8 @@ public class IconBadgeGeneratorTests
     public IconBadgeGeneratorTests()
     {
         _loggerMock = new Mock<ILogger<IconBadgeGenerator>>();
+        _loggerMock.Setup(x => x.IsEnabled(LogLevel.Error)).Returns(true);
+
         _converterMock = new Mock<IIconBadgeConverter>();
         _serviceProviderMock = new Mock<IServiceProvider>();
         var httpClientFactoryMock = new Mock<IHttpClientFactory>();
@@ -59,14 +61,14 @@ public class IconBadgeGeneratorTests
     {
         // Arrange
         var slug = "invalidslug";
-        var expectedErrorMessage = $"Icon slug {slug} is not valid";
+        var expectedLoggedErrorMessage = $"Icon slug not valid: {slug}";
 
         // Act
         var result = await _badgeGenerator.Generate(slug);
 
         // Assert
         Assert.Equal(string.Empty, result);
-        _loggerMock.VerifyLogging(expectedErrorMessage, LogLevel.Error, Times.Once());
+        _loggerMock.VerifyLogging(expectedLoggedErrorMessage, LogLevel.Error, Times.Once());
     }
 
     [Fact]
@@ -74,7 +76,7 @@ public class IconBadgeGeneratorTests
     {
         // Arrange
         var slug = "simpleicons|github";
-        var expectedErrorMessage = "Badge generation error";
+        var expectedLoggedErrorMessage = "Badge generation error";
         var expectedException = new Exception("Download failed");
 
         _downloaderMock.Setup(x => x.DownloadAsBytes("github"))
@@ -85,30 +87,23 @@ public class IconBadgeGeneratorTests
 
         // Assert
         Assert.Equal(string.Empty, result);
-        _loggerMock.VerifyLogging(expectedErrorMessage, LogLevel.Error, Times.Once());
+        _loggerMock.VerifyLogging(expectedLoggedErrorMessage, LogLevel.Error, Times.Once());
     }
 
-    //[Fact]
-    //public void GetDownloader_SupportedType_ReturnsDownloader()
-    //{
-    //    // Arrange
-    //    var expectedDownloader = _downloaderMock.Object;
+    [Fact]
+    public async Task Generate_UnsupportedIconBadgeDownloader()
+    {
+        // Arrange
+        var slug = "unsupported|github";
+        var expectedLoggedErrorMessage = "Badge generation error";
+        var expectedLoggedException = new NotSupportedException("Icon type not supported");
 
-    //    // Act
-    //    var result = _badgeGenerator.GetDownloader("simpleicons");
+        // Act
+        var result = await _badgeGenerator.Generate(slug);
 
-    //    // Assert
-    //    Assert.Equal(expectedDownloader, result);
-    //}
-
-    //[Fact]
-    //public void GetDownloader_UnsupportedType_ThrowsNotSupportedException()
-    //{
-    //    // Arrange
-    //    var unsupportedType = "unsupported";
-
-    //    // Act & Assert
-    //    Assert.Throws<NotSupportedException>(() => _badgeGenerator.GetDownloader(unsupportedType));
-    //}
+        // Assert
+        Assert.Equal(string.Empty, result);
+        _loggerMock.VerifyLogging(expectedLoggedErrorMessage, expectedLoggedException, LogLevel.Error, Times.Once());
+    }
 }
 
