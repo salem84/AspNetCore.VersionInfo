@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Services.Badge
 {
@@ -45,6 +47,11 @@ namespace AspNetCore.VersionInfo.Services.Badge
     {
         private readonly double[] _charWidthTable = FontsWidth.Verdana110;
         private readonly IIconBadgeGenerator iconBadgeGenerator;
+
+        private static Regex ValidColorRegex = new(
+            pattern: "^(?:#)(?:[a-f0-9]{3}|[a-f0-9]{6})\\b|(?:rgb|hsl)a?\\([^\\)]*\\)$",
+            options: RegexOptions.Compiled | RegexOptions.IgnoreCase,
+            matchTimeout: TimeSpan.FromMilliseconds(200));
 
         public BadgePainter(IIconBadgeGenerator iconBadgeGenerator)
         {
@@ -117,13 +124,18 @@ namespace AspNetCore.VersionInfo.Services.Badge
 
             return total;
         }
-        private static string ParseColor(string input)
+        private static string ParseColor(string inputColor)
         {
             var type = typeof(ColorScheme);
-            var fieldInfo = type.GetField(input);
+            var fieldInfo = type.GetField(inputColor);
             if (fieldInfo == null)
             {
-                return input;
+                // Validate color
+                if (!ValidColorRegex.IsMatch(inputColor))
+                {
+                    throw new ArgumentException("Not valid icon color", nameof(inputColor));
+                }
+                return inputColor;
             }
 
             return (string)fieldInfo.GetValue(type);

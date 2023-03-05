@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Services.Badge;
 using Moq;
 using Xunit;
@@ -118,8 +119,14 @@ namespace AspNetCore.VersionInfo.Tests.Services
             Assert.Contains($"fill=\"{ColorScheme.Blue}\"", badge);
         }
 
-        [Fact]
-        public async Task DrawBadge_WithCustomColor()
+        [Theory]
+        [InlineData("#FF0000")]
+        [InlineData("#FFF")]
+        [InlineData("rgb(255,0,24)")]
+        [InlineData("rgb(255, 0, 24)")]
+        [InlineData("rgba(255, 0, 24, .5)")]
+        [InlineData("hsla(170, 23%, 25%, 0.2)")]
+        public async Task DrawBadge_WithValidColor(string color)
         {
             // Arrange
             var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
@@ -128,7 +135,7 @@ namespace AspNetCore.VersionInfo.Tests.Services
             {
                 Subject = "Framework",
                 Status = ".NET 6.0.0",
-                StatusColor = "customcolor",
+                StatusColor = color,
                 Style = Style.Flat
             };
 
@@ -137,7 +144,27 @@ namespace AspNetCore.VersionInfo.Tests.Services
 
             // Assert
             Assert.StartsWith("<svg", badge);
-            Assert.Contains("fill=\"customcolor\"", badge);
+            Assert.Contains($"fill=\"{color}\"", badge);
+        }
+
+        [Theory]
+        [InlineData("notvalidcolor")]
+        [InlineData("#f2ewq")]
+        public async Task DrawBadge_WithCustomNotValidColor(string notValidColor)
+        {
+            // Arrange
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
+            var painter = new BadgePainter(iconBadgeGenerator.Object);
+            var badgeInfo = new BadgeInfo()
+            {
+                Subject = "Framework",
+                Status = ".NET 6.0.0",
+                StatusColor = notValidColor,
+                Style = Style.Flat
+            };
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => painter.Draw(badgeInfo));
         }
     }
 }
