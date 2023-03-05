@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Services.Badge;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
@@ -11,25 +11,25 @@ namespace AspNetCore.VersionInfo.Tests.Services;
 public class IconBadgeGeneratorTests
 {
     private readonly IIconBadgeGenerator _badgeGenerator;
-    private readonly Mock<ILogger<IIconBadgeGenerator>> _loggerMock;
+    private readonly Mock<ILogger<IconBadgeGenerator>> _loggerMock;
     private readonly Mock<IIconBadgeConverter> _converterMock;
-    private readonly Mock<IMemoryCache> _memoryCacheMock;
     private readonly Mock<IServiceProvider> _serviceProviderMock;
     private readonly Mock<SimpleIconsDownloader> _downloaderMock;
 
     public IconBadgeGeneratorTests()
     {
-        _loggerMock = new Mock<ILogger<IIconBadgeGenerator>>();
+        _loggerMock = new Mock<ILogger<IconBadgeGenerator>>();
         _converterMock = new Mock<IIconBadgeConverter>();
-        _memoryCacheMock = new Mock<IMemoryCache>();
         _serviceProviderMock = new Mock<IServiceProvider>();
-        _downloaderMock = new Mock<SimpleIconsDownloader>();
+        var httpClientFactoryMock = new Mock<IHttpClientFactory>();
+        _downloaderMock = new Mock<SimpleIconsDownloader>(httpClientFactoryMock.Object);
 
-        _serviceProviderMock.Setup(x => x.GetService<SimpleIconsDownloader>())
+        _serviceProviderMock.Setup(x => x.GetService(typeof(SimpleIconsDownloader)))
                             .Returns(_downloaderMock.Object);
 
+        var memoryCache = new MemoryCache(new MemoryCacheOptions());
         _badgeGenerator = new IconBadgeGenerator(_serviceProviderMock.Object, _loggerMock.Object,
-            _converterMock.Object, _memoryCacheMock.Object);
+            _converterMock.Object, memoryCache);
     }
 
     [Fact]
@@ -41,7 +41,7 @@ public class IconBadgeGeneratorTests
         var expectedSvgBase64 = "c3Zn";
 
         _downloaderMock.Setup(x => x.DownloadAsBytes("github"))
-                       .ReturnsAsync(svgDataBytes);
+                      .ReturnsAsync(svgDataBytes);
 
         _converterMock.Setup(x => x.ConvertToSvgBase64(svgDataBytes))
                       .Returns(expectedSvgBase64);
@@ -66,7 +66,7 @@ public class IconBadgeGeneratorTests
 
         // Assert
         Assert.Equal(string.Empty, result);
-        _loggerMock.Verify(x => x.LogError(expectedErrorMessage), Times.Once);
+        _loggerMock.VerifyLogging(expectedErrorMessage, LogLevel.Error, Times.Once());
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class IconBadgeGeneratorTests
 
         // Assert
         Assert.Equal(string.Empty, result);
-        _loggerMock.Verify(x => x.LogError(expectedException, expectedErrorMessage), Times.Once);
+        _loggerMock.VerifyLogging(expectedErrorMessage, LogLevel.Error, Times.Once());
     }
 
     //[Fact]
