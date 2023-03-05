@@ -12,7 +12,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
 
     internal class SimpleIconsDownloader : IIconBadgeDownloader
     {
-        private const string BASE_URL = "https://cdn.simpleicons.org";
+        private static readonly string BASE_URL = "https://cdn.simpleicons.org";
 
         private static Regex ValidSlugRegex = new(
             pattern: "^[a-zA-Z0-9]*$",

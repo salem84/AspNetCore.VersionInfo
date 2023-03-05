@@ -20,6 +20,11 @@ namespace AspNetCore.VersionInfo.Services.Badge
         private readonly IIconBadgeConverter iconBadgeConverter;
         private readonly IMemoryCache memoryCache;
 
+        #region LoggerMessage
+        [LoggerMessage(Level = LogLevel.Error, Message = "Icon slug not valid: {iconSlug}")]
+        private partial void LogIconSlugNotValid(string iconSlug);
+        #endregion
+
         public IconBadgeGenerator(IServiceProvider serviceProvider,
             ILogger<IIconBadgeGenerator> logger,
             IIconBadgeConverter iconBadgeConverter,
@@ -47,7 +52,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
                 var iconInfoArray = iconSlug.Split(TYPE_SEPARATOR);
                 if (iconInfoArray.Length != 2)
                 {
-                    logger.LogError($"Icon slug {iconSlug} is not valid");
+                    LogIconSlugNotValid(iconSlug);
                     return string.Empty;
                 }
 
