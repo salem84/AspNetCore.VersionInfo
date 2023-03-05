@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Services.Badge;
 using Moq;
@@ -6,27 +7,43 @@ using Xunit;
 
 namespace AspNetCore.VersionInfo.Tests.Services
 {
-    public class BadgePainterTest : BaseIocTest
+    public class BadgePainterTest
     {
-        [Fact]
-        public async Task DrawBadge()
+        [Theory]
+        [InlineData("Framework", ".NET 6.0.0")]
+        [InlineData("Framework", "")]
+        [InlineData("", "")]
+        [InlineData("UnicodeChars", "¥Щ")]
+        [InlineData("CustomChar", "⌨")]
+        public async Task DrawBadge(string subject, string status)
         {
             // Arrange
             var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
             var painter = new BadgePainter(iconBadgeGenerator.Object);
             var badgeInfo = new BadgeInfo()
             {
-                Subject = "Framework",
-                Status = ".NET 6.0.0",
+                Subject = subject,
+                Status = status,
                 StatusColor = Constants.BADGE_DEFAULT_COLOR,
                 Style = Style.Flat
             };
+            var regexSubject = new Regex(
+            pattern: $"<text x=\"\\d+\" y=\"\\d+\" textLength=\"\\d+\">{subject}<\\/text>",
+            options: RegexOptions.IgnoreCase,
+            matchTimeout: TimeSpan.FromMilliseconds(200));
+
+            var regexStatus = new Regex(
+            pattern: $"<text x=\"\\d+\" y=\"\\d+\" textLength=\"\\d+\">{status}<\\/text>",
+            options: RegexOptions.IgnoreCase,
+            matchTimeout: TimeSpan.FromMilliseconds(200));
 
             // Act
             var badge = await painter.Draw(badgeInfo);
 
             // Assert
             Assert.StartsWith("<svg", badge);
+            Assert.Matches(regexSubject, badge);
+            Assert.Matches(regexStatus, badge);
         }
 
         [Fact]
