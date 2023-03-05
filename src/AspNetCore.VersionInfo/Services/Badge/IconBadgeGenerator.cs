@@ -11,7 +11,7 @@ namespace AspNetCore.VersionInfo.Services.Badge
         Task<string> Generate(string iconSlug);
     }
 
-    internal class IconBadgeGenerator : IIconBadgeGenerator
+    internal partial class IconBadgeGenerator : IIconBadgeGenerator
     {
         private const string TYPE_SIMPLEICONS = "simpleicons";
         private const char TYPE_SEPARATOR = '|';
