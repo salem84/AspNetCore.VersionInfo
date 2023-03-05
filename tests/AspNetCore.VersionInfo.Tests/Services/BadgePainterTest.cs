@@ -3,7 +3,7 @@ using AspNetCore.VersionInfo.Services.Badge;
 using Moq;
 using Xunit;
 
-namespace AspNetCore.VersionInfo.Tests
+namespace AspNetCore.VersionInfo.Tests.Services
 {
     public class BadgePainterTest : BaseIocTest
     {
@@ -46,6 +46,7 @@ namespace AspNetCore.VersionInfo.Tests
             var badge = await painter.Draw(badgeInfo);
 
             // Assert
+            Assert.StartsWith("<svg", badge);
             Assert.DoesNotContain("<icon", badge);
         }
 
@@ -68,7 +69,53 @@ namespace AspNetCore.VersionInfo.Tests
             var badge = await painter.Draw(badgeInfo);
 
             // Assert
+            Assert.StartsWith("<svg", badge);
             Assert.Contains("<image", badge);
+        }
+
+        [Fact]
+        public async Task DrawBadge_WithDefaultColor()
+        {
+            // Arrange
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
+            var painter = new BadgePainter(iconBadgeGenerator.Object);
+            var badgeInfo = new BadgeInfo()
+            {
+                Subject = "Framework",
+                Status = ".NET 6.0.0",
+                StatusColor = Constants.BADGE_DEFAULT_COLOR, // Default is Green
+                Style = Style.Flat
+            };
+            var defaultColor = ColorScheme.Green;
+
+            // Act
+            var badge = await painter.Draw(badgeInfo);
+
+            // Assert
+            Assert.StartsWith("<svg", badge);
+            Assert.Contains($"fill=\"{defaultColor}\"", badge);
+        }
+
+        [Fact]
+        public async Task DrawBadge_WithSupportedColor()
+        {
+            // Arrange
+            var iconBadgeGenerator = new Mock<IIconBadgeGenerator>();
+            var painter = new BadgePainter(iconBadgeGenerator.Object);
+            var badgeInfo = new BadgeInfo()
+            {
+                Subject = "Framework",
+                Status = ".NET 6.0.0",
+                StatusColor = ColorScheme.Blue,
+                Style = Style.Flat
+            };
+
+            // Act
+            var badge = await painter.Draw(badgeInfo);
+
+            // Assert
+            Assert.StartsWith("<svg", badge);
+            Assert.Contains($"fill=\"{ColorScheme.Blue}\"", badge);
         }
 
         [Fact]
@@ -81,7 +128,7 @@ namespace AspNetCore.VersionInfo.Tests
             {
                 Subject = "Framework",
                 Status = ".NET 6.0.0",
-                StatusColor = Constants.BADGE_DEFAULT_COLOR,
+                StatusColor = "customcolor",
                 Style = Style.Flat
             };
 
@@ -90,6 +137,7 @@ namespace AspNetCore.VersionInfo.Tests
 
             // Assert
             Assert.StartsWith("<svg", badge);
+            Assert.Contains("fill=\"customcolor\"", badge);
         }
     }
 }
