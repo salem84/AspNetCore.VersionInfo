@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Middleware;
 using AspNetCore.VersionInfo.Services;
+using AspNetCore.VersionInfo.Services.Badge;
 using AspNetCore.VersionInfo.Tests.Mock;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -42,7 +43,15 @@ namespace AspNetCore.VersionInfo.Tests
             var mockLogger = new Mock<ILogger<BadgeEndpoint>>();
             var mockBadgePainter = new Mock<IBadgePainter>();
             var svgReturnForKey1 = "<svg>Value1</svg>";
-            mockBadgePainter.Setup(x => x.Draw("Key1", It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Style>())).Returns(svgReturnForKey1);
+            var badgeInfo = new BadgeInfo()
+            {
+                Subject = "Key1",
+                Status = "Value1",
+                StatusColor = It.IsAny<string>(),
+                IconSlug = It.IsAny<string>(),
+                Style = It.IsAny<Style>()
+            };
+            mockBadgePainter.Setup(x => x.Draw(It.IsAny<BadgeInfo>())).ReturnsAsync(svgReturnForKey1);
             RegisterServiceWithInstance<IBadgePainter>(mockBadgePainter.Object);
 
             // Act

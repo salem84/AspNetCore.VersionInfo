@@ -14,16 +14,14 @@ name: Lint Code Base
 # Start the job on all push #
 #############################
 on:
+  push:
+    branches-ignore: [master]
+    # Remove the line above to run when pushing to master
+    paths: [ 'src/**' ]
+  pull_request:
+    branches: [master]
+    paths: [ 'src/**' ]
   workflow_dispatch:
-  
-#  push:
-#    branches-ignore: [master]
-#    # Remove the line above to run when pushing to master
-#    paths: [ 'src/**' ]
-#  pull_request:
-#    branches: [master]
-#    paths: [ 'src/**' ]
-
 
 ###############
 # Set the Job #
@@ -54,9 +52,4 @@ jobs:
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
-          LINTER_RULES_PATH: '.'
-          EDITORCONFIG_FILE_NAME: '.editorconfig2'
-          VALIDATE_ALL_CODEBASE: false
-          VALIDATE_CSHARP: true
-          DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

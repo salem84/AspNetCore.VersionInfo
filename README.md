@@ -39,12 +39,12 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 |![Win](docs/images/win_med.png) **Windows Web App**| https://aspnetcoreversioninfo-demo.azurewebsites.net | 
 |![Win](docs/images/win_med.png) **Windows HTML Endpoint** | [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html) | 
 |![Win](docs/images/win_med.png) **Windows JSON Endpoint** | [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json) |
-|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os) | 
+|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons__windows)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons__windows) | 
 | | |
 |![Linux](docs/images/linux_med.png) **Linux Web App**| https://aspnetcoreversioninfo-linux-demo.azurewebsites.net | 
 |![Linux](docs/images/linux_med.png) **Linux HTML Endpoint**| [/version/html](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/html) | 
 |![Linux](docs/images/linux_med.png) **Linux JSON Endpoint**| [/version/json](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/json) | 
-|![Linux](docs/images/linux_med.png) **Linux Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os)](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os) | 
+|![Linux](docs/images/linux_med.png) **Linux Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons__debian)](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons__debian) | 
 
 ## Getting Started
 
@@ -126,7 +126,8 @@ where `{versionInfoId}` is a key returned by providers.
 
 Moreover endpoint accepts following parameters in querystring:
 * `label`: it's the name to show in the image
-* `color`: a string as defined in the colors table, custom colors are not (yet) supported
+* `icon`: the source type and slug for the icon separated by two underscore characters (`__`) such as `simpleicons__azure`. In this version only [Simple Icons](https://simpleicons.org/) type is supported; you can find a list of slugs [here](https://github.com/simple-icons/simple-icons/blob/develop/slugs.md). Icon color is always white.
+* `color`: a string as defined in the colors table or a custom colors in hexadecimal, RGB, HSL.
 
 | Color | String | 
 | -     | -      |
@@ -139,4 +140,5 @@ Moreover endpoint accepts following parameters in querystring:
 | ![#007ec6](https://via.placeholder.com/15/007ec6/000000.png?text=+) | Blue |
 | ![#555](https://via.placeholder.com/15/555/000000.png?text=+) | Gray |
 | ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000.png?text=+) | LightGray |
+
 

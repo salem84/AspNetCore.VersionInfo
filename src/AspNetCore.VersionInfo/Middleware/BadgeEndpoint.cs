@@ -1,5 +1,6 @@
 ﻿using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
+using AspNetCore.VersionInfo.Services.Badge;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -64,7 +65,15 @@ namespace AspNetCore.VersionInfo.Middleware
                 }
 
                 // Draw badge
-                responseContent = badgePainter.Draw(label, versionInfoValue, color, Style.Flat);
+                var badgeInfo = new BadgeInfo()
+                {
+                    Subject = label,
+                    Status = versionInfoValue,
+                    StatusColor = color,
+                    Style = Style.Flat,
+                    IconSlug = context.Request.Query["icon"]
+            };
+                responseContent = await badgePainter.Draw(badgeInfo);
             }
 
             // Set ContentType as image/svg+xml

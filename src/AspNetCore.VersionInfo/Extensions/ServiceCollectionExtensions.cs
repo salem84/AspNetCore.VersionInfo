@@ -2,6 +2,7 @@
 using AspNetCore.VersionInfo;
 using AspNetCore.VersionInfo.Configuration;
 using AspNetCore.VersionInfo.Services;
+using AspNetCore.VersionInfo.Services.Badge;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -12,8 +13,14 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var builder = new VersionInfoBuilder(services);
 
+            services.AddHttpClient();
+
             services.AddTransient<IInfoCollector, FlatInfoCollector>();
             services.AddTransient<IBadgePainter, BadgePainter>();
+            services.AddTransient<IIconBadgeGenerator, IconBadgeGenerator>();
+            services.AddTransient<IIconBadgeConverter, IconBadgeConverter>();
+
+            services.AddTransient<SimpleIconsDownloader>();
 
             return builder;
         }
