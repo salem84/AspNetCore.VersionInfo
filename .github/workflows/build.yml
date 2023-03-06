@@ -166,8 +166,8 @@ jobs:
       with:
         name: nupkg
         path: |
-           **\*.nupkg
-           **\*.snupkg
+           **/*.nupkg
+           **/*.snupkg
 
     - name: Stop Sonarcloud
       env:
