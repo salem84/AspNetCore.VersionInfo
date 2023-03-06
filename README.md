@@ -126,7 +126,7 @@ where `{versionInfoId}` is a key returned by providers.
 
 Moreover endpoint accepts following parameters in querystring:
 * `label`: it's the name to show in the image
-* `icon`: the slug for the icon from [Simple Icons](https://simpleicons.org/). You can find a list of slugs [here](https://github.com/simple-icons/simple-icons/blob/develop/slugs.md). Icon color is white.
+* `icon`: the source type and slug for the icon separated by two underscore characters (`__`) such as `simpleicons__azure`. In this version only [Simple Icons](https://simpleicons.org/) type is supported; you can find a list of slugs [here](https://github.com/simple-icons/simple-icons/blob/develop/slugs.md). Icon color is always white.
 * `color`: a string as defined in the colors table or a custom colors in hexadecimal, RGB, HSL.
 
 | Color | String | 
