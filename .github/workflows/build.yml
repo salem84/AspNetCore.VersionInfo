@@ -146,6 +146,12 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
+    - name: Normalize README.md for NuGet publish
+      run: |
+        sed -i 's/!\[Linux\](docs\/images\/linux_med\.png)//g' README.md
+        sed -i 's/<br\/>//g' README.md
+        cat README.md
+    
     - name: Build
       run: dotnet build --no-restore --configuration $CONFIGURATION
 
