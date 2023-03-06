@@ -1,5 +1,5 @@
 # based on https://dusted.codes/github-actions-for-dotnet-core-nuget-packages
-name: CI .NET
+name: Build and publish
 
 on:
   push:
