@@ -165,9 +165,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: nupkg
+        # With absolute path avoid path hierarchy will be preserved
         path: |
-           **/*.nupkg
-           **/*.snupkg
+           ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
+           ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.snupkg
 
     - name: Stop Sonarcloud
       env:
