@@ -151,7 +151,7 @@ jobs:
         sed -i 's|docs/images|https://raw.githubusercontent.com/${{ github.repository }}/master/docs/images|g' README.md
         sed -i 's|<br\/>|,|g' README.md
         sed -i 's|!\[/version/badge\](https:[^)]*)|/version/badge|g' README.md
-        sed -i 's|\[\(.*\)\](\(https:\/\/via.placeholder.com[^)]*\))|\1|g' README.md
+        sed -i 's|!\[\(.*\)\](\(https:\/\/via.placeholder.com[^)]*\))|\1|g' README.md
         
     
     - name: Build
