@@ -148,7 +148,7 @@ jobs:
 
     - name: Normalize README.md for NuGet publish
       run: |
-        sed -i 's|docs/images|https://raw.githubusercontent.com/${{ github.repository }}/docs/images|g' README.md
+        sed -i 's|docs/images|https://raw.githubusercontent.com/${{ github.repository }}/master/docs/images|g' README.md
         sed -i 's/<br\/>/,/g' README.md
         
     
