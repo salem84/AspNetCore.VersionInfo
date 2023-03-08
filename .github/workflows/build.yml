@@ -146,6 +146,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
+    - name: Normalize README.md for NuGet publish
+      run: |
+        sed -i 's|docs/images|https://raw.githubusercontent.com/${{ github.repository }}/master/docs/images|g' README.md
+        sed -i 's|<br\/>|,|g' README.md
+        sed -i 's|!\[/version/badge\](https:[^)]*)|/version/badge|g' README.md
+        sed -i 's|!\[\(.*\)\](\(https:\/\/via.placeholder.com[^)]*\))|\1|g' README.md
+        
+    
     - name: Build
       run: dotnet build --no-restore --configuration $CONFIGURATION
 
@@ -159,7 +167,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: nupkg
-        path: ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
+        # With absolute path avoid path hierarchy will be preserved
+        path: |
+           ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
+           ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.snupkg
 
     - name: Stop Sonarcloud
       env:
