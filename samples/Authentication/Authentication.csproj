@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <SonarQubeExclude>true</SonarQubeExclude>
+    <Version>3.1.0</Version>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AspNetCore.VersionInfo\AspNetCore.VersionInfo.csproj" />
+  </ItemGroup>
+
+</Project>
