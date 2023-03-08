@@ -1,0 +1,32 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Application Version Badge </p>
+
+    @if(User.Identity.IsAuthenticated)
+    {
+        <img alt="entry-assembly" src="/version/badge/EntryAssemblyVersion?color=BrightGreen&label=version" />
+        <img alt="framework-description" src="/version/badge/RuntimeInformation.FrameworkDescription?color=Red&label=framework" />
+        <img alt="runtime-identifier" src="/version/badge/RuntimeInformation.RuntimeIdentifier?color=Blue&label=os&icon=simpleicons__microsoftazure" />
+    }
+    else
+    {
+        <p class="text-black-50">You are not authorized to see badges!</p>
+    }
+    
+</div>
+<div class="container mt-5">
+    <p>
+        <i>AspNetCore.VersionInfo</i> is a library to expose information about assembly versions used in your web application. In particular there are two endpoints, which returns:
+    </p>
+    <ul>
+        <li>a JSON-formatted data (<a href="/version/json" target="_blank">/version/json</a>)</li>
+        <li>an HTML user-friendly page (<a href="/version/html" target="_blank">/version/html</a>)</li>
+        <li>a nice badge image</li>
+    </ul>
+</div>
