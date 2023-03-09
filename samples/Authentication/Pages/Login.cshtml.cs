@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
+using System.Linq;
+using System;
 
 namespace AspNetCore.VersionInfo.Samples.Authentication.Pages
 {
@@ -22,13 +24,20 @@ namespace AspNetCore.VersionInfo.Samples.Authentication.Pages
 
         public async Task<IActionResult> OnPost() 
         {
+            var users = new[]
+            {
+                new { Username = "demo", Password = "demo", Role = Constants.USER_ROLE},
+                new { Username = "admin", Password = "demo", Role = Constants.ADMIN_ROLE}
+            };
 
-            if (Username.Equals("demo") && Password.Equals("demo"))
+            var user = users.SingleOrDefault(x => x.Username.Equals(Username, StringComparison.CurrentCultureIgnoreCase));
+
+            if (user != null && user.Password.Equals(Password))
             {
                 var claims = new List<Claim>
                 {
-                    new Claim("user", Username),
-                    new Claim("role", "Member")
+                    new Claim("user", user.Username),
+                    new Claim("role", user.Role)
                 };
 
                 await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));

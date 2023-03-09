@@ -10,9 +10,6 @@ namespace AspNetCore.VersionInfo.Samples.Authentication
 {
     public class Startup
     {
-        private const string VERSIONINFO_POLICY = nameof(VERSIONINFO_POLICY);
-        private const string COOKIE_SCHEME = "SampleSchemeName";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,15 +24,21 @@ namespace AspNetCore.VersionInfo.Samples.Authentication
 
             services.AddAuthorization(cfg =>
             {
-                cfg.AddPolicy(name: VERSIONINFO_POLICY, cfgPolicy =>
+                cfg.AddPolicy(name: Constants.VERSIONINFO_USER_POLICY, cfgPolicy =>
                 {
                     cfgPolicy.AddRequirements().RequireAuthenticatedUser();
-                    cfgPolicy.AddAuthenticationSchemes(COOKIE_SCHEME);
+                    cfgPolicy.AddAuthenticationSchemes(Constants.COOKIE_SCHEME);
+                });
+
+                cfg.AddPolicy(name: Constants.VERSIONINFO_ADMIN_POLICY, cfgPolicy =>
+                {
+                    cfgPolicy.AddRequirements().RequireAuthenticatedUser().RequireRole(Constants.ADMIN_ROLE);
+                    cfgPolicy.AddAuthenticationSchemes(Constants.COOKIE_SCHEME);
                 });
             });
 
-            services.AddAuthentication(COOKIE_SCHEME) // Sets the default scheme to cookies
-                    .AddCookie(COOKIE_SCHEME, options =>
+            services.AddAuthentication(Constants.COOKIE_SCHEME)
+                    .AddCookie(Constants.COOKIE_SCHEME, options =>
                     {
                         options.AccessDeniedPath = "/AccessDenied";
                         options.LoginPath = "/Login";
@@ -46,7 +49,7 @@ namespace AspNetCore.VersionInfo.Samples.Authentication
                 .With<AssemblyVersionProvider>()
                 .With<AppDomainAssembliesVersionProvider>()
                 .With<EnvironmentProvider>()
-                .With<EnvironmentVariablesProvider>();
+                .With<EnvironmentVariablesProvider>(p => p.AuthorizationPolicyName = Constants.VERSIONINFO_ADMIN_POLICY);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +77,7 @@ namespace AspNetCore.VersionInfo.Samples.Authentication
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapVersionInfo().RequireAuthorization(VERSIONINFO_POLICY); ;
+                endpoints.MapVersionInfo().RequireAuthorization(Constants.VERSIONINFO_USER_POLICY); ;
             });
         }
     }
