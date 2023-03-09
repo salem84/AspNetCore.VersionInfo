@@ -1,5 +1,4 @@
 ﻿using AspNetCore.VersionInfo.Providers;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -44,12 +43,14 @@ namespace AspNetCore.VersionInfo.Samples.Authentication
                         options.LoginPath = "/Login";
                     });
 
+            services.AddHttpContextAccessor();
+
             services.AddVersionInfo()
                 .With<ClrVersionProvider>()
                 .With<AssemblyVersionProvider>()
                 .With<AppDomainAssembliesVersionProvider>()
                 .With<EnvironmentProvider>()
-                .With<EnvironmentVariablesProvider>(p => p.AuthorizationPolicyName = Constants.VERSIONINFO_ADMIN_POLICY);
+                .With<AuthEnvironmentVariablesProvider>(); // Require AdminRole (see implementation) 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

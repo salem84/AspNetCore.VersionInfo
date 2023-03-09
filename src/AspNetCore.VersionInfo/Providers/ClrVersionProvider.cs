@@ -6,9 +6,9 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class ClrVersionProvider : IInfoProvider
     {
-        public string Name => nameof(ClrVersionProvider);
+        public virtual string Name => nameof(ClrVersionProvider);
 
-        public IDictionary<string, string> GetData()
+        public virtual IDictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();
             dict.Add(Constants.KEY_RUNTIMEINFORMATION_FRAMEWORKDESCRIPTION, RuntimeInformation.FrameworkDescription);

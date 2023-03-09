@@ -12,6 +12,11 @@ namespace AspNetCore.VersionInfo
             var options = new ProviderOptions();
             setupOptions?.Invoke(options);
 
+            return ConfigureProvider<T>(builder, options);
+        }
+
+        private static VersionInfoBuilder ConfigureProvider<T>(this VersionInfoBuilder builder, ProviderOptions options) where T : class, IInfoProvider
+        {
             builder.Services.AddTransient<IInfoProvider, T>();
             return builder;
         }
