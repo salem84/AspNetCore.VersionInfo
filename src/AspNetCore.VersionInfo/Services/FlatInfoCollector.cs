@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using AspNetCore.VersionInfo.Configuration;
 using AspNetCore.VersionInfo.Models;
 using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Providers;
@@ -10,16 +12,18 @@ namespace AspNetCore.VersionInfo.Services
     {
         private readonly IEnumerable<IInfoProvider> _infoHandlers;
         private readonly ILogger<FlatInfoCollector> _logger;
+        private readonly IExclusionSettings _exclusionSettings;
 
         #region LoggerMessage
         [LoggerMessage(Level = LogLevel.Debug, Message = "Elaborating {handlerName} provider")]
         private partial void LogElaboratingHandler(string handlerName);
         #endregion
 
-        public FlatInfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<FlatInfoCollector> logger)
+        public FlatInfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<FlatInfoCollector> logger, IExclusionSettings exclusionSettings)
         {
             _infoHandlers = infoHandlers;
             _logger = logger;
+            _exclusionSettings = exclusionSettings;
         }
         public ICollectorResult AggregateData()
         {
@@ -30,12 +34,26 @@ namespace AspNetCore.VersionInfo.Services
                 LogElaboratingHandler(handler.Name);
                 foreach (var d in handler.GetData())
                 {
-                    result.Add(new VersionDataProviderKeyValueResult()
+                    if (_exclusionSettings.keys.Count() == 0)
                     {
-                        Key = d.Key,
-                        Value = d.Value,
-                        ProviderName = handler.Name
-                    });
+                        result.Add(new VersionDataProviderKeyValueResult()
+                        {
+                            Key = d.Key,
+                            Value = d.Value,
+                            ProviderName = handler.Name
+                        });
+                    }
+
+                    else if (!_exclusionSettings.keys.Contains(d.Key))
+                    {
+                        result.Add(new VersionDataProviderKeyValueResult()
+                        {
+                            Key = d.Key,
+                            Value = d.Value,
+                            ProviderName = handler.Name
+                        });
+
+                    }
                 }
             }
 
