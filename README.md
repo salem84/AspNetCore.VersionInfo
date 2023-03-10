@@ -1,4 +1,4 @@
-﻿[![NuGet version](https://img.shields.io/nuget/v/AspNetCore.VersionInfo?color=yellowgreen)](http://www.nuget.org/packages/AspNetCore.VersionInfo) ![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=coverage)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
+[![NuGet version](https://img.shields.io/nuget/v/AspNetCore.VersionInfo?color=yellowgreen)](http://www.nuget.org/packages/AspNetCore.VersionInfo) ![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=coverage)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=security_rating)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
 
@@ -154,9 +154,58 @@ Moreover endpoint accepts following parameters in querystring:
 
 ## 🔑 Security
 
-- Development mode
-- Authorization endpoint
-- Authorization in provider
+### Enable Endpoint only in Development mode
+In order to enable _AspNetCore.VersionInfo_ only in the development environment, change `Configure` method
+
+```cs
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    ...
+    
+    app.UseEndpoints(endpoints =>
+    {
+        if (env.IsDevelopment())
+        {
+            endpoints.MapVersionInfo();
+        }
+    });
+    
+    ...
+}
+```
+
+### Authorization Policy on endpoint
+
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    ...
+    
+    services.AddAuthorization(cfg =>
+    {
+        cfg.AddPolicy(name: Constants.VERSIONINFO_USER_POLICY, cfgPolicy =>
+        {
+            cfgPolicy.AddRequirements().RequireAuthenticatedUser();
+            cfgPolicy.AddAuthenticationSchemes(Constants.COOKIE_SCHEME);
+        });
+    });
+    
+    ...
+}
+
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    ...
+    
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapVersionInfo().RequireAuthorization(Constants.VERSIONINFO_USER_POLICY); ;
+    });
+    
+    ...
+}
+```
 
 For more information, you can inspect [Authentication example](./samples/Authentication). 
 
