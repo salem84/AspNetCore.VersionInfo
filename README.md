@@ -5,7 +5,7 @@
 # AspNetCore.VersionInfo
 
 AspNetCore.VersionInfo is a library to expose information about assembly versions used in your web application. 
-In particular there are two endpoints, which returns:
+In particular there are three endpoints, which returns:
 * a JSON-formatted data (_/version/json_)
 * an HTML user-friendly page (_/version/html_)
 * a nice badge image (_/version/badge_)
