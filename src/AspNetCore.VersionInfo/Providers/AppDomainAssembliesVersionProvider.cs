@@ -6,9 +6,9 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class AppDomainAssembliesVersionProvider : IInfoProvider
     {
-        public string Name => nameof(AppDomainAssembliesVersionProvider);
+        public virtual string Name => nameof(AppDomainAssembliesVersionProvider);
 
-        public IDictionary<string, string> GetData()
+        public virtual IDictionary<string, string> GetData()
         {
             var dict = new SortedDictionary<string, string>();
 

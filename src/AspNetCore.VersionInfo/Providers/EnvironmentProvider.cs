@@ -5,9 +5,9 @@ namespace AspNetCore.VersionInfo.Providers
 {
     public class EnvironmentProvider : IInfoProvider
     {
-        public string Name => nameof(EnvironmentProvider);
+        public virtual string Name => nameof(EnvironmentProvider);
 
-        public IDictionary<string, string> GetData()
+        public virtual IDictionary<string, string> GetData()
         {
             var dict = new Dictionary<string, string>();
 

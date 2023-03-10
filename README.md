@@ -5,7 +5,7 @@
 # AspNetCore.VersionInfo
 
 AspNetCore.VersionInfo is a library to expose information about assembly versions used in your web application. 
-In particular there are two endpoints, which returns:
+In particular there are three endpoints, which returns:
 * a JSON-formatted data (_/version/json_)
 * an HTML user-friendly page (_/version/html_)
 * a nice badge image (_/version/badge_)
@@ -23,16 +23,17 @@ Library offers some in-bundle providers to capture versions information, such as
 
 Moreover it is possible create a specific class to collect additional data as described in [Providers](#providers) section.
 
-## Prerequisites
+## 🧰 Supported Platforms
+
 This library currently targets `net6.0`
 
-## Download
+## 📦 Download
 
 Prerelease packages are on [GH Packages](https://github.com/salem84?tab=packages&repo_name=AspNetCore.VersionInfo)
 
 Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.VersionInfo)
 
-## Demo
+## 🚀 Online Demo
 
 |   | URL |
 |---|:-----:|
@@ -46,7 +47,7 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 |![Linux](docs/images/linux_med.png) **Linux JSON Endpoint**| [/version/json](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/json) | 
 |![Linux](docs/images/linux_med.png) **Linux Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons__debian)](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=Red&label=os&icon=simpleicons__debian) | 
 
-## Getting Started
+## ⭐ Getting Started
 
 ### Startup.cs
 ```csharp
@@ -71,7 +72,7 @@ public class Startup
 }
 ```
 
-## Providers
+## 🔌 Providers
 Library is based on following types:
 * Providers, that read information and return data in a dictionary
 * Collector, that aggregates all data from providers and exposes to endpoints.
@@ -93,7 +94,7 @@ _AspNetCore.VersionInfo_ package includes following providers:
 | EnvironmentProvider  | `Environment.Uptime` <br/> `Environment.OSVersion` <br/> `Environment.IsOsWindows` <br/> `Environment.Is64BitOperatingSystem` <br/> `Environment.Is64BitProcess` <br/> `Environment.ProcessorCount` <br/> `Environment.MachineName` <br/> `Environment.SystemDirectory` <br/> `Environment.WorkingDirectory` <br/> `Environment.CommandLine` <br/> `Environment.DotNetVersion` | Environment properties |
 | EnvironmentVariablesProvider | `<EnvironmentVariableName>`-`<EnvironmentVariableValue>` | Environment variables |
 
-### Options
+## 🔧 Options
 
 `MapVersionInfo` extension method accepts an optional `VersionInfoOptions` argument to change default URLs:
 
@@ -116,7 +117,7 @@ public void Configure(IApplicationBuilder app)
 ```
 
 
-### Badge
+## 🖼 Badges
 
 Badge image can be obtained with url
 
@@ -141,4 +142,73 @@ Moreover endpoint accepts following parameters in querystring:
 | ![#555](https://via.placeholder.com/15/555/000000.png?text=+) | Gray |
 | ![#9f9f9f](https://via.placeholder.com/15/9f9f9f/000000.png?text=+) | LightGray |
 
+## 💿 Examples
 
+| Name | Notes | Repository |
+| -     | -      | - |
+| Basic | Simple .NET 6 WebApplication with built-in endpoints (published in [demo site](https://aspnetcoreversioninfo-demo.azurewebsites.net)) | [💾](./samples/Basic) |
+| CustomOptions | WebApplication with custom configuration for endpoint URLs | [💾](./samples/CustomOptions) | 
+| Minimal | WebApplication using Minimal API | [💾](./samples/Minimal) | 
+| Authentication | WebApplication leverages the ASP.NET Core Authentication/Authorization features to easily restrict access | [💾](./samples/Authentication) | 
+
+
+## 🔑 Security
+
+### Enable Endpoint only in Development mode
+In order to enable _AspNetCore.VersionInfo_ only in the development environment, change `Configure` method
+
+```cs
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    ...
+    
+    app.UseEndpoints(endpoints =>
+    {
+        if (env.IsDevelopment())
+        {
+            endpoints.MapVersionInfo();
+        }
+    });
+    
+    ...
+}
+```
+
+### Authorization Policy on endpoint
+
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    ...
+    
+    services.AddAuthorization(cfg =>
+    {
+        cfg.AddPolicy(name: Constants.VERSIONINFO_USER_POLICY, cfgPolicy =>
+        {
+            cfgPolicy.AddRequirements().RequireAuthenticatedUser();
+            cfgPolicy.AddAuthenticationSchemes(Constants.COOKIE_SCHEME);
+        });
+    });
+    
+    ...
+}
+
+
+public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    ...
+    
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapVersionInfo().RequireAuthorization(Constants.VERSIONINFO_USER_POLICY); ;
+    });
+    
+    ...
+}
+```
+
+For more information, you can inspect [Authentication example](./samples/Authentication). 
+
+## 📄 License
+
+_AspNetCore.VersionInfo_ is [Apache-2.0 licensed](./LICENSE.md)
