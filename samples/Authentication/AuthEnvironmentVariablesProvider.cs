@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Providers;
 using AspNetCore.VersionInfo.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,20 +19,17 @@ namespace AspNetCore.VersionInfo.Samples.Authentication
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public override IDictionary<string, string> GetData()
+        public override async Task<InfoProviderResult> GetDataAsync()
         {
-            var isAuthorized = CheckAuthorization();
+            var isAuthorized = await CheckAuthorization();
             if (isAuthorized)
             {
-                return base.GetData();
+                return await base.GetDataAsync();
             }
 
-            return new Dictionary<string, string>();
+            return null;
         }
 
-        private bool CheckAuthorization()
-        {
-            return _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, Constants.VERSIONINFO_ADMIN_POLICY).Result.Succeeded;
-        }
+        private async Task<bool> CheckAuthorization() => (await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext.User, Constants.VERSIONINFO_ADMIN_POLICY)).Succeeded;
     }
 }

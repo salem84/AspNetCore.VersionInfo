@@ -37,7 +37,7 @@ namespace AspNetCore.VersionInfo.Tests
                 {
                     { "Key1", "Value1" }
                 });
-            infoHandler.Setup(x => x.AggregateData()).Returns(simpleData);
+            infoHandler.Setup(x => x.AggregateData()).ReturnsAsync(simpleData);
             RegisterServiceWithInstance<IInfoCollector>(infoHandler.Object);
 
             var mockLogger = new Mock<ILogger<BadgeEndpoint>>();

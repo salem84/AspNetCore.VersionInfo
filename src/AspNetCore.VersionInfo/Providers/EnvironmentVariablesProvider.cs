@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Providers;
 
 namespace AspNetCore.VersionInfo.Providers
 {
@@ -8,16 +9,16 @@ namespace AspNetCore.VersionInfo.Providers
     {
         public virtual string Name => nameof(EnvironmentVariablesProvider);
 
-        public virtual IDictionary<string, string> GetData()
+        public virtual Task<InfoProviderResult> GetDataAsync()
         {
-            var dict = new Dictionary<string, string>();
+            var data = new InfoProviderResult(Name);
 
             foreach (DictionaryEntry envVar in Environment.GetEnvironmentVariables())
             {
-                dict.Add(envVar.Key.ToString(), envVar.Value.ToString());
+                data.Add(envVar.Key.ToString(), envVar.Value.ToString());
             }
 
-            return dict;
+            return Task.FromResult(data);
         }
     }
 }

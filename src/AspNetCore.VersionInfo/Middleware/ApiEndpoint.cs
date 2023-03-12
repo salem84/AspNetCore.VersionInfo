@@ -23,7 +23,7 @@ namespace AspNetCore.VersionInfo.Middleware
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
-                var versionInfo = infoHandler.AggregateData() as FlatCollectorResult;
+                var versionInfo = await infoHandler.AggregateData() as FlatCollectorResult;
                 responseContent = JsonSerializer.Serialize(versionInfo);
             }
 

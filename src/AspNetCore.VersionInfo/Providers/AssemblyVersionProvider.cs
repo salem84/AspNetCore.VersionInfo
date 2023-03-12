@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Providers;
 
 namespace AspNetCore.VersionInfo.Providers
 {
@@ -9,23 +10,23 @@ namespace AspNetCore.VersionInfo.Providers
     {
         public virtual string Name => nameof(AssemblyVersionProvider);
 
-        public virtual IDictionary<string, string> GetData()
+        public virtual Task<InfoProviderResult> GetDataAsync()
         {
-            var dict = new Dictionary<string, string>();
+            var data = new InfoProviderResult(Name);
 
             var entryAssembly = Assembly.GetEntryAssembly();
             var fi = FileVersionInfo.GetVersionInfo(entryAssembly.Location);
 
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_VERSION, entryAssembly.GetName().Version.ToString());
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_FULLNAME, entryAssembly.FullName);
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_LOCATION, entryAssembly.Location);
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_DIRECTORY_PATH, Path.GetDirectoryName(entryAssembly.Location));
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_FILE_VERSION, fi.FileVersion);
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_CLR_VERSION, entryAssembly.ImageRuntimeVersion);
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_CREATION_DATE, File.GetCreationTime(entryAssembly.Location).ToString());
-            dict.Add(Constants.KEY_ENTRY_ASSEMBLY_LASTMODIFIED_DATE, File.GetLastWriteTime(entryAssembly.Location).ToString());
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_VERSION, entryAssembly.GetName().Version.ToString());
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_FULLNAME, entryAssembly.FullName);
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_LOCATION, entryAssembly.Location);
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_DIRECTORY_PATH, Path.GetDirectoryName(entryAssembly.Location));
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_FILE_VERSION, fi.FileVersion);
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_CLR_VERSION, entryAssembly.ImageRuntimeVersion);
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_CREATION_DATE, File.GetCreationTime(entryAssembly.Location).ToString());
+            data.Add(Constants.KEY_ENTRY_ASSEMBLY_LASTMODIFIED_DATE, File.GetLastWriteTime(entryAssembly.Location).ToString());
 
-            return dict;
+            return Task.FromResult(data);
         }
     }
 }

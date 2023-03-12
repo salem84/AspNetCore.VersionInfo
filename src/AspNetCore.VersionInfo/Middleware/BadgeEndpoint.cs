@@ -1,10 +1,10 @@
-﻿using AspNetCore.VersionInfo.Models.Collectors;
+﻿using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
 using AspNetCore.VersionInfo.Services.Badge;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
 namespace AspNetCore.VersionInfo.Middleware
 {
@@ -39,7 +39,7 @@ namespace AspNetCore.VersionInfo.Middleware
                 var badgePainter = scope.ServiceProvider.GetService<IBadgePainter>();
 
                 // Collect all data
-                versionInfo = infoHandler.AggregateData();
+                versionInfo = await infoHandler.AggregateData();
 
                 // Retrieve versionInfo data by QueryString key
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);
@@ -72,7 +72,7 @@ namespace AspNetCore.VersionInfo.Middleware
                     StatusColor = color,
                     Style = Style.Flat,
                     IconSlug = context.Request.Query["icon"]
-            };
+                };
                 responseContent = await badgePainter.Draw(badgeInfo);
             }
 

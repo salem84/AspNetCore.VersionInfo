@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Providers;
 
 namespace AspNetCore.VersionInfo.Providers
 {
     public interface IInfoProvider
     {
         string Name { get; }
-        IDictionary<string, string> GetData();
+        Task<InfoProviderResult> GetDataAsync();
     }
 }

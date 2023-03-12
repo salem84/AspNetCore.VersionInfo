@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Models;
 using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Providers;
@@ -12,8 +14,11 @@ namespace AspNetCore.VersionInfo.Services
         private readonly ILogger<FlatInfoCollector> _logger;
 
         #region LoggerMessage
-        [LoggerMessage(Level = LogLevel.Debug, Message = "Elaborating {handlerName} provider")]
+        [LoggerMessage(EventId = 1, Level = LogLevel.Debug, Message = "Elaborating {handlerName} provider")]
         private partial void LogElaboratingHandler(string handlerName);
+
+        [LoggerMessage(EventId = 2, Level = LogLevel.Error, Message = "Error during elaboration of {handlerName} provider")]
+        private partial void LogErrorElaborateHandler(string handlerName, Exception ex);
         #endregion
 
         public FlatInfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<FlatInfoCollector> logger)
@@ -21,21 +26,33 @@ namespace AspNetCore.VersionInfo.Services
             _infoHandlers = infoHandlers;
             _logger = logger;
         }
-        public ICollectorResult AggregateData()
+        public async Task<ICollectorResult> AggregateData()
         {
             // It's maybe better pass this dictionary as argument for all handlers?
             var result = new FlatCollectorResult();
             foreach (var handler in _infoHandlers)
             {
                 LogElaboratingHandler(handler.Name);
-                foreach (var d in handler.GetData())
+                try
                 {
-                    result.Add(new VersionDataProviderKeyValueResult()
+                    var data = await handler.GetDataAsync();
+                    if (data != null)
                     {
-                        Key = d.Key,
-                        Value = d.Value,
-                        ProviderName = handler.Name
-                    });
+                        foreach (var d in data.Data)
+                        {
+                            result.Add(new VersionDataProviderKeyValueResult()
+                            {
+                                Key = d.Key,
+                                Value = d.Value,
+                                ProviderName = handler.Name
+                            });
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    LogErrorElaborateHandler(handler.Name, ex);
                 }
             }
 

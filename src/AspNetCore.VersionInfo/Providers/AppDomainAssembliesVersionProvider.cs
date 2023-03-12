@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Providers;
 
 namespace AspNetCore.VersionInfo.Providers
 {
@@ -8,7 +10,7 @@ namespace AspNetCore.VersionInfo.Providers
     {
         public virtual string Name => nameof(AppDomainAssembliesVersionProvider);
 
-        public virtual IDictionary<string, string> GetData()
+        public virtual Task<InfoProviderResult> GetDataAsync()
         {
             var dict = new SortedDictionary<string, string>();
 
@@ -21,7 +23,8 @@ namespace AspNetCore.VersionInfo.Providers
                 }
             }
 
-            return dict.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            var ret = dict.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            return Task.FromResult(new InfoProviderResult(Name, ret));
         }
     }
 }

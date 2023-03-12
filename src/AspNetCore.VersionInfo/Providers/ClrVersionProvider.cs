@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Models.Providers;
 
 namespace AspNetCore.VersionInfo.Providers
 {
@@ -8,18 +9,18 @@ namespace AspNetCore.VersionInfo.Providers
     {
         public virtual string Name => nameof(ClrVersionProvider);
 
-        public virtual IDictionary<string, string> GetData()
+        public virtual Task<InfoProviderResult> GetDataAsync()
         {
-            var dict = new Dictionary<string, string>();
-            dict.Add(Constants.KEY_RUNTIMEINFORMATION_FRAMEWORKDESCRIPTION, RuntimeInformation.FrameworkDescription);
-            dict.Add(Constants.KEY_RUNTIMEINFORMATION_OSDESCRIPTION, RuntimeInformation.OSDescription);
-            dict.Add(Constants.KEY_RUNTIMEINFORMATION_OSARCHITECTURE, RuntimeInformation.OSArchitecture.ToString());
-            dict.Add(Constants.KEY_RUNTIMEINFORMATION_PROCESSARCHITECTURE, RuntimeInformation.ProcessArchitecture.ToString());
-            dict.Add(Constants.KEY_RUNTIMEINFORMATION_RUNTIMEIDENTIFIER, RuntimeInformation.RuntimeIdentifier);
+            var data = new InfoProviderResult(Name);
+            data.Add(Constants.KEY_RUNTIMEINFORMATION_FRAMEWORKDESCRIPTION, RuntimeInformation.FrameworkDescription);
+            data.Add(Constants.KEY_RUNTIMEINFORMATION_OSDESCRIPTION, RuntimeInformation.OSDescription);
+            data.Add(Constants.KEY_RUNTIMEINFORMATION_OSARCHITECTURE, RuntimeInformation.OSArchitecture.ToString());
+            data.Add(Constants.KEY_RUNTIMEINFORMATION_PROCESSARCHITECTURE, RuntimeInformation.ProcessArchitecture.ToString());
+            data.Add(Constants.KEY_RUNTIMEINFORMATION_RUNTIMEIDENTIFIER, RuntimeInformation.RuntimeIdentifier);
 
-            dict.Add(Constants.KEY_ENVIRONMENT_VERSION, Environment.Version.ToString());
+            data.Add(Constants.KEY_ENVIRONMENT_VERSION, Environment.Version.ToString());
 
-            return dict;
+            return Task.FromResult(data);
         }
     }
 }
