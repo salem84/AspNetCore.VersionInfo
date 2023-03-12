@@ -1,7 +1,7 @@
 ﻿using System;
 using AspNetCore.VersionInfo.Configuration;
+using AspNetCore.VersionInfo.Models.Providers;
 using AspNetCore.VersionInfo.Providers;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AspNetCore.VersionInfo
 {
@@ -17,7 +17,12 @@ namespace AspNetCore.VersionInfo
 
         private static VersionInfoBuilder ConfigureProvider<T>(this VersionInfoBuilder builder, ProviderOptions options) where T : class, IInfoProvider
         {
-            builder.Services.AddTransient<IInfoProvider, T>();
+            builder.Add(new ProviderRegistration()
+            {
+                ProviderType = typeof(T),
+                Enabled = true,
+                Options = options
+            });
             return builder;
         }
     }

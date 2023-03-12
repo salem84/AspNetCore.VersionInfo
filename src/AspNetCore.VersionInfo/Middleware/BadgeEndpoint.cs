@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
 using AspNetCore.VersionInfo.Services.Badge;
@@ -37,9 +38,10 @@ namespace AspNetCore.VersionInfo.Middleware
             {
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
                 var badgePainter = scope.ServiceProvider.GetService<IBadgePainter>();
+                var cancellationToken = context?.RequestAborted ?? CancellationToken.None;
 
                 // Collect all data
-                versionInfo = await infoHandler.AggregateData();
+                versionInfo = await infoHandler.AggregateData(cancellationToken);
 
                 // Retrieve versionInfo data by QueryString key
                 var found = versionInfo.TryGetValue(id, out string versionInfoValue);

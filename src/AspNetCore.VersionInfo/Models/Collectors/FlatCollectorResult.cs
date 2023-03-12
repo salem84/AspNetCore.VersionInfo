@@ -51,6 +51,11 @@ namespace AspNetCore.VersionInfo.Models.Collectors
             return true;
         }
 
+        /// <summary>
+        /// Convert to dictionary (for testing purpose)
+        /// </summary>
+        /// <param name="includeProviderName"></param>
+        /// <returns></returns>
         public Dictionary<string, string> ToDictionary(bool includeProviderName)
         {
             if (includeProviderName)

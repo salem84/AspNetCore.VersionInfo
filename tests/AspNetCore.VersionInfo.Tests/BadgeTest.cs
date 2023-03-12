@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Middleware;
 using AspNetCore.VersionInfo.Services;
@@ -37,7 +38,7 @@ namespace AspNetCore.VersionInfo.Tests
                 {
                     { "Key1", "Value1" }
                 });
-            infoHandler.Setup(x => x.AggregateData()).ReturnsAsync(simpleData);
+            infoHandler.Setup(x => x.AggregateData(It.IsAny<CancellationToken>())).ReturnsAsync(simpleData);
             RegisterServiceWithInstance<IInfoCollector>(infoHandler.Object);
 
             var mockLogger = new Mock<ILogger<BadgeEndpoint>>();

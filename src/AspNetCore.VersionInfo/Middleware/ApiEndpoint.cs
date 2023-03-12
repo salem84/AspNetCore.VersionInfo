@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Models.Collectors;
 using AspNetCore.VersionInfo.Services;
@@ -23,7 +24,8 @@ namespace AspNetCore.VersionInfo.Middleware
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var infoHandler = scope.ServiceProvider.GetService<IInfoCollector>();
-                var versionInfo = await infoHandler.AggregateData() as FlatCollectorResult;
+                var cancellationToken = context?.RequestAborted ?? CancellationToken.None;
+                var versionInfo = await infoHandler.AggregateData(cancellationToken) as FlatCollectorResult;
                 responseContent = JsonSerializer.Serialize(versionInfo);
             }
 

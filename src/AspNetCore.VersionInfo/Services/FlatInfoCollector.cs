@@ -1,16 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using AspNetCore.VersionInfo.Configuration;
 using AspNetCore.VersionInfo.Models;
 using AspNetCore.VersionInfo.Models.Collectors;
+using AspNetCore.VersionInfo.Models.Providers;
 using AspNetCore.VersionInfo.Providers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace AspNetCore.VersionInfo.Services
 {
     internal partial class FlatInfoCollector : IInfoCollector
     {
-        private readonly IEnumerable<IInfoProvider> _infoHandlers;
+        private readonly IServiceScopeFactory _scopeFactory;
+        private readonly IOptions<VersionInfoOptions> _options;
         private readonly ILogger<FlatInfoCollector> _logger;
 
         #region LoggerMessage
@@ -21,33 +27,63 @@ namespace AspNetCore.VersionInfo.Services
         private partial void LogErrorElaborateHandler(string handlerName, Exception ex);
         #endregion
 
-        public FlatInfoCollector(IEnumerable<IInfoProvider> infoHandlers, ILogger<FlatInfoCollector> logger)
+        public FlatInfoCollector(IServiceScopeFactory scopeFactory, IOptions<VersionInfoOptions> options, ILogger<FlatInfoCollector> logger)
         {
-            _infoHandlers = infoHandlers;
-            _logger = logger;
+            _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        public async Task<ICollectorResult> AggregateData()
+        public async Task<ICollectorResult> AggregateData(CancellationToken cancellationToken = default)
         {
-            // It's maybe better pass this dictionary as argument for all handlers?
             var result = new FlatCollectorResult();
-            foreach (var handler in _infoHandlers)
+
+            // Get only enabled providers 
+            var providerRegistrations = _options.Value.Registrations.Where(p => p.Enabled);
+
+            var tasks = new Task<InfoProviderResult>[providerRegistrations.Count()];
+            var index = 0;
+            foreach (var registration in providerRegistrations)
             {
+                tasks[index++] = Task.Run(() => RunGetDataAsync(registration, cancellationToken), cancellationToken);
+            }
+
+            await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            foreach (var task in tasks)
+            {
+                if (task.Result.Data != null)
+                {
+                    foreach (var d in task.Result.Data)
+                    {
+                        result.Add(new VersionDataProviderKeyValueResult()
+                        {
+                            Key = d.Key,
+                            Value = d.Value,
+                            ProviderName = task.Result.ProviderName
+                        });
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private async Task<InfoProviderResult> RunGetDataAsync(ProviderRegistration registration, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var scope = _scopeFactory.CreateAsyncScope();
+            await using (scope.ConfigureAwait(false))
+            {
+                // Create provider instance
+                var handler = scope.ServiceProvider.GetService(registration.ProviderType) as IInfoProvider;
+
                 LogElaboratingHandler(handler.Name);
+
                 try
                 {
                     var data = await handler.GetDataAsync();
-                    if (data != null)
-                    {
-                        foreach (var d in data.Data)
-                        {
-                            result.Add(new VersionDataProviderKeyValueResult()
-                            {
-                                Key = d.Key,
-                                Value = d.Value,
-                                ProviderName = handler.Name
-                            });
-                        }
-                    }
+                    return data;
 
                 }
                 catch (Exception ex)
@@ -56,7 +92,7 @@ namespace AspNetCore.VersionInfo.Services
                 }
             }
 
-            return result;
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using AspNetCore.VersionInfo.Middleware;
 using AspNetCore.VersionInfo.Services;
@@ -35,7 +36,7 @@ namespace AspNetCore.VersionInfo.Tests
 
             await middlewareInstance.InvokeAsync(defaultContext);
 
-            infoHandler.Verify(x => x.AggregateData());
+            infoHandler.Verify(x => x.AggregateData(It.IsAny<CancellationToken>()));
 
             //defaultContext.Response.Body.Seek(0, SeekOrigin.Begin);
             //var body = new StreamReader(defaultContext.Response.Body).ReadToEnd();
