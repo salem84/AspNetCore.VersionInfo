@@ -7,7 +7,7 @@ namespace AspNetCore.VersionInfo.Models.Providers
     {
         public string ProviderName { get; init; }
 
-        private Dictionary<string, string> _data = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _data = new Dictionary<string, string>();
         public IImmutableDictionary<string, string> Data => _data.ToImmutableDictionary();
 
         public int Count => _data.Count;
