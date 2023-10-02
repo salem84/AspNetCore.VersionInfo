@@ -1,9 +1,7 @@
 # based on https://dusted.codes/github-actions-for-dotnet-core-nuget-packages
-name: Build CI
+name: Build and publish
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 env:
@@ -12,7 +10,12 @@ env:
   # Disable sending usage data to Microsoft
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   # Project name to pack and publish
-  PROJECT_NAME: AspNetCore.VersionInfo 
+  PROJECT_NAME: AspNetCore.VersionInfo
+  # GitHub Packages Feed settings
+  GITHUB_FEED: https://nuget.pkg.github.com/salem84/
+  # Official NuGet Feed settings
+  NUGET_FEED: https://api.nuget.org/v3/index.json
+  NUGET_KEY: ${{ secrets.NUGET_KEY }}
 
 jobs:
   build:
@@ -29,13 +32,13 @@ jobs:
       run: git fetch --prune --unshallow
 
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.10.2
+      uses: gittools/actions/gitversion/setup@v0.9.15
       with:
         versionSpec: '5.x'
 
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.10.2
+      uses: gittools/actions/gitversion/execute@v0.9.15
 
     - name: Build info
       run: |
@@ -147,6 +150,7 @@ jobs:
         sed -i 's|<br\/>|,|g' README.md
         sed -i 's|!\[/version/badge\](https:[^)]*)|/version/badge|g' README.md
         sed -i 's|!\[\(.*\)\](\(https:\/\/via.placeholder.com[^)]*\))|\1|g' README.md
+        
     
     - name: Build
       run: dotnet build --no-restore --configuration $CONFIGURATION
@@ -154,8 +158,39 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=coverage.opencover.xml
 
+    - name: Pack
+      run: dotnet pack -v normal -c $CONFIGURATION --no-restore --no-build --include-symbols --include-source src/$PROJECT_NAME/$PROJECT_NAME.*proj
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: nupkg
+        # With absolute path avoid path hierarchy will be preserved
+        path: |
+           ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.nupkg
+           ./src/${{ env.PROJECT_NAME }}/bin/${{ env.CONFIGURATION }}/*.snupkg
+
     - name: Stop Sonarcloud
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: ~/.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+  publish:
+    needs: build
+    if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nupkg
+
+      - name: Push to GitHub Feed
+        shell: bash
+        run: dotnet nuget push *.nupkg --source $GITHUB_FEED --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to NuGet Feed
+        if: startsWith(github.ref, 'refs/tags/')
+        run: dotnet nuget push *.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+        
