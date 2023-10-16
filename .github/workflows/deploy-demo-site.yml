@@ -33,7 +33,7 @@ jobs:
       run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
     - name: Deploy to Azure Web App (Windows)
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'aspnetcoreversioninfo-demo'
         slot-name: 'production'
@@ -41,7 +41,7 @@ jobs:
         package: ${{env.DOTNET_ROOT}}/myapp
         
     - name: Deploy to Azure Web App (Linux)
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: 'aspnetcoreversioninfo-linux-demo'
         slot-name: 'production'
