@@ -25,7 +25,7 @@ Moreover it is possible create a specific class to collect additional data as de
 
 ## 🧰 Supported Platforms
 
-This library currently targets `net6.0`
+This library currently targets `net8.0`
 
 ## 📦 Download
 
