@@ -1,4 +1,4 @@
-[![NuGet version](https://img.shields.io/nuget/v/AspNetCore.VersionInfo?color=yellowgreen)](http://www.nuget.org/packages/AspNetCore.VersionInfo) ![.NET](https://github.com/salem84/AspNetCore.VersionInfo/workflows/.NET/badge.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=coverage)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
+[![NuGet version](https://img.shields.io/nuget/v/AspNetCore.VersionInfo?color=yellowgreen)](http://www.nuget.org/packages/AspNetCore.VersionInfo) ![.NET](https://img.shields.io/badge/.NET-8.0-blueviolet) [![License](https://img.shields.io/badge/License-Apache%202.0-red.svg)](https://github.com/salem84/AspNetCore.VersionInfo/blob/master/LICENSE) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=coverage)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=security_rating)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=salem84_AspNetCore.VersionInfo&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=salem84_AspNetCore.VersionInfo)
 
@@ -40,7 +40,7 @@ Release packages are on [Nuget](http://www.nuget.org/packages/AspNetCore.Version
 |![Win](docs/images/win_med.png) **Windows Web App**| https://aspnetcoreversioninfo-demo.azurewebsites.net | 
 |![Win](docs/images/win_med.png) **Windows HTML Endpoint** | [/version/html](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/html) | 
 |![Win](docs/images/win_med.png) **Windows JSON Endpoint** | [/version/json](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/json) |
-|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons__windows)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os&icon=simpleicons__windows) | 
+|![Win](docs/images/win_med.png) **Windows Badge Endpoint** | [![/version/badge](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os)](https://aspnetcoreversioninfo-demo.azurewebsites.net/version/badge/RuntimeInformation.RuntimeIdentifier?color=BrightGreen&label=os) | 
 | | |
 |![Linux](docs/images/linux_med.png) **Linux Web App**| https://aspnetcoreversioninfo-linux-demo.azurewebsites.net | 
 |![Linux](docs/images/linux_med.png) **Linux HTML Endpoint**| [/version/html](https://aspnetcoreversioninfo-linux-demo.azurewebsites.net/version/html) | 
@@ -127,7 +127,7 @@ where `{versionInfoId}` is a key returned by providers.
 
 Moreover endpoint accepts following parameters in querystring:
 * `label`: it's the name to show in the image
-* `icon`: the source type and slug for the icon separated by two underscore characters (`__`) such as `simpleicons__azure`. In this version only [Simple Icons](https://simpleicons.org/) type is supported; you can find a list of slugs [here](https://github.com/simple-icons/simple-icons/blob/develop/slugs.md). Icon color is always white.
+* `icon`: the source type and slug for the icon separated by two underscore characters (`__`) such as `simpleicons__linux`. In this version only [Simple Icons](https://simpleicons.org/) type is supported; you can find a list of slugs [here](https://github.com/simple-icons/simple-icons/blob/develop/slugs.md). Icon color is always white.
 * `color`: a string as defined in the colors table or a custom colors in hexadecimal, RGB, HSL.
 
 | Color | String | 
